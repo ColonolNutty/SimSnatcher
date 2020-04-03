@@ -1,0 +1,23 @@
+- Sim Snatcher Settings
+  - Settings interaction should only appear when clicking on sims.
+  - Settings should save and load properly to a household.
+  - If interactions are disabled, abduction interactions should no longer appear.
+- Abduction
+  - Abducted Sims should
+    - not be added to the household
+    - be prevented from leaving the active lot
+    - be able to perform all of the same interactions that the active sims can without being inappropriate.
+  - Abduction State
+    - Abducted sims should be "reabducted" upon their situation expiring after 6 hours of sim game time
+    - The Hostage relationship should appear when hovering over the captive sim with the active sim selected.
+    - The Captor relationship should appear when playing as the captive sim.
+    - Both sims should have the abduction rel bit with each other.
+    - Upon refresh, the relationships should continue to be correct (Captor has Hostage rel bit toward Captive and Captive has Captor rel bit toward Captor)
+    - Relationships should not be duplicated
+  - Release
+    - Upon a sim being released, the previously captive sim should
+      - Not have the abduction buff that prevents them from leaving
+      - Not have Captor rel bit with the Captor sim.
+      - Not have Hostage rel bit with the Captor sim.
+      - Not have Abduction rel bit with Captor sim.
+      - Be able to leave after a maximum of 6 hours.

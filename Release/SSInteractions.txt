@@ -1,0 +1,32 @@
+For any interaction that requires SHIFT+CLICK, you must enable testing cheats by doing this command in the CTRL+SHIFT+C console "testingcheats on"
+
+- Abduction:
+  - Abduct a Sim:
+    - Click on a Sim that is not a part of your household and go through these interactions -> Sim Snatcher -> Abduction -> Attempt to Abduct
+    - Watch your Sim attempt to abduct the other Sim
+      - The percentage chance of success is based on the Fitness skill as well as a couple of buffs
+        - Starting at 50% (A score of 50 or above is required to win) 10% is added/subtracted per difference in fitness level
+        - The abductor Sim has a Fitness skill of 5 and the victim has a Fitness skill of 1
+          - That is 4 levels difference, since it is the abductor with the higher fitness skill, 40% is added to the total chance, resulting in a 90% chance of success
+        - The abductor Sim has a Fitness skill of 1 and the victim has a fitness skill of 5
+          - That is 4 levels difference, since it is the victim with the higher fitness skill, 40% is subtracted from the total chance, resulting in a 10% chance of success
+        - If the Abduction Always Successful setting is enabled, then the chance of success will always be at 100%
+    - If you win, then the abducted Sim is added to your household, new interactions appear when clicking on the Sim (ex. Release Hostage), and the Sims are given proper buffs.
+    - If you lose, then nothing happens (currently)
+    - Whether you win or lose, the relationship between the Sims will go down massively.
+
+  - Release an Abducted Sim:
+    - Click on an abducted Sim and go through these interactions -> Sim Snatcher -> Abduction -> Release Hostage
+      - There will be no interaction queued upon doing it, the Sim will be immediately released.
+      - At most 6 Sim hours must pass before the Sim will decide to leave the lot.
+    - Troubleshooting:
+      - If a Sim is not releasing properly you can use the debug interaction to clear it.
+      - SHIFT + CLICK on the abductor/abducted Sim and go through these interactions Sim Snatcher -> Abduction -> Clear Abduction Data
+      - After doing this, wait at most 6 Sim hours before the Sim will properly be released. If they aren't, then complain about it in the thread or discord.
+
+  - Order Sims to do various things:
+    - Click on a Sim that your Sim has abducted and go through these interactions -> Sim Snatcher -> Abduction -> Order To... ->
+      - Go To Residence - Takes you and the other Sim to your house.
+      - Go Here - Orders a Sim to go to a specific spot on the ground.
+      - Perform Interaction - Your Hostage will attempt to perform that interaction.
+      - It isn't guaranteed that they can do it though, they can't do every interaction for whatever reason, but you also can't tell if they can't do it until they attempt to do it, which means they also can't be filtered out of the list!
