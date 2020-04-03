@@ -6,7 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/EA/simulation" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EA/generated" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EA/core" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Scripts/SimSnatcher" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Libraries/S4CL" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Release" />
     </content>

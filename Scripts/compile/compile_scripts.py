@@ -7,4 +7,4 @@ Copyright (c) COLONOLNUTTY
 """
 from Utilities.compiler import compile_module
 
-compile_module(root='..\\Release\\CNSimSnatcher', mod_scripts_folder='./SimSnatcher', include_folders=('cnsimsnatcher', 'ssutilities'), mod_name='cn_simsnatcher')
+compile_module(root='..\\Release\\CNSimSnatcher', mod_scripts_folder='.', include_folders=('cnsimsnatcher', 'ssutilities'), mod_name='cn_simsnatcher')
