@@ -25,29 +25,34 @@ class _SSAbductionSummonHostages:
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())
     def _summon_hostages_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
-        log.debug('Attempting to summon sims.')
+        if not event_data.game_loaded:
+            return False
+        log.debug('Attempting to summon hostage Sims to active lot.')
         _has_hostages = CommonFunctionUtils.run_predicates_as_one((CommonHouseholdUtils.is_part_of_active_household, CommonFunctionUtils.run_with_arguments(SSAbductionStateUtils.has_abducted_sims, instanced_only=False)))
 
         captor_sim_info_list = tuple(CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=_has_hostages))
-        log.format_with_message('Found captor sims.', captor_sims=CommonSimNameUtils.get_full_names(captor_sim_info_list))
+        log.format_with_message('Found captor Sims.', captor_sims=CommonSimNameUtils.get_full_names(captor_sim_info_list))
         for captor_sim_info in captor_sim_info_list:
-            log.format_with_message('Attempting to locate hostages for Sim.', sim=CommonSimNameUtils.get_full_name(captor_sim_info))
             if CommonLocationUtils.get_zone_id(event_data.zone) != CommonHouseholdUtils.get_household_lot_id(captor_sim_info):
                 log.format_with_message('Household was not correct.', household_id=event_data.household_id, captor_household_id=CommonHouseholdUtils.get_household_id(captor_sim_info))
                 continue
             log.debug('Household is correct.')
+            log.debug('Attempting to locate hostages for \'{}\'.'.format(CommonSimNameUtils.get_full_name(captor_sim_info)))
             captor_position = CommonSimLocationUtils.get_position(captor_sim_info)
             captor_location = CommonSimLocationUtils.get_location(captor_sim_info)
             hostage_sim_info_list = SSAbductionStateUtils.get_sim_info_of_hostages(captor_sim_info, instanced_only=False)
             log.format_with_message('Found hostages.', hostages=CommonSimNameUtils.get_full_names(hostage_sim_info_list))
             for hostage_sim_info in hostage_sim_info_list:
+                sim_name = CommonSimNameUtils.get_full_name(hostage_sim_info)
+                log.debug('Checking if \'{}\' needs to be spawned.'.format(sim_name))
                 # If Sim has spawned and they are on the current lot, ignore spawning them.
                 if CommonSimUtils.get_sim_instance(hostage_sim_info) is not None:
+                    log.debug('\'{}\' has already been spawned on the lot, skipping.'.format(sim_name))
                     continue
                 if CommonSimLocationUtils.is_on_current_lot(hostage_sim_info):
-                    log.debug('Hostage is already on the current lot. \'{}\''.format(CommonSimNameUtils.get_full_name(hostage_sim_info)))
+                    log.debug('\'{}\' is already on the current lot, skipping.'.format(sim_name))
                     continue
-                log.format_with_message('Spawning hostage.', sim=CommonSimNameUtils.get_full_name(hostage_sim_info))
+                log.debug('Spawning \'{}\' on current lot.'.format(sim_name))
                 SimSpawner.spawn_sim(hostage_sim_info, sim_position=captor_position, sim_location=captor_location)
         log.debug('Done spawning hostages.')
         return True
