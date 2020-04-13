@@ -10,7 +10,7 @@ from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_abduction_utils')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_abduction_utils')
 
 
 class SSAbductionUtils:

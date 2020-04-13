@@ -19,7 +19,7 @@ from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_log_all_interactions')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_log_all_interactions')
 
 
 class SSDebugLogAllInteractionsInteraction(CommonImmediateSuperInteraction):
@@ -27,7 +27,7 @@ class SSDebugLogAllInteractionsInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
@@ -40,7 +40,7 @@ class SSDebugLogAllInteractionsInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
         interactions = CommonObjectInteractionUtils.get_all_interactions_registered_to_object_gen(interaction_target)

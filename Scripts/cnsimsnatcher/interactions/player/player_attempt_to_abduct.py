@@ -23,47 +23,47 @@ from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimSta
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_start_abduction')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_start_abduction')
 
 
 class SSAbductionAttemptToAbductInteraction(CommonSocialMixerInteraction):
     """ Handles the success outcome of an attempt to abduct. """
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.debug('Attempting to Abduct a Sim')
         return super().on_started(interaction_sim, interaction_target)
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
     def on_performed(self, interaction_sim: Sim, interaction_target: Any):
         log.format_with_message('Running \'{}\' on_performed.'.format(self.__class__.__name__), interaction_sim=interaction_sim,
                                 interaction_target=interaction_target)
         return self._finish_off_interaction(interaction_sim, interaction_target)
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_killed(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.format_with_message('Running \'{}\' on_killed.'.format(self.__class__.__name__), interaction_sim=interaction_sim,
                                 interaction_target=interaction_target)
         return self._finish_off_interaction(interaction_sim, interaction_target)
 
     # noinspection PyMissingTypeHints,PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, )
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), )
     def on_reset(self):
         log.format_with_message('Running \'{}\' on_reset.'.format(self.__class__.__name__))
         return False
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
     def on_cancelled(self, interaction_sim: Sim, interaction_target: Any, finishing_type: FinishingType, cancel_reason_msg: str, **kwargs):
         log.format_with_message('Running \'{}\' on_cancelled.'.format(self.__class__.__name__), interaction_sim=interaction_sim,
                                 interaction_target=interaction_target, finishing_type=finishing_type,
                                 cancel_reason_msg=cancel_reason_msg, kwargles=kwargs)
         return self._finish_off_interaction(interaction_sim, interaction_target)
 
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def _finish_off_interaction(self, interaction_sim: Sim, interaction_target: Any):
         log.format_with_message('Running \'{}\' _finish_off_interaction.'.format(self.__class__.__name__), interaction_sim=interaction_sim,
                                 interaction_target=interaction_target)

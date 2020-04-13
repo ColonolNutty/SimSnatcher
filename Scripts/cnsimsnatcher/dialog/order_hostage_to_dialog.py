@@ -31,7 +31,7 @@ from sims4communitylib.dialogs.option_dialogs.options.sims.common_dialog_sim_opt
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_order_hostage_to_dialog')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_order_hostage_to_dialog')
 
 
 class SSAbductionOrderHostageToDialog:
@@ -45,7 +45,7 @@ class SSAbductionOrderHostageToDialog:
             log.debug('Dialog closed.')
             return True
 
-        @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name)
+        @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
         def _on_chosen(chosen_sim_info: SimInfo) -> bool:
             if chosen_sim_info is None:
                 log.format_with_message('None chosen.', chosen_sim_info=chosen_sim_info)
@@ -89,7 +89,7 @@ class SSAbductionOrderHostageToDialog:
         option_dialog.show(sim_info=requester_sim_info)
 
     @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def can_perform_interaction(
         interaction: Interaction,
         super_interaction: Interaction,

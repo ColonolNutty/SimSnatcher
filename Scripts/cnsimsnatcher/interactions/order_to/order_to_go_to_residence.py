@@ -20,7 +20,7 @@ from sims4communitylib.utils.sims.common_sim_location_utils import CommonSimLoca
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_order_to_go_to_residence')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_order_to_go_to_residence')
 
 
 class SSOrderToGoToResidenceInteraction(CommonSuperInteraction):
@@ -28,7 +28,7 @@ class SSOrderToGoToResidenceInteraction(CommonSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.debug('Checking if Sim can be demanded to go to residence.')
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
@@ -51,7 +51,7 @@ class SSOrderToGoToResidenceInteraction(CommonSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyUnusedLocal,PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_run(self, interaction_sim: Sim, interaction_target: Any, timeline):
         log.debug('Running go to residence interaction')
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)

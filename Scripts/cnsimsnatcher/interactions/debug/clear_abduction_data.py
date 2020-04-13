@@ -19,7 +19,7 @@ from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtil
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_clear_abduction_data')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_clear_abduction_data')
 
 
 class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
@@ -27,7 +27,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         if not SSSettingUtils.interactions_are_enabled():
@@ -45,7 +45,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):

@@ -22,7 +22,7 @@ class SSOpenSettingsInteraction(CommonTerrainInteraction):
     """ Handle the interaction to Open Settings. """
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         if not SSSettingUtils.is_enabled_for_interactions(sim_info):
@@ -35,7 +35,7 @@ class SSOpenSettingsInteraction(CommonTerrainInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         from cnsimsnatcher.settings.dialog import SSSettingsDialog
         SSSettingsDialog.open()

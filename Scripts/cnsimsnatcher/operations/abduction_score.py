@@ -17,7 +17,7 @@ from sims4communitylib.exceptions.common_exceptions_handler import CommonExcepti
 from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimStatisticUtils
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_attempt_to_abduct_score')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_attempt_to_abduct_score')
 
 
 class SSAbductionSuccessChanceOperation:
@@ -25,7 +25,7 @@ class SSAbductionSuccessChanceOperation:
     ABDUCTION_SUCCESS_THRESHOLD = 50
 
     @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=0)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=0)
     def calculate_success_chance(sim_info: SimInfo, target_sim_info: SimInfo) -> int:
         """ Calculate the success chance of the Sim abducting the target. """
         log.debug('Calculating abduction attempt score.')

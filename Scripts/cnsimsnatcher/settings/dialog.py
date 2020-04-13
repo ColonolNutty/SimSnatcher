@@ -21,7 +21,7 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_object_option_dialog
 class SSSettingsDialog:
     """ Settings for the SS Abduction mod. """
     @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
     def open() -> None:
         """ Open Abduction settings. """
         SSSettingsDialog._settings().show()

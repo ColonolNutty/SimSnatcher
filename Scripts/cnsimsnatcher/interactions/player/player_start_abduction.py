@@ -24,7 +24,7 @@ from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_start_abduction')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_start_abduction')
 
 
 class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
@@ -32,7 +32,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.debug('Testing to see if sim can be abducted')
         if not SSSettingUtils.interactions_are_enabled():
@@ -74,7 +74,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
             log.debug('Failed, Target is not a Sim.')

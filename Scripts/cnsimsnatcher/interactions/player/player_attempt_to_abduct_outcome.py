@@ -16,14 +16,14 @@ from sims4communitylib.exceptions.common_exceptions_handler import CommonExcepti
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_start_abduction')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_start_abduction')
 
 
 class SSAbductionAttemptToAbductSuccessInteraction(CommonImmediateSuperInteraction):
     """ Handles the success outcome of an attempt to abduct. """
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.debug('Abduction Attempt was Successful!')
         # The one abducting.
@@ -40,7 +40,7 @@ class SSAbductionAttemptToAbductFailureInteraction(CommonImmediateSuperInteracti
     """ Handles the failure outcome of an attempt to abduct. """
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.debug('Abduction Attempt Failed!')
         # TODO: Add more logic surrounding a failed abduction attempt. Call cops, reduce Fame, etc.

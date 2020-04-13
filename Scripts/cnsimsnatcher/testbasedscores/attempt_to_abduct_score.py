@@ -20,7 +20,7 @@ from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimSta
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_attempt_to_abduct_score')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_attempt_to_abduct_score')
 
 
 class SSAbductionAttemptToAbductTestBasedScore(TestBasedScore):
@@ -35,7 +35,7 @@ class SSAbductionAttemptToAbductTestBasedScore(TestBasedScore):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=0)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=0)
     def get_score(cls, resolver) -> int:
         yield_to_irq()
         if resolver is not None:

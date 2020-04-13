@@ -18,12 +18,12 @@ from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_abduction_summon_hostages')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_abduction_summon_hostages')
 
 
 class _SSAbductionSummonHostages:
     @staticmethod
-    @CommonEventRegistry.handle_events(ModInfo.get_identity().name)
+    @CommonEventRegistry.handle_events(ModInfo.get_identity())
     def _summon_hostages_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
         log.debug('Attempting to summon sims.')
         _has_hostages = CommonFunctionUtils.run_predicates_as_one((CommonHouseholdUtils.is_part_of_active_household, CommonFunctionUtils.run_with_arguments(SSAbductionStateUtils.has_abducted_sims, instanced_only=False)))

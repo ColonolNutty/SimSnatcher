@@ -26,7 +26,7 @@ from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_order_to_go_here')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_order_to_go_here')
 
 
 class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
@@ -34,7 +34,7 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=TestResult.NONE)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
@@ -62,7 +62,7 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.debug('Running go to residence interaction')
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)

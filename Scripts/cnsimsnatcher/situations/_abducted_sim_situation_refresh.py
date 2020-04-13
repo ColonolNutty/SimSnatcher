@@ -20,7 +20,7 @@ from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUt
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_refresh_situation')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_refresh_situation')
 
 
 class _SSAbductionRefreshSituation:
@@ -43,7 +43,7 @@ class _SSAbductionRefreshSituation:
         return True
 
     @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def refresh_abduction_status_of_sim(captive_sim_info: SimInfo) -> bool:
         """ Refresh the abduction status of a sim and reapply the abducted situation. """
         log.format_with_message('Attempting to refresh sim abduction status.', sim=captive_sim_info)
@@ -68,6 +68,6 @@ class _SSAbductionRefreshSituation:
         )
 
 
-@CommonIntervalEventRegistry.run_every(ModInfo.get_identity().name)
+@CommonIntervalEventRegistry.run_every(ModInfo.get_identity())
 def _ss_abduction_refresh_abducted_sim_situations_on_game_update(*_, **__) -> Any:
     return _SSAbductionRefreshSituation._refresh_abducted_sim_situations(*_, **__)

@@ -100,7 +100,7 @@ class CommonDataManagerRegistry(CommonService, HasClassLog):
 
 
 # noinspection PyUnusedLocal
-@CommonEventRegistry.handle_events(ModInfo.get_identity().name)
+@CommonEventRegistry.handle_events(ModInfo.get_identity())
 def _common_save_data_on_zone_save(event_data: S4CLZoneSaveEvent) -> bool:
     CommonDataManagerRegistry.get().save_data()
     return True

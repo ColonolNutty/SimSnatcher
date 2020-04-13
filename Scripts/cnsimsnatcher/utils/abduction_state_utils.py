@@ -24,7 +24,7 @@ from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'ss_abduction_state_utils')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_abduction_state_utils')
 
 
 class SSAbductionStateUtils:
@@ -87,7 +87,7 @@ class SSAbductionStateUtils:
         CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
 
     @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity().name, fallback_return=False)
+    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def clear_abduction_data(sim_info: SimInfo) -> bool:
         """ Clear abduction data from a sim. """
         if sim_info is None:
