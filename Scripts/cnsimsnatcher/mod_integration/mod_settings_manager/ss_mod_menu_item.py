@@ -44,6 +44,11 @@ try:
 
         # noinspection PyMissingOrEmptyDocstring
         @property
+        def description(self) -> Union[int, str, LocalizedString, None]:
+            return SSStringId.SIM_SNATCHER_SETTINGS_DESCRIPTION
+
+        # noinspection PyMissingOrEmptyDocstring
+        @property
         def tooltip_text(self) -> LocalizedString:
             return SSStringId.SIM_SNATCHER_SETTINGS_DESCRIPTION
 
