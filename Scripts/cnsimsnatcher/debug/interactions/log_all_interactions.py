@@ -44,7 +44,6 @@ class SSDebugLogAllInteractionsInteraction(CommonImmediateSuperInteraction):
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
         interactions = CommonObjectInteractionUtils.get_all_interactions_registered_to_object_gen(interaction_target)
-        log.enable()
         log.debug('printing names')
         for interaction in interactions:
             try:

@@ -20,6 +20,11 @@ from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 class SSOpenSettingsInteraction(CommonTerrainInteraction):
     """ Handle the interaction to Open Settings. """
+    def __init__(self, *_, **__) -> None:
+        super().__init__(*_, **__)
+        from cnsimsnatcher.settings.dialog import SSSettingsDialog
+        self._settings_dialog = SSSettingsDialog()
+
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
@@ -37,6 +42,5 @@ class SSOpenSettingsInteraction(CommonTerrainInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
-        from cnsimsnatcher.settings.dialog import SSSettingsDialog
-        SSSettingsDialog.open()
+        self._settings_dialog.open()
         return True
