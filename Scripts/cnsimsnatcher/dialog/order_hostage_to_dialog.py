@@ -55,7 +55,7 @@ class SSAbductionOrderHostageToDialog:
             on_sim_chosen(chosen_sim_info)
             return True
 
-        hostage_sim_info_list = SSAbductionStateUtils.get_sim_info_of_hostages(requester_sim_info)
+        hostage_sim_info_list = SSAbductionStateUtils.get_sim_info_list_of_hostages(requester_sim_info)
 
         option_dialog = CommonChooseSimOptionDialog(
             SSStringId.SS_ABDUCTION_CHOOSE_A_HOSTAGE_FOR_ORDER,

@@ -6,10 +6,6 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 # noinspection PyBroadException
-from cnsimsnatcher.enums.image_ids import SSImageId
-from sims4.resources import Types
-from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
-
 try:
     from cnsimsnatcher.enums.string_identifiers import SSStringId
     from cnsimsnatcher.modinfo import ModInfo
@@ -29,6 +25,9 @@ try:
     from sims4communitylib.utils.common_log_registry import CommonLogRegistry
     from protocolbuffers.Localization_pb2 import LocalizedString
     from cnsimsnatcher.settings.setting_utils import SSSettingUtils
+    from cnsimsnatcher.enums.image_ids import SSImageId
+    from sims4.resources import Types
+    from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
 
 
     class _SSMSMMenuItem(S4MSMMenuItem):
@@ -97,7 +96,7 @@ try:
 
     # noinspection PyUnusedLocal
     @CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), SSOpenSettingsInteraction, SSOpenSettingsInteraction.on_test.__name__)
-    def _hide_interaction(original, cls, *_, **__) -> TestResult:
+    def _ss_hide_interaction(original, cls, *_, **__) -> TestResult:
         log.debug('Hiding the SS Open Settings interaction in favor of the Mod Settings Menu.')
         return TestResult.NONE
 except:

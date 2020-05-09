@@ -23,7 +23,7 @@ class CommonDataManagerRegistry(CommonService, HasClassLog):
         self._data_managers: Dict[str, Dict[str, CommonDataManager]] = {}
 
     @property
-    def data_managers(self) -> Dict[str, Dict[str, CommonDataManager]]:
+    def data_managers(self: 'CommonDataManagerRegistry') -> Dict[str, Dict[str, CommonDataManager]]:
         """ Data managers. """
         return self._data_managers
 

@@ -55,7 +55,7 @@ class SSAbductionStateUtils:
         )
 
     @staticmethod
-    def get_sim_info_of_hostages(sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+    def get_sim_info_list_of_hostages(sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
         """ Retrieve the SimInfo of all hostages the specified sim has captive. """
         hostage_sim_info_list = tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT, instanced_only=instanced_only))
         if not any(hostage_sim_info_list):
@@ -123,7 +123,7 @@ def _ss_abduction_show_hostage_names(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
     output('Showing hostages of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
-    hostage_sim_info_list = SSAbductionStateUtils.get_sim_info_of_hostages(active_sim_info)
+    hostage_sim_info_list = SSAbductionStateUtils.get_sim_info_list_of_hostages(active_sim_info)
     for hostage_sim_info in hostage_sim_info_list:
         output('\'{}\''.format(CommonSimNameUtils.get_full_name(hostage_sim_info)))
     output('Done displaying hostages.')

@@ -36,17 +36,17 @@ class CommonSkillUtilityService(CommonService):
     @property
     def skill_identifier(self) -> int:
         """ Retrieve an identifier of the skill being managed. """
-        raise NotImplementedError('\'{}\' not implemented.'.format(self.__class__.skill_identifier.__name__))
+        raise NotImplementedError('\'skill_identifier\' of class \'{}\' not implemented.'.format(self.__class__.__name__))
 
     @property
     def skill_commodity(self) -> int:
         """ Retrieve an identifier of the commodity of the skill being managed. """
-        raise NotImplementedError('\'{}\' not implemented.'.format(self.__class__.skill_commodity.__name__))
+        raise NotImplementedError('\'skill_commodity\' of class \'{}\' not implemented.'.format(self.__class__.__name__))
 
     @property
     def skill_experience_modifiers(self) -> Dict[int, float]:
         """ Retrieve skill experience modifiers. """
-        raise NotImplementedError('\'{}\' not implemented.'.format(self.__class__.skill_experience_modifiers.__name__))
+        raise NotImplementedError('\'skill_experience_modifiers\' of class \'{}\' not implemented.'.format(self.__class__.__name__))
 
     # noinspection PyUnusedLocal
     def get_skill_type(self, sim_info: SimInfo) -> int:
