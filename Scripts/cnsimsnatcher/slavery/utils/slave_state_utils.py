@@ -5,16 +5,30 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+import sims4.commands
 from typing import Tuple
-
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.slavery.enums.buff_ids import SSSlaveryBuffId
+from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
+from cnsimsnatcher.slavery.enums.relationship_bit_ids import SSSlaveryRelationshipBitId
+from cnsimsnatcher.slavery.enums.situation_ids import SSSlaverySituationId
+from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
+from cnsimsnatcher.slavery.enums.trait_ids import SSSlaveryTraitId
 from sims.sim_info import SimInfo
+from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
+from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
+from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
+from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
+from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
+from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
+from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
+from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
 
 
-class SSSlaveStateUtils(HasLog):
+class SSSlaveryStateUtils(HasLog):
     """ Utilities for controlling Slave state. """
 
     # noinspection PyMissingOrEmptyDocstring
@@ -27,21 +41,73 @@ class SSSlaveStateUtils(HasLog):
     def log_identifier(self) -> str:
         return 'ss_slave_state_utils'
 
-    def is_slave(self, sim_info: SimInfo) -> bool:
-        """ Determine if a Sim is a Slave or not. """
-        return False
+    def has_slaves(self, master_sim_info: SimInfo, instanced_only: bool=True) -> bool:
+        """ Determine if a Sim has any Slaves. """
+        return CommonRelationshipUtils.has_relationship_bit_with_any_sims(
+            master_sim_info,
+            SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT,
+            instanced_only=instanced_only
+        )
+
+    def has_masters(self, slave_sim_info: SimInfo, instanced_only: bool=True) -> bool:
+        """ Determine if a Sim has any Masters. """
+        return CommonTraitUtils.has_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)\
+               or CommonBuffUtils.has_buff(slave_sim_info, SSSlaveryBuffId.IS_ENSLAVED_INVISIBLE)\
+               or CommonRelationshipUtils.has_relationship_bit_with_any_sims(
+            slave_sim_info,
+            SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT,
+            instanced_only=instanced_only
+        )
 
     def is_slave_of(self, slave_sim_info: SimInfo, master_sim_info: SimInfo) -> bool:
-        """ Determine if a Sim is the Slave of the Target Sim. """
-        return self.is_master_of(master_sim_info, slave_sim_info)
+        """ Determine if a Sim is a Slave of another Sim. """
+        from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
+        return CommonRelationshipUtils.has_relationship_bit_with_sim(
+            slave_sim_info,
+            master_sim_info,
+            SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT
+        )\
+               and CommonRelationshipUtils.has_relationship_bit_with_sim(
+            slave_sim_info,
+            master_sim_info,
+            SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT
+        )
 
     def is_master_of(self, master_sim_info: SimInfo, slave_sim_info: SimInfo) -> bool:
-        """ Determine if a Sim is the Master of the Target Sim. """
-        return False
+        """ Determine if a Sim is a Master of another Sim. """
+        from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
+        return CommonRelationshipUtils.has_relationship_bit_with_sim(
+            master_sim_info,
+            slave_sim_info,
+            SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT
+        )\
+               and CommonRelationshipUtils.has_relationship_bit_with_sim(
+            master_sim_info,
+            slave_sim_info,
+            SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT
+        )
 
-    def convert_hostage_to_slave(self, hostage_sim_info: SimInfo) -> bool:
-        """ Convert a Hostage Sim to a Slave Sim. """
-        return False
+    @staticmethod
+    def get_slaves(master_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+        """ Retrieve a collection of Sims that are a Slave to the specified Sim. """
+        return tuple(
+            CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
+                master_sim_info,
+                SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT,
+                instanced_only=instanced_only
+            )
+        )
+
+    @staticmethod
+    def get_masters(slave_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+        """ Retrieve a collection of Sims that are a Master of the specified Sim. """
+        return tuple(
+            CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
+                slave_sim_info,
+                SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT,
+                instanced_only=instanced_only
+            )
+        )
 
     def create_slave(self, slave_sim_info: SimInfo, master_sim_info: SimInfo) -> Tuple[bool, str]:
         """create_slave(slave_sim_info, master_sim_info)
@@ -55,10 +121,26 @@ class SSSlaveStateUtils(HasLog):
         :return: True, if the Sim was turned into a Slave successfully. False, if not.
         :rtype: bool
         """
+        if slave_sim_info is None or master_sim_info is None:
+            return False, 'Failed, missing Hostage or Master data.'
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
         if slave_sim_info is master_sim_info:
             return False, 'Failed, \'{}\' cannot be a Slave to themselves.'.format(slave_sim_name)
-        return False, 'Failed to turn \'{}\' into a Slave for unknown reasons.'.format(slave_sim_name)
+        from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+        if SSAbductionStateUtils.is_hostage_of(slave_sim_info, master_sim_info):
+            if not SSAbductionStateUtils.clear_abduction_data(slave_sim_info):
+                return False, 'Failed, failed to clear abduction data before converting \'{}\' to Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
+        if not CommonRelationshipUtils.has_met(master_sim_info, slave_sim_info) and not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, CommonRelationshipBitId.HAS_MET):
+            self.log.error('Failed to add Has Met Relationship Bit.')
+        if not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT):
+            self.log.error('Failed to add Slave Relationship Bit.')
+        if not CommonRelationshipUtils.add_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT):
+            self.log.error('Failed to add Master Relationship Bit.')
+        if not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT):
+            self.log.error('Failed to add Slave Relationship Bit.')
+        CommonBuffUtils.add_buff(slave_sim_info, SSSlaveryBuffId.IS_ENSLAVED_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSSlaveryStringId.BEING_ENSLAVED))
+        CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+        return False, 'Success, Hostage \'{}\' converted to Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
 
     def release_slave(self, slave_sim_info: SimInfo, releasing_sim_info: SimInfo=None) -> bool:
         """release_slave(slave_sim_info, releasing_sim_info=None)
@@ -72,4 +154,60 @@ class SSSlaveStateUtils(HasLog):
         :return: True, if the Slave was released successfully. False, if not.
         :rtype: bool
         """
-        return False
+        if slave_sim_info is None:
+            self.log.debug('slave_sim_info was None.')
+            return False
+        slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
+        self.log.debug('Attempting to clear slavery data from \'{}\'.'.format(slave_sim_name))
+        master_sim_info_list = self.get_masters(slave_sim_info)
+        for master_sim_info in master_sim_info_list:
+            master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
+            self.log.debug('Attempting to remove relationship bits between Master \'{}\' and Slave \'{}\'.'.format(master_sim_name, slave_sim_name))
+            CommonRelationshipUtils.remove_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT)
+            CommonRelationshipUtils.remove_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT)
+            CommonRelationshipUtils.remove_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT)
+            CommonRelationshipUtils.remove_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT)
+            CommonRelationshipUtils.remove_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT)
+            CommonRelationshipUtils.remove_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT)
+            self.log.debug('Done removing relationship bits between Master \'{}\' and Slave \'{}\'.'.format(master_sim_name, slave_sim_name))
+
+        self.log.debug('Attempting to remove Slave trait.')
+        CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+        self.log.debug('Attempting to remove Enslaved buff.')
+        CommonBuffUtils.remove_buff(slave_sim_info, SSSlaveryBuffId.IS_ENSLAVED_INVISIBLE)
+        self.log.debug('Done removing Enslaved buff.')
+        self.log.debug('Attempting to remove Enslaved situation.')
+        CommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
+        self.log.debug('Done removing sim from Enslaved situation.')
+        self.log.debug('Making former slave leave.')
+        CommonSituationUtils.make_sim_leave(slave_sim_info)
+        self.log.debug('Made former slave leave.')
+        return True
+
+    def has_invalid_enslaved_state(self, slave_sim_info: SimInfo) -> bool:
+        """ Determine if a Sim has an invalid enslaved state. """
+        return self.has_masters(slave_sim_info)\
+               and not CommonSituationUtils.has_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)\
+               and not CommonSimInteractionUtils.has_interaction_running_or_queued(slave_sim_info, SSSlaveryInteractionId.ATTEMPT_TO_ENSLAVE_HUMAN_SUCCESS_OUTCOME)
+
+
+@sims4.commands.Command('simsnatcher.show_slaves', command_type=sims4.commands.CommandType.Live)
+def _sss_show_slaves_names(_connection: int=None):
+    output = sims4.commands.CheatOutput(_connection)
+    output('Showing slaves of active sim')
+    active_sim_info = CommonSimUtils.get_active_sim_info()
+    sim_info_list = SSSlaveryStateUtils.get_slaves(active_sim_info)
+    for sim_info in sim_info_list:
+        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
+    output('Done displaying slaves.')
+
+
+@sims4.commands.Command('simsnatcher.show_masters', command_type=sims4.commands.CommandType.Live)
+def _sss_show_master_names(_connection: int=None):
+    output = sims4.commands.CheatOutput(_connection)
+    output('Showing masters of active sim')
+    active_sim_info = CommonSimUtils.get_active_sim_info()
+    sim_info_list = SSSlaveryStateUtils.get_masters(active_sim_info)
+    for sim_info in sim_info_list:
+        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
+    output('Done displaying masters.')
