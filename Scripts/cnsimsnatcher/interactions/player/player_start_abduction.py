@@ -35,7 +35,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.debug('Testing to see if sim can be abducted')
-        if not SSSettingUtils.interactions_are_enabled():
+        if not SSSettingUtils().interactions_are_enabled():
             log.debug('Failed, Abduction interactions are disabled.')
             return TestResult.NONE
         if not CommonTypeUtils.is_sim_instance(interaction_target):
@@ -43,7 +43,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
             return TestResult.NONE
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info) or not SSSettingUtils.is_enabled_for_interactions(target_sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             log.debug('Failed, Active Sim or Target Sim is not available for interactions.')
             return TestResult.NONE
         if not SSAbductionUtils.can_engage_in_abduction(sim_info) or not SSAbductionUtils.can_engage_in_abduction(target_sim_info):

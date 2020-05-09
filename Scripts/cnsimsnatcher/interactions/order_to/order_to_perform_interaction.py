@@ -109,7 +109,7 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             log.debug('Failed, Active Sim is not enabled for interactions.')
             return TestResult.NONE
         if not SSAbductionStateUtils.has_abducted_sims(sim_info):
@@ -169,7 +169,7 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
             return True
 
         def _debug_interaction_with_name(interaction: Interaction) -> bool:
-            if SSSettingUtils.Cheats.should_show_debug_interactions_for_perform_interaction():
+            if SSSettingUtils().cheats.should_show_debug_interactions_for_perform_interaction():
                 return True
             interaction_short_name = CommonInteractionUtils.get_interaction_short_name(interaction)
             log.format_with_message('Checking interaction with short name: ', interaction_short_name=interaction_short_name)
@@ -251,14 +251,14 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
                 ).show()
                 return
 
-            if SSSettingUtils.disclaimer_has_been_shown():
+            if SSSettingUtils().disclaimer_has_been_shown():
                 log.debug('Showing interaction dialog.')
                 option_dialog.show(sim_info=hostage_sim_info)
             else:
                 def _on_acknowledged(_: Any) -> None:
                     log.debug('Showing interaction dialog.')
                     option_dialog.show(sim_info=hostage_sim_info)
-                    SSSettingUtils.flag_disclaimer_as_shown()
+                    SSSettingUtils().flag_disclaimer_as_shown()
 
                 CommonOkDialog(
                     SSStringId.DISCLAIMER_NAME,

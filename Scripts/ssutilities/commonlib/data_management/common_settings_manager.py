@@ -73,7 +73,7 @@ class CommonSettingsManager(CommonPersistedDataManager):
         self.settings[key] = value
 
     def get_setting(self, key: str, variable_type: Type=None) -> Any:
-        """get_setting(key, variable_type=None)
+        """get_setting(key, variable_type=None, default_value=None)
 
         Get the value of a setting.
 
@@ -88,7 +88,7 @@ class CommonSettingsManager(CommonPersistedDataManager):
         if key not in self.settings:
             setting_value = self._locate_backwards_compatible_setting(key)
             if not setting_value:
-                raise AttributeError('No setting was found with key \'{}\''.format(key))
+                return self.get_default_setting(key, variable_type=variable_type)
             self.set_setting(key, setting_value)
         if variable_type is None:
             return self.settings[key]
@@ -108,7 +108,7 @@ class CommonSettingsManager(CommonPersistedDataManager):
         :exception AttributeError: When no default value for the setting with the specified key is found.
         """
         if key not in self._default_data:
-            raise AttributeError('No default setting was found with key \'{}\''.format(key))
+            raise AttributeError('No default setting was found with key \'{}\' in manager \'{}\''.format(key, self.name))
         if variable_type is None:
             return self._default_data[key]
         return variable_type(self._default_data[key])

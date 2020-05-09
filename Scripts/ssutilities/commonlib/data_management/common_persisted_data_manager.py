@@ -16,12 +16,8 @@ from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdU
 
 
 class CommonPersistedDataManager(CommonDataManager):
-    """CommonPersistedDataManager()
-
-    Manage data for the current Save.
-
-    """
-    def __init__(self: 'CommonPersistedDataManager', *_, **__):
+    """ Manage data for the current Save. """
+    def __init__(self, *_, **__) -> None:
         super().__init__()
         self._can_be_saved = True
 
@@ -33,29 +29,31 @@ class CommonPersistedDataManager(CommonDataManager):
     def _can_be_saved(self, val: bool):
         self.__can_be_saved = val
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def name(self) -> str:
-        raise NotImplementedError('Missing \'{}\'.'.format(self.__class__.name.__name__))
+        """ The name of the data manager. """
+        raise NotImplementedError('Missing name.')
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def mod_identity(self) -> CommonModIdentity:
-        raise NotImplementedError('Missing \'{}\'.'.format(self.__class__.mod_identity.__name__))
+        """ The Identity of the mod that owns this class. """
+        raise NotImplementedError('Missing mod_identity.')
 
     @property
     def _version(self) -> int:
-        raise NotImplementedError('Missing \'{}\'.'.format(self.__class__._version.__name__))
+        raise NotImplementedError('Missing _version.')
 
     @property
     def _default_data(self) -> Dict[str, Any]:
-        raise NotImplementedError('Missing \'{}\'.'.format(self.__class__._default_data.__name__))
+        """ The default data. """
+        raise NotImplementedError('\'{}\' not implemented'.format(self.__class__._default_data.__name__))
 
     @property
     def _data_name(self) -> str:
         return 'do_not_remove_{}_{}'.format(self.identifier, self.name).lower()
 
     def _load(self) -> Dict[str, Any]:
+        """ Load data from the current Save. """
         self.log.debug('Loading data. \'{}\'.'.format(self.identifier))
         data_name = self._data_name
         self.log.debug('Attempting to locate data \'{}\'.'.format(data_name))
@@ -110,6 +108,7 @@ class CommonPersistedDataManager(CommonDataManager):
         return loaded_data
 
     def _save(self) -> bool:
+        """ Save data to the current Save. """
         if not self._can_be_saved:
             return True
         self.log.format_with_message('Saving data \'{}\'.'.format(self.identifier))
@@ -138,8 +137,8 @@ class CommonPersistedDataManager(CommonDataManager):
         self.log.format_with_message('Done saving data \'{}\'.'.format(data_name))
         return True
 
-    # noinspection PyMissingOrEmptyDocstring
     def remove(self) -> bool:
+        """ Remove data. """
         self.log.format_with_message('Removing data \'{}\'.'.format(self.identifier))
         data_name = self._data_name
         self.log.format_with_message('Attempting to remove data \'{}\'.'.format(data_name))
@@ -151,12 +150,9 @@ class CommonPersistedDataManager(CommonDataManager):
         return result
 
     def reset(self, prevent_save: bool=False):
-        """reset(prevent_save=False)
-
-        Reset the data store to default values.
-
-        :param prevent_save: If True, when the game is saved, the data will not be persisted. Default is False.
-        :type prevent_save: bool, optional
+        """
+            Reset the data store to default values.
+        :param prevent_save: If True, when the game is saved, the data will not be persisted.
         """
         try:
             self.remove()

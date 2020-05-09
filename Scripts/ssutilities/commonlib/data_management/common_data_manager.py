@@ -9,49 +9,37 @@ from typing import Dict, Any
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.logging.has_log import HasLog
+from sims4communitylib.utils.common_log_registry import CommonLogRegistry
+from ssutilities.modinfo import ModInfo
+
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity().name, 'common_data_manager')
 
 
 class CommonDataManager(HasLog):
     """ Manage a storage of data. """
-    def __init__(self: 'CommonDataManager'):
+    def __init__(self) -> None:
         super().__init__()
         self._storage = None
         self._loaded = False
 
     @property
     def name(self) -> str:
-        """The name of the data manager.
-
-        :return: The name of the data manager.
-        :rtype: str
-        """
+        """ The name of the data manager. """
         raise NotImplementedError('Missing name.')
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def mod_identity(self) -> CommonModIdentity:
-        raise NotImplementedError('Missing \'{}\'.'.format(self.__class__.mod_identity.__name__))
+        """ The Identity of the mod that owns this storage of data. """
+        raise NotImplementedError('Missing mod_identity.')
 
     @property
     def identifier(self) -> str:
-        """The identity of the data storage.
-
-        :return: The identity of the data storage.
-        :rtype: str
-        """
+        """ The identity of the storage of data. """
         return CommonDataManager._format_identifier(self.mod_identity)
 
     @property
-    def loaded(self) -> bool:
-        """Determine if data has been loaded.
-
-        :return: True, if the data has been loaded. False, if not.
-        :rtype: bool
-        """
-        return self._loaded
-
-    @property
     def _storage(self) -> Dict[str, Any]:
+        """ The storage of data itself. """
         if not self._loaded:
             self.load()
         return self.__storage
@@ -61,56 +49,31 @@ class CommonDataManager(HasLog):
         self.__storage = value
 
     def set_data(self, key: str, value: Any):
-        """set_data(key, value)
-
-        Set data in storage.
-
-        :param key: The name of the data.
-        :type key: str
-        :param value: The value being set.
-        :type value: Any
-        """
+        """ Set data in storage. """
         self.log.format_with_message('Setting data \'{}\''.format(key), value=value)
         self._storage[key] = value
 
     def get_data(self, key: str, default_value: Any=None) -> Any:
-        """get_data(key, default_value=None)
-
-        Get data from storage.
-
-        :param key: The name of the data.
-        :type key: str
-        :param default_value: If data is not found using key, this value will be returned. Default is None.
-        :type default_value: Any, optional
-        :return: The value of the data.
-        :rtype: Any
-        """
+        """ Get data from storage."""
         self.log.format_with_message('Getting data \'{}\''.format(key), default_value=default_value)
         if key not in self._storage:
             self._storage[key] = default_value
         return self._storage[key]
 
     def remove_data(self, key: str) -> bool:
-        """remove_data(key)
-
-        Remove data from storage.
-
-        :param key: The name of the data.
-        :type key: str
-        :return: True, if the data was successfully removed. False, if not.
-        :rtype: bool
-        """
+        """ Remove data from storage. """
         if key not in self._storage:
             return False
         del self._storage[key]
         return True
 
+    @property
+    def loaded(self) -> bool:
+        """ True, if data has been loaded. """
+        return self._loaded
+
     def load(self) -> None:
-        """load()
-
-        Load data into storage.
-
-        """
+        """ Load data. """
         try:
             self.log.debug('Loading data.')
             self._loaded = False
@@ -120,15 +83,9 @@ class CommonDataManager(HasLog):
             CommonExceptionHandler.log_exception(self.mod_identity.name, 'Error occurred while loading data \'{}\'.'.format(self.identifier), exception=ex)
 
     def save(self) -> bool:
-        """save()
-
-        Save data from storage.
-
-        :return: True, if save was successful. False, if not.
-        :rtype: bool
-        """
+        """ Save data. """
         try:
-            self.log.debug('Saving data.')
+            log.debug('Saving data.')
             return self._save()
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity.name, 'Error occurred while saving data store \'{}\'.'.format(self.identifier), exception=ex)

@@ -60,7 +60,7 @@ class SSAbductionAbductionSkillUtilityService(CommonSkillUtilityService):
     def increase_skill(self, sim_info: SimInfo, amount: float=1.0, reason: int=SSAbductionAbductionSkillIncreaseReason.NONE) -> bool:
         if amount <= 0.0:
             return False
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             return False
         if reason == SSAbductionAbductionSkillIncreaseReason.ABDUCTING_A_SIM:
             if CommonTraitUtils.is_shameless(sim_info):
@@ -79,7 +79,7 @@ class SSAbductionAbductionSkillUtilityService(CommonSkillUtilityService):
     def decrease_skill(self, sim_info: SimInfo, amount: float=1.0, reason: Any=CommonSkillDecreaseReason.NONE) -> bool:
         if amount <= 0.0:
             return False
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             return False
         amount += self.get_skill_points_modifier(reason)
         CommonSimSkillUtils.change_progress_toward_next_skill_level(sim_info, self.get_skill_type(sim_info), -amount)

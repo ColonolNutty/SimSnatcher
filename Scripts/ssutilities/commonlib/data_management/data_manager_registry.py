@@ -23,8 +23,9 @@ class CommonDataManagerRegistry(CommonService, HasClassLog):
         self._data_managers: Dict[str, Dict[str, CommonDataManager]] = {}
 
     @property
-    def data_managers(self: 'CommonDataManagerRegistry') -> Dict[str, Dict[str, CommonDataManager]]:
+    def data_managers(self) -> Dict[str, Dict[str, CommonDataManager]]:
         """ Data managers. """
+        # noinspection PyUnresolvedReferences
         return self._data_managers
 
     # noinspection PyMissingOrEmptyDocstring
@@ -37,16 +38,18 @@ class CommonDataManagerRegistry(CommonService, HasClassLog):
     def get_log_identifier(cls) -> str:
         return 'common_data_manager'
 
-    @staticmethod
-    def register_data_manager(data_manager: CommonDataManager):
+    @classmethod
+    def register_data_manager(cls, data_manager: CommonDataManager):
         """ Register a new data manager. """
-        CommonDataManagerRegistry.get_log().format_with_message('Registering data store.', data_store=data_manager)
-        CommonDataManagerRegistry.get()._register_data_manager(data_manager)
+        cls.get_log().format_with_message('Registering data store.', identifier=data_manager.identifier, name=data_manager.name)
+        cls()._register_data_manager(data_manager)
 
     def _register_data_manager(self, data_manager: CommonDataManager):
         if data_manager.identifier not in self.data_managers:
+            self.get_log().debug('Identifier not found within data managers: \'{}\''.format(data_manager.identifier))
             self.data_managers[data_manager.identifier] = dict()
         if data_manager.name not in self.data_managers[data_manager.identifier]:
+            self.get_log().debug('Data manager name not found within data managers: \'{}\''.format(data_manager.name))
             self.data_managers[data_manager.identifier][data_manager.name] = data_manager
 
     def load_data(self) -> None:
@@ -100,7 +103,7 @@ class CommonDataManagerRegistry(CommonService, HasClassLog):
 
 
 # noinspection PyUnusedLocal
-@CommonEventRegistry.handle_events(ModInfo.get_identity())
+@CommonEventRegistry.handle_events(ModInfo.get_identity().name)
 def _common_save_data_on_zone_save(event_data: S4CLZoneSaveEvent) -> bool:
-    CommonDataManagerRegistry.get().save_data()
+    CommonDataManagerRegistry().save_data()
     return True

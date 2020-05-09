@@ -30,12 +30,12 @@ class SSOpenSettingsInteraction(CommonTerrainInteraction):
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             return TestResult.NONE
         if not CommonTypeUtils.is_sim_instance(interaction_target):
             return TestResult.NONE
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        if not SSSettingUtils.is_enabled_for_interactions(target_sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             return TestResult.NONE
         return TestResult.TRUE
 

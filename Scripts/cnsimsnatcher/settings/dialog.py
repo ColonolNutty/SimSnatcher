@@ -10,6 +10,10 @@ from typing import Any, Callable
 from cnsimsnatcher.enums.string_identifiers import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.settings import SSSetting
+from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
+from cnsimsnatcher.slavery.settings.dialog import SSSlaverySettingsDialog
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
+    CommonDialogActionOption
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_branch_option import CommonDialogOpenDialogOption
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
@@ -27,7 +31,7 @@ class SSSettingsDialog(HasLog):
         super().__init__()
         self._on_close = on_close
         from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils.get_mod_settings_manager()
+        self._settings_manager = SSDataManagerUtils().get_global_mod_settings_manager()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -42,13 +46,21 @@ class SSSettingsDialog(HasLog):
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
     def open(self) -> None:
         """ Open SS Settings. """
+        self.log.debug('Opening SS Settings.')
         self._settings().show()
 
     def _settings(self) -> CommonChooseObjectOptionDialog:
+        self.log.debug('Building SS Settings.')
+
         def _on_close() -> None:
+            self.log.debug('Saving SS Settings.')
             self._settings_manager.save()
             if self._on_close is not None:
                 self._on_close()
+
+        def _reopen(*_, **__) -> None:
+            self.log.debug('Reopening SS Settings.')
+            self.open()
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.SIM_SNATCHER_SETTINGS_NAME,
@@ -58,8 +70,9 @@ class SSSettingsDialog(HasLog):
 
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
+                self.log.debug('Updating setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
                 self._settings_manager.set_setting(setting_name, setting_value)
-            self.open()
+            _reopen()
 
         option_dialog.add_option(
             CommonDialogToggleOption(
@@ -77,6 +90,16 @@ class SSSettingsDialog(HasLog):
         )
 
         option_dialog.add_option(
+            CommonDialogActionOption(
+                CommonDialogOptionContext(
+                    SSSlaveryStringId.SLAVERY_SETTINGS_NAME,
+                    SSSlaveryStringId.SLAVERY_SETTINGS_DESCRIPTION,
+                ),
+                on_chosen=SSSlaverySettingsDialog(on_close=_reopen).open
+            )
+        )
+
+        option_dialog.add_option(
             CommonDialogOpenDialogOption(
                 self._cheat_settings,
                 CommonDialogOptionContext(
@@ -88,7 +111,10 @@ class SSSettingsDialog(HasLog):
         return option_dialog
 
     def _cheat_settings(self) -> CommonChooseObjectOptionDialog:
+        self.log.debug('Building SS Cheat Settings.')
+
         def _on_close() -> None:
+            self.log.debug('SS Cheat Settings closed.')
             self.open()
 
         option_dialog = CommonChooseObjectOptionDialog(
@@ -99,6 +125,7 @@ class SSSettingsDialog(HasLog):
 
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
+                self.log.debug('Updating Cheat setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
                 self._settings_manager.set_setting(setting_name, setting_value)
             self._cheat_settings().show()
 

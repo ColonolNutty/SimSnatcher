@@ -41,7 +41,7 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
         if interaction_target is None or CommonTypeUtils.is_sim_instance(interaction_target):
             log.debug('Failed, Target is invalid.')
             return TestResult.NONE
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             log.debug('Failed, Active Sim are not enabled for interactions.')
             return TestResult.NONE
 

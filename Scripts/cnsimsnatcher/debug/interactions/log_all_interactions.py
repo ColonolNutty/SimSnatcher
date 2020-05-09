@@ -31,7 +31,7 @@ class SSDebugLogAllInteractionsInteraction(CommonImmediateSuperInteraction):
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         log.format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             log.debug('Failed, Active Sim or Target Sim are not enabled for abduction.')
             return TestResult.NONE
         if interaction_target is None:

@@ -67,11 +67,11 @@ try:
             if target is None or not CommonTypeUtils.is_sim_or_sim_info(target):
                 self.log.debug('Failed, Target is not a Sim.')
                 return False
-            if not SSSettingUtils.is_enabled_for_interactions(source_sim_info):
+            if not SSSettingUtils().is_enabled_for_interactions(source_sim_info):
                 self.log.debug('Failed, Source Sim is not enabled for interactions.')
                 return TestResult.NONE
             target_sim_info = CommonSimUtils.get_sim_info(target)
-            if not SSSettingUtils.is_enabled_for_interactions(target_sim_info):
+            if not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
                 self.log.debug('Failed, Target Sim is not enabled for interactions.')
                 return False
             self.log.debug('Menu is available for Source Sim and Target Sim.')

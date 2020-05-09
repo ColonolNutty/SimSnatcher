@@ -18,7 +18,7 @@ class SSAbductionUtils:
     @staticmethod
     def can_engage_in_abduction(sim_info: SimInfo) -> bool:
         """ Determine if a sim can engage in abduction. """
-        if not SSSettingUtils.is_enabled_for_interactions(sim_info):
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
             return False
         return SSAbductionUtils.is_allowed_to_abduct_others(sim_info)\
                or SSAbductionUtils.is_allowed_to_be_abducted(sim_info)
@@ -31,9 +31,9 @@ class SSAbductionUtils:
     @staticmethod
     def is_allowed_to_abduct_others(sim_info: SimInfo) -> bool:
         """ Determine if a sim is allowed to abduct other sims. """
-        return SSSettingUtils.is_enabled_for_interactions(sim_info)
+        return SSSettingUtils().is_enabled_for_interactions(sim_info)
 
     @staticmethod
     def is_allowed_to_be_abducted(sim_info: SimInfo) -> bool:
         """ Determine if a sim is allowed to be abducted by other sims. """
-        return SSSettingUtils.is_enabled_for_interactions(sim_info)
+        return SSSettingUtils().is_enabled_for_interactions(sim_info)

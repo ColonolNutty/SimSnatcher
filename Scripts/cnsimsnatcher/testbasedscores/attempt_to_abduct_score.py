@@ -58,7 +58,7 @@ class SSAbductionAttemptToAbductTestBasedScore(TestBasedScore):
 
     @classmethod
     def _get_result(cls, sim_info: SimInfo, target_sim_info: SimInfo) -> int:
-        if SSSettingUtils.Cheats.always_successful():
+        if SSSettingUtils().cheats.always_successful():
             log.debug('Guaranteed Abduction Attempt. Always successful setting is enabled.')
             return 1
         if CommonSimSkillUtils.is_at_max_skill_level(sim_info, SSSkillId.SS_ABDUCTION):
