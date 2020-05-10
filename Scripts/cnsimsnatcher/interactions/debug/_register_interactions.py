@@ -15,13 +15,12 @@ from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 
 @CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
-class _SSAbductionSimInteractionHandler(CommonScriptObjectInteractionHandler):
+class _SSAbductionDebugSimInteractionHandler(CommonScriptObjectInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_START_ABDUCTION,
-            SSInteractionId.SS_ABDUCTION_END_ABDUCTION,
+            SSInteractionId.SS_ABDUCTION_DEBUG_CLEAR_ABDUCTION_DATA,
         )
         return result
 

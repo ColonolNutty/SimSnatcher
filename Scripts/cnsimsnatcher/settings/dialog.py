@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Callable
 
-from cnsimsnatcher.enums.string_identifiers import SSStringId
+from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.settings import SSSetting
 from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId

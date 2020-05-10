@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Tuple
 
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.slavery.utils.slave_state_utils import SSSlaveryStateUtils
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from protocolbuffers.Math_pb2 import Vector3
 from routing import Location
 from sims.sim_info import SimInfo
@@ -44,7 +44,7 @@ class _SSSlaverySummonSlaves(HasLog):
         self.log.format_with_message('Found master Sims.', master_sims=CommonSimNameUtils.get_full_names(master_sim_info_list))
         for master_sim_info in master_sim_info_list:
             master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
-            self.log.debug('Attempting to summon slave Sims captured by \'{}\''.format(master_sim_name))
+            self.log.debug('Attempting to summon slave Sims enslaved by \'{}\''.format(master_sim_name))
             if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_lot_id(master_sim_info):
                 self.log.format_with_message('Failed, \'{}\' does not own the currently loaded household.'.format(master_sim_name), household_id=household_id, master_household_id=CommonHouseholdUtils.get_household_id(master_sim_info))
                 continue
@@ -87,7 +87,7 @@ class _SSSlaverySummonSlaves(HasLog):
             (
                 CommonHouseholdUtils.is_part_of_active_household,
                 CommonFunctionUtils.run_with_arguments(
-                    SSSlaveryStateUtils.has_slaves,
+                    SSSlaveryStateUtils().has_slaves,
                     instanced_only=False
                 )
             )
@@ -95,7 +95,7 @@ class _SSSlaverySummonSlaves(HasLog):
         return tuple(CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=_has_slaves))
 
     def _get_slaves_of(self, master_sim_info: SimInfo, instanced_only: bool=False) -> Tuple[SimInfo]:
-        return SSSlaveryStateUtils.get_slaves(master_sim_info, instanced_only=instanced_only)
+        return SSSlaveryStateUtils().get_slaves(master_sim_info, instanced_only=instanced_only)
 
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())

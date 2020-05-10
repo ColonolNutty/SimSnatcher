@@ -5,9 +5,16 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from sims4communitylib.enums.enumtypes.int_enum import CommonEnumIntBase
+# noinspection PyBroadException
+try:
+    # noinspection PyUnresolvedReferences
+    from enum import Int
+except:
+    # noinspection PyMissingOrEmptyDocstring
+    class Int:
+        pass
 
 
-class SSSituationId(CommonEnumIntBase):
+class SSSituationId(Int):
     """ Situation identifiers used by SS. """
     SS_ABDUCTION_PLAYER_ABDUCTED_NPC = 6077877712849474601

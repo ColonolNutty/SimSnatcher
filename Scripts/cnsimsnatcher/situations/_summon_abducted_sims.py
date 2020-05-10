@@ -87,7 +87,7 @@ class _SSAbductionSummonHostages(HasLog):
             (
                 CommonHouseholdUtils.is_part_of_active_household,
                 CommonFunctionUtils.run_with_arguments(
-                    SSAbductionStateUtils.has_abducted_sims,
+                    SSAbductionStateUtils().has_captives,
                     instanced_only=False
                 )
             )
@@ -95,7 +95,7 @@ class _SSAbductionSummonHostages(HasLog):
         return tuple(CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=_has_hostages))
 
     def _get_hostages_of(self, captor_sim_info: SimInfo, instanced_only: bool=False) -> Tuple[SimInfo]:
-        return SSAbductionStateUtils.get_hostages(captor_sim_info, instanced_only=instanced_only)
+        return SSAbductionStateUtils().get_captives(captor_sim_info, instanced_only=instanced_only)
 
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())

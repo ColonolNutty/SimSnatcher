@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 # noinspection PyBroadException
 try:
-    from cnsimsnatcher.enums.string_identifiers import SSStringId
+    from cnsimsnatcher.enums.string_ids import SSStringId
     from cnsimsnatcher.modinfo import ModInfo
     from cnsimsnatcher.settings.dialog import SSSettingsDialog
     from cnsimsnatcher.settings.open_settings import SSOpenSettingsInteraction

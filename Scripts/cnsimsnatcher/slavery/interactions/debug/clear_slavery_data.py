@@ -6,11 +6,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any
+
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
+from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -19,8 +21,8 @@ from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 
-class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
-    """ Handle the Clear Abduction Data interaction. """
+class SSSlaveryClearDataInteraction(CommonImmediateSuperInteraction):
+    """ Handle the Clear Slavery Data interaction. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -30,14 +32,14 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_clear_abduction_data'
+        return 'ss_clear_slavery_data'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         cls.get_log().format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
-        if not SSSettingUtils().interactions_are_enabled():
-            cls.get_log().debug('Failed, Abduction interactions are disabled.')
+        if not SSSlaverySettingUtils().interactions_are_enabled():
+            cls.get_log().debug('Failed, Slavery interactions are disabled.')
             return TestResult.NONE
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
             cls.get_log().debug('Failed, Target is invalid.')
@@ -47,7 +49,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             cls.get_log().debug("Failed, Active Sim or Target Sim are not enabled for interactions.")
             return TestResult.NONE
-        cls.get_log().debug('Success, showing clear abduction data interaction on target.')
+        cls.get_log().debug('Success, showing clear slavery data interaction on target.')
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
@@ -57,6 +59,6 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
             self.log.debug('Failed, no Target or they were not a Sim.')
             return False
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        self.log.format_with_message('Attempting to clear abduction data from Sim.', sim=CommonSimNameUtils.get_full_name(target_sim_info))
-        SSAbductionStateUtils().release_captives_of(target_sim_info)
-        return SSAbductionStateUtils().release_captive(target_sim_info)
+        self.log.format_with_message('Attempting to clear slavery data from Sim.', sim=CommonSimNameUtils.get_full_name(target_sim_info))
+        SSSlaveryStateUtils().release_slaves_of(target_sim_info)
+        return SSSlaveryStateUtils().release_slave(target_sim_info)

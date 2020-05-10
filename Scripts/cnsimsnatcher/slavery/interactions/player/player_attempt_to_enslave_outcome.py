@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Any
 
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.slavery.utils.slave_state_utils import SSSlaveryStateUtils
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -26,7 +26,7 @@ class SSSlaveryAttemptToEnslaveSuccessInteraction(CommonImmediateSuperInteractio
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_enslave'
+        return 'ss_start_slavery'
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
@@ -36,7 +36,7 @@ class SSSlaveryAttemptToEnslaveSuccessInteraction(CommonImmediateSuperInteractio
         # The one to be Slave.
         slave_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         SSSlaveryStateUtils().create_slave(slave_sim_info, master_sim_info)
-        self.log.debug('Finished enslavement.')
+        self.log.debug('Finished succeeding enslave.')
         return True
 
 
@@ -51,7 +51,7 @@ class SSSlaveryAttemptToEnslaveFailureInteraction(CommonImmediateSuperInteractio
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_enslave'
+        return 'ss_start_slavery'
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:

@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
-from cnsimsnatcher.enums.interaction_identifiers import SSInteractionId
+from cnsimsnatcher.enums.interaction_ids import SSInteractionId
 from objects.script_object import ScriptObject
 from sims4communitylib.services.interactions.interaction_registration_service import CommonInteractionRegistry, \
     CommonInteractionType, CommonScriptObjectInteractionHandler, CommonInteractionHandler

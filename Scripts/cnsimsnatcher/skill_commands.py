@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 import sims4.commands
-from cnsimsnatcher.enums.skill_identifiers import SSSkillId
+from cnsimsnatcher.enums.skill_ids import SSSkillId
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.sims.common_sim_skill_utils import CommonSimSkillUtils
 

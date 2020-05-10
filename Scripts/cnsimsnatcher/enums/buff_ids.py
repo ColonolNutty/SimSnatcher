@@ -15,6 +15,7 @@ except:
         pass
 
 
-class SSSlaveryBuffId(Int):
-    """ Buff identifiers used by SS Slavery. """
-    IS_ENSLAVED_INVISIBLE = 10277097707576492159
+class SSBuffId(Int):
+    """ Buff identifiers used by SS. """
+    ALLOWED_NOTHING_INVISIBLE = 14606159824511998137
+    PREVENT_LEAVE_INVISIBLE = 17783615372645687397

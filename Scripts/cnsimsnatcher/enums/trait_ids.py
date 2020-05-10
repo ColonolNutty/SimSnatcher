@@ -15,6 +15,6 @@ except:
         pass
 
 
-class SSSlaveryTraitId(Int):
-    """ Trait identifiers used by SS Slavery. """
-    SLAVE = 464981593962255592
+class SSAbductionTraitId(Int):
+    """ Trait identifiers used by SS Abduction. """
+    CAPTIVE = 17755269199929665496

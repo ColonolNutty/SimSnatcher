@@ -6,8 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Dict
-from cnsimsnatcher.enums.skill_identifiers import SSSkillId
-from cnsimsnatcher.enums.statistic_identifiers import SSStatisticId
+from cnsimsnatcher.enums.skill_ids import SSSkillId
+from cnsimsnatcher.enums.statistic_ids import SSStatisticId
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from sims.sim_info import SimInfo
 from ssutilities.commonlib.services.skillutility_service import CommonSkillUtilityService, CommonSkillIncreaseReason, CommonSkillDecreaseReason

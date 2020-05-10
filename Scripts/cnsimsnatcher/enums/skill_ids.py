@@ -5,9 +5,16 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from sims4communitylib.enums.enumtypes.int_enum import CommonEnumIntBase
+# noinspection PyBroadException
+try:
+    # noinspection PyUnresolvedReferences
+    from enum import Int
+except:
+    # noinspection PyMissingOrEmptyDocstring
+    class Int:
+        pass
 
 
-class SSSkillId(CommonEnumIntBase):
+class SSSkillId(Int):
     """ Skill identifiers used by SS. """
     SS_ABDUCTION = 9691605280024687972

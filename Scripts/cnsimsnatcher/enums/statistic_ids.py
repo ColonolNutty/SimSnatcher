@@ -5,10 +5,17 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from sims4communitylib.enums.enumtypes.int_enum import CommonEnumIntBase
+# noinspection PyBroadException
+try:
+    # noinspection PyUnresolvedReferences
+    from enum import Int
+except:
+    # noinspection PyMissingOrEmptyDocstring
+    class Int:
+        pass
 
 
-class SSStatisticId(CommonEnumIntBase):
+class SSStatisticId(Int):
     """ Statistic identifiers used by SS. """
     SS_ABDUCTION_COMMODITY_WAS_SUCCESS = 7779095003538788002
     SKILL_ABDUCTION_LEVEL = 16132061470889775549

@@ -7,18 +7,22 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
 import sims4.commands
-from cnsimsnatcher.enums.buff_identifiers import SSBuffId
-from cnsimsnatcher.enums.relationship_bit_identifiers import SSRelationshipBitId
-from cnsimsnatcher.enums.situation_identifiers import SSSituationId
-from cnsimsnatcher.enums.string_identifiers import SSStringId
+from cnsimsnatcher.enums.buff_ids import SSBuffId
+from cnsimsnatcher.enums.relationship_bit_ids import SSRelationshipBitId
+from cnsimsnatcher.enums.situation_ids import SSSituationId
+from cnsimsnatcher.enums.string_ids import SSStringId
+from cnsimsnatcher.enums.trait_ids import SSAbductionTraitId
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim_info import SimInfo
+from sims4communitylib.logging.has_log import HasLog
+from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.enums.situations_enum import CommonSituationId
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
+from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
 from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
@@ -28,111 +32,196 @@ from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_abduction_state_utils')
 
 
-class SSAbductionStateUtils:
-    """ Utilities for abduction state. """
-    @staticmethod
-    def has_abducted_sims(sim_info: SimInfo, instanced_only: bool=True) -> bool:
-        """ Determine if a sim has abducted any sims. """
-        return CommonRelationshipUtils.has_relationship_bit_with_any_sims(sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT, instanced_only=instanced_only)
+class SSAbductionStateUtils(HasLog):
+    """ Utilities for managing Abduction state. """
 
-    @staticmethod
-    def has_been_abducted(sim_info: SimInfo, instanced_only: bool=True) -> bool:
-        """ Determine if a sim has been abducted. """
-        return CommonBuffUtils.has_buff(sim_info, SSBuffId.SS_ABDUCTION_WAS_ABDUCTED_INVISIBLE)\
-               or CommonRelationshipUtils.has_relationship_bit_with_any_sims(sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT, instanced_only=instanced_only)
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def mod_identity(self) -> CommonModIdentity:
+        return ModInfo.get_identity()
 
-    @staticmethod
-    def is_hostage_of(sim_info: SimInfo, target_sim_info: SimInfo) -> bool:
-        """ Determine if a sim is the hostage of the specified sim. """
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 'ss_abduction_state_utils'
+
+    def has_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> bool:
+        """ Determine if a Sim has abducted any Sims. """
+        return CommonRelationshipUtils.has_relationship_bit_with_any_sims(
+            captor_sim_info,
+            SSRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT,
+            instanced_only=instanced_only
+        )
+
+    def has_captors(self, hostage_sim_info: SimInfo, instanced_only: bool=True) -> bool:
+        """ Determine if a Sim has been abducted. """
+        return CommonTraitUtils.has_trait(hostage_sim_info, SSAbductionTraitId.CAPTIVE)\
+               or CommonRelationshipUtils.has_relationship_bit_with_any_sims(
+            hostage_sim_info,
+            SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT,
+            instanced_only=instanced_only
+        )
+
+    def is_captive_of(self, sim_info: SimInfo, target_sim_info: SimInfo) -> bool:
+        """ Determine if a Sim is the hostage of the specified Sim. """
         return CommonRelationshipUtils.has_relationship_bit_with_sim(
             sim_info,
             target_sim_info,
-            SSRelationshipBitId.SS_ABDUCTION_CAPTOR_SIM_TO_HOSTAGE_SIM_REL_BIT
+            SSRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT
         )\
                and CommonRelationshipUtils.has_relationship_bit_with_sim(
             sim_info,
             target_sim_info,
-            SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT
+            SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT
         )
 
-    @staticmethod
-    def get_sims_with_captor_hostage_relationships_with(sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
-        """ Retrieve the SimInfo of all Sims with a Captor/Hostage relationship with the specified sim. """
-        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, SSRelationshipBitId.SS_ABDUCTION_CAPTOR_SIM_TO_HOSTAGE_SIM_REL_BIT, instanced_only=instanced_only))
+    def get_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+        """ Retrieve a collection of Sims that are a Captive to the specified Sim. """
+        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(captor_sim_info, SSRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT, instanced_only=instanced_only))
 
-    @staticmethod
-    def get_hostages(captor_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
-        """ Retrieve the SimInfo of all hostages the specified sim has captive. """
-        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(captor_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT, instanced_only=instanced_only))
+    def get_captors(self, captive_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+        """ Retrieve a collection of Sims that are a Captor of the specified Sim. """
+        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(captive_sim_info, SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT, instanced_only=instanced_only))
 
-    @staticmethod
-    def get_captors(hostage_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
-        """ Retrieve the SimInfo of all captors that are holding the specified sim hostage. """
-        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(hostage_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT, instanced_only=instanced_only))
+    def create_captive(self, captive_sim_info: SimInfo, captor_sim_info: SimInfo) -> Tuple[bool, str]:
+        """create_captive(captive_sim_info, captor_sim_info)
 
-    @staticmethod
-    def add_abduction_data(captor_sim_info: SimInfo, captive_sim_info: SimInfo):
-        """ Add abduction data between two sims. """
-        if not CommonRelationshipUtils.has_met(captor_sim_info, captive_sim_info) and not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, CommonRelationshipBitId.HAS_MET):
-            log.error('Failed to add Has Met Relationship Bit.')
-        if not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.SS_ABDUCTION_CAPTOR_SIM_TO_HOSTAGE_SIM_REL_BIT):
-            log.error('Failed to add Abduction Relationship Bit.')
-        if not CommonRelationshipUtils.add_relationship_bit(captive_sim_info, captor_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT):
-            log.error('Failed to add Captor Relationship Bit.')
-        if not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT):
-            log.error('Failed to add Hostage Relationship Bit.')
-        CommonBuffUtils.add_buff(captive_sim_info, SSBuffId.SS_ABDUCTION_WAS_ABDUCTED_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSStringId.ABDUCTION))
-        CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
-        CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
-        CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
+        Turn a Sim into a Captive.
 
-    @staticmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
-    def clear_abduction_data(to_clear_sim_info: SimInfo) -> bool:
-        """ Clear abduction data from a sim. """
-        if to_clear_sim_info is None:
-            log.debug('sim_info was None.')
+        :param captive_sim_info: The Sim to turn into a Captive.
+        :type captive_sim_info: SimInfo
+        :param captor_sim_info: The Sim that will be the Captor of the Captive.
+        :type captor_sim_info: SimInfo
+        :return: True, if the Sim was turned into a Captive successfully. False, if not.
+        :rtype: bool
+        """
+        if captive_sim_info is None or captor_sim_info is None:
+            return False, 'Failed, missing Captive or Captor data.'
+        captive_sim_name = CommonSimNameUtils.get_full_name(captive_sim_info)
+        captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
+        try:
+            if not CommonRelationshipUtils.has_met(captor_sim_info, captive_sim_info) and not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, CommonRelationshipBitId.HAS_MET):
+                self.log.error('Failed to add Has Met Relationship Bit.')
+            if not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT):
+                self.log.error('Failed to add Captor/Captive Relationship Bit.')
+            if not CommonRelationshipUtils.add_relationship_bit(captive_sim_info, captor_sim_info, SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT):
+                self.log.error('Failed to add Captor Relationship Bit.')
+            if not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT):
+                self.log.error('Failed to add Captive Relationship Bit.')
+            CommonBuffUtils.add_buff(captive_sim_info, SSBuffId.ALLOWED_NOTHING_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSStringId.ABDUCTION))
+            CommonBuffUtils.add_buff(captive_sim_info, SSBuffId.PREVENT_LEAVE_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSStringId.ABDUCTION))
+            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
+            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
+            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
+            CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+        except Exception as ex:
+            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Captive \'{}\'.'.format(captive_sim_name), exception=ex)
+            return False, 'Failed, Exception Occurred.'
+        return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(captive_sim_info))
+
+    def release_captive(self, captive_sim_info: SimInfo, releasing_sim_info: SimInfo=None) -> bool:
+        """release_captive(captive_sim_info, releasing_sim_info=None)
+
+        Release a Captive Sim from Captivity.
+
+        :param captive_sim_info: The Captive being released.
+        :type captive_sim_info: SimInfo
+        :param releasing_sim_info: The Sim that is releasing the Captive. Default is None.
+        :type releasing_sim_info: SimInfo, optional
+        :return: True, if the Captive was released successfully. False, if not.
+        :rtype: bool
+        """
+        if captive_sim_info is None:
+            self.log.debug('captive_sim_info was None.')
             return False
-        log.format_with_message('Attempting to clear abduction data from sim.', sim=to_clear_sim_info)
-        sim_info_list = SSAbductionStateUtils.get_sims_with_captor_hostage_relationships_with(to_clear_sim_info)
-        if sim_info_list:
-            for sim_info in sim_info_list:
-                    log.format_with_message('Attempting to remove relationship bits between sims.', sim=to_clear_sim_info, target=sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(to_clear_sim_info, sim_info, SSRelationshipBitId.SS_ABDUCTION_CAPTOR_SIM_TO_HOSTAGE_SIM_REL_BIT)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, to_clear_sim_info, SSRelationshipBitId.SS_ABDUCTION_CAPTOR_SIM_TO_HOSTAGE_SIM_REL_BIT)
-                    CommonRelationshipUtils.remove_relationship_bit(to_clear_sim_info, sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, to_clear_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_HAS_CAPTURED_SIM_REL_BIT)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, to_clear_sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT)
-                    CommonRelationshipUtils.remove_relationship_bit(to_clear_sim_info, sim_info, SSRelationshipBitId.SS_ABDUCTION_SIM_IS_CAPTURED_BY_SIM_REL_BIT)
-                    log.debug('Done removing relationship bits.')
-        else:
-            log.debug('No captors found.')
-        log.debug('Attempting to remove abduction buff.')
-        CommonBuffUtils.remove_buff(to_clear_sim_info, SSBuffId.SS_ABDUCTION_WAS_ABDUCTED_INVISIBLE)
-        log.debug('Done removing abduction buff.')
-        log.debug('Attempting to remove abduction situation.')
-        CommonSituationUtils.remove_sim_from_situation(to_clear_sim_info, SSSituationId.SS_ABDUCTION_PLAYER_ABDUCTED_NPC)
-        log.debug('Done removing sim from abduction situation.')
-        log.debug('Making sim leave.')
-        CommonSituationUtils.make_sim_leave(to_clear_sim_info)
-        log.debug('Done making sim leave.')
+        captive_sim_name = CommonSimNameUtils.get_full_name(captive_sim_info)
+        try:
+            self.log.debug('Attempting to release Captive \'{}\'.'.format(captive_sim_name))
+            if releasing_sim_info is not None and self.is_captive_of(captive_sim_info, releasing_sim_info):
+                captor_sim_info_list = (releasing_sim_info,)
+            else:
+                captor_sim_info_list = self.get_captors(captive_sim_info)
+
+            for captor_sim_info in captor_sim_info_list:
+                self.log.format_with_message('Attempting to remove relationship bits between Sims.', sim=captive_sim_info, target=captor_sim_info)
+                CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
+                CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
+                CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT)
+                CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT)
+                CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT)
+                CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT)
+                self.log.debug('Done removing relationship bits.')
+            self.log.debug('Done removing Captor relationships.')
+
+            self.log.debug('Attempting to remove traits.')
+            CommonTraitUtils.remove_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+            self.log.debug('Attempting to remove buffs.')
+            CommonBuffUtils.remove_buff(captive_sim_info, SSBuffId.ALLOWED_NOTHING_INVISIBLE)
+            CommonBuffUtils.remove_buff(captive_sim_info, SSBuffId.PREVENT_LEAVE_INVISIBLE)
+            self.log.debug('Done removing buffs.')
+            self.log.debug('Attempting to remove situations.')
+            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSSituationId.SS_ABDUCTION_PLAYER_ABDUCTED_NPC)
+            self.log.debug('Done removing Sim from situations.')
+            self.log.debug('Attempting to make Sim leave.')
+            CommonSituationUtils.make_sim_leave(captive_sim_info)
+            self.log.debug('Done making Sim leave.')
+            self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
+        except Exception as ex:
+            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)
+            return False
         return True
 
-    @staticmethod
-    def has_invalid_abduction_state(sim_info: SimInfo) -> bool:
+    def release_captives_of(self, captor_sim_info: SimInfo) -> bool:
+        """release_captives_of(captor_sim_info)
+
+        Release all Captives of the specified Captor Sim.
+
+        :param captor_sim_info: The Captor to release the Captives of.
+        :type captor_sim_info: SimInfo
+        :return: True, if all Captives of the specified Captor Sim were released successfully. False, if not.
+        :rtype: bool
+        """
+        if captor_sim_info is None:
+            self.log.debug('captor_sim_info was None.')
+            return False
+        captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
+        self.log.debug('Releasing All Captives of \'{}\'.'.format(captor_sim_name))
+        captive_sim_info_list = self.get_captives(captor_sim_info)
+        for captive_sim_info in captive_sim_info_list:
+            self.release_captive(captive_sim_info, releasing_sim_info=captor_sim_info)
+        self.log.debug('Done releasing Captives of Captor \'{}\'.'.format(captor_sim_info))
+        return True
+
+    def has_invalid_abduction_state(self, sim_info: SimInfo) -> bool:
         """ Determine if a Sim has an invalid abduction state. """
-        from cnsimsnatcher.enums.interaction_identifiers import SSInteractionId
-        return SSAbductionStateUtils.has_been_abducted(sim_info)\
-               and not CommonSituationUtils.has_situation(sim_info, SSSituationId.SS_ABDUCTION_PLAYER_ABDUCTED_NPC)\
+        from cnsimsnatcher.enums.interaction_ids import SSInteractionId
+        return self.has_captors(sim_info)\
+               and (not CommonSituationUtils.has_situation(sim_info, SSSituationId.SS_ABDUCTION_PLAYER_ABDUCTED_NPC)
+                    or not CommonTraitUtils.has_trait(sim_info, SSAbductionTraitId.CAPTIVE))\
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(sim_info, SSInteractionId.SS_ABDUCTION_ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME)
 
 
 @sims4.commands.Command('simsnatcher.show_hostages', command_type=sims4.commands.CommandType.Live)
 def _ss_abduction_show_hostage_names(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
-    output('Showing hostages of active sim')
+    output('Showing hostages of active Sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
-    hostage_sim_info_list = SSAbductionStateUtils.get_hostages(active_sim_info)
-    for hostage_sim_info in hostage_sim_info_list:
-        output('\'{}\''.format(CommonSimNameUtils.get_full_name(hostage_sim_info)))
+    sim_info_list = SSAbductionStateUtils().get_captives(active_sim_info)
+    if not sim_info_list:
+        output('No hostages were found for the Active Sim.')
+    for sim_info in sim_info_list:
+        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
     output('Done displaying hostages.')
+
+
+@sims4.commands.Command('simsnatcher.show_captors', command_type=sims4.commands.CommandType.Live)
+def _ss_abduction__show_master_names(_connection: int=None):
+    output = sims4.commands.CheatOutput(_connection)
+    output('Showing captors of active sim')
+    active_sim_info = CommonSimUtils.get_active_sim_info()
+    sim_info_list = SSAbductionStateUtils().get_captors(active_sim_info)
+    if not sim_info_list:
+        output('No captors were found for the Active Sim.')
+    for sim_info in sim_info_list:
+        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
+    output('Done displaying captors.')

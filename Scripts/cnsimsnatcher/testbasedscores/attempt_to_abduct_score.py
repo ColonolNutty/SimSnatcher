@@ -6,8 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from interactions import ParticipantType
-from cnsimsnatcher.enums.skill_identifiers import SSSkillId
-from cnsimsnatcher.enums.statistic_identifiers import SSStatisticId
+from cnsimsnatcher.enums.skill_ids import SSSkillId
+from cnsimsnatcher.enums.statistic_ids import SSStatisticId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils

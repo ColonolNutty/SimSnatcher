@@ -5,10 +5,17 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from sims4communitylib.enums.enumtypes.int_enum import CommonEnumIntBase
+# noinspection PyBroadException
+try:
+    # noinspection PyUnresolvedReferences
+    from enum import Int
+except:
+    # noinspection PyMissingOrEmptyDocstring
+    class Int:
+        pass
 
 
-class SSInteractionId(CommonEnumIntBase):
+class SSInteractionId(Int):
     """ Interaction identifiers used by SS. """
     # Abduction
     SS_ABDUCTION_OPEN_SETTINGS = 17997355933418421807

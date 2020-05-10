@@ -8,8 +8,8 @@ Copyright (c) COLONOLNUTTY
 import random
 from typing import Tuple
 
-from cnsimsnatcher.enums.skill_identifiers import SSSkillId
-from cnsimsnatcher.enums.statistic_identifiers import SSStatisticId
+from cnsimsnatcher.enums.skill_ids import SSSkillId
+from cnsimsnatcher.enums.statistic_ids import SSStatisticId
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.skills_enum import CommonSkillId

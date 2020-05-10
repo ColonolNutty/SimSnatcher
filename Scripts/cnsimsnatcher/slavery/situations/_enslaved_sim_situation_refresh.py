@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Any
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
-from cnsimsnatcher.slavery.utils.slave_state_utils import SSSlaveryStateUtils
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.events.interval.common_interval_event_service import CommonIntervalEventRegistry
 from sims4communitylib.logging.has_log import HasLog
@@ -34,22 +34,21 @@ class _SSSlaveryRefreshSituation(CommonService, HasLog):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 'sss_refresh_situation'
+        return 'ss_slavery_refresh_situation'
 
     def _refresh_sim_situations(self, *_, **__) -> bool:
         sims_needing_refresh = CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=self._state_utils.has_invalid_enslaved_state)
         for sim_info in sims_needing_refresh:
             self.log.format_with_message('Attempting to refresh enslaved status of sim.', sim=sim_info)
-            result = self.refresh_enslaved_status_of_sim(sim_info)
+            result = self.refresh_status_of_sim(sim_info)
             if result:
                 self.log.debug('Successfully refreshed enslaved status of sim.')
             else:
                 self.log.debug('Failed to refresh enslaved status of sim.')
         return True
 
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
-    def refresh_enslaved_status_of_sim(self, slave_sim_info: SimInfo) -> bool:
-        """ Refresh the abduction status of a sim and reapply the abducted situation. """
+    def refresh_status_of_sim(self, slave_sim_info: SimInfo) -> bool:
+        """ Refresh the enslaved status of a Sim. """
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
         try:
             self.log.format_with_message('Attempting to refresh enslaved status of \'{}\'.'.format(slave_sim_name))
@@ -57,11 +56,10 @@ class _SSSlaveryRefreshSituation(CommonService, HasLog):
             if sim_instance is None:
                 self.log.debug('Failed, \'{}\' has not been summoned.'.format(slave_sim_name))
                 return False
-            master_sim_info_list = self._state_utils.get_masters(slave_sim_info)
+            master_sim_info_list = self._state_utils.get_masters(slave_sim_info, instanced_only=True)
             if not master_sim_info_list:
                 self.log.debug('Failed, no masters found.')
                 return False
-            master_sim_info_list = self._state_utils.get_masters(slave_sim_info, instanced_only=True)
             for master_sim_info in master_sim_info_list:
                 if not CommonHouseholdUtils.is_part_of_active_household(master_sim_info):
                     self.log.debug('Failed, the Master sim is not a part of the active household.')
@@ -73,9 +71,10 @@ class _SSSlaveryRefreshSituation(CommonService, HasLog):
                     target=sim_instance
                 )
             self.log.debug('Done refreshing enslaved status.')
-            return True
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'A problem occurred while attempting to refresh enslaved status of \'{}\''.format(slave_sim_name), exception=ex)
+            return False
+        return True
 
 
 @CommonIntervalEventRegistry.run_every(ModInfo.get_identity())

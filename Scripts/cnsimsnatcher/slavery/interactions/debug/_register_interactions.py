@@ -6,8 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
-
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
+from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
 from objects.script_object import ScriptObject
 from sims4communitylib.services.interactions.interaction_registration_service import CommonInteractionRegistry, \
     CommonInteractionType, CommonScriptObjectInteractionHandler
@@ -15,13 +14,12 @@ from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 
 @CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
-class _SSAbductionSimInteractionHandler(CommonScriptObjectInteractionHandler):
+class _SSSlaveryDebugSimInteractionHandler(CommonScriptObjectInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_START_ABDUCTION,
-            SSInteractionId.SS_ABDUCTION_END_ABDUCTION,
+            SSSlaveryInteractionId.CLEAR_SLAVERY_DATA,
         )
         return result
 

@@ -6,6 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any
+
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
@@ -42,7 +44,7 @@ class SSOrderToGoToResidenceInteraction(CommonSuperInteraction):
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             log.debug('Failed, Active Sim or Target Sim are not enabled for interactions.')
             return TestResult.NONE
-        if not SSAbductionStateUtils.has_been_abducted(target_sim_info):
+        if not SSAbductionStateUtils().has_captors(target_sim_info) and not SSSlaveryStateUtils().has_masters(target_sim_info):
             log.debug('Failed, Target Sim has not been abducted.')
             return TestResult.NONE
         if CommonSimLocationUtils.is_at_home(sim_info):

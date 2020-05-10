@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from cnsimsnatcher.slavery.enums.statistic_ids import SSSlaveryStatisticId
 from cnsimsnatcher.slavery.operations.enslave_score import SSEnslaveAttemptSuccessChanceOperation
 from interactions import ParticipantType
-from cnsimsnatcher.enums.skill_identifiers import SSSkillId
+from cnsimsnatcher.enums.skill_ids import SSSkillId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from event_testing.test_based_score import TestBasedScore
