@@ -32,7 +32,6 @@ from sims4communitylib.utils.objects.common_object_interaction_utils import Comm
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
@@ -115,7 +114,6 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=TestResult.NONE)
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         cls.get_log().format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
@@ -163,7 +161,6 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self), interaction_sim=interaction_sim, interaction_target=interaction_target)
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
