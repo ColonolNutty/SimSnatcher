@@ -16,7 +16,6 @@ __pycache__
 */*.pyc
 **/*.pyc
 Utilities/*.pyc
-tunings
 **/*.7z
 **/*.zip
 **/Release/*.7z

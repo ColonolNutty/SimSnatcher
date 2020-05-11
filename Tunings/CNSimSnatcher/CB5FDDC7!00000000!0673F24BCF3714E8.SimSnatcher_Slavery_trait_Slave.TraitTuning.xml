@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="SimSnatcher_Slavery_trait_Slave" s="464981593962255592">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0xF9D01A72<!--Slave--></T>
+  <T n="display_name_gender_neutral">0xF9D01A72<!--Slave--></T>
+  <T p="SlaveIcon" n="icon">2f7d0004:00000000:F838AC7741A8AFC6</T>
+  <T n="trait_description">0xBFF37FCD<!--Indentured Servitude--></T>
+  <T n="trait_origin_description">0xBD99A17D<!--From Being Enslaved--></T>
+  <E n="trait_type">GAMEPLAY</E>
+</I>

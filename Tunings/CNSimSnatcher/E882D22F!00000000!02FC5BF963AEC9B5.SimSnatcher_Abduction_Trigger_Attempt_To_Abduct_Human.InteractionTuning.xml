@@ -1,0 +1,21 @@
+<I c="ImmediateSuperInteraction" i="interaction" m="interactions.base.immediate_interaction" n="SimSnatcher_Abduction_Trigger_Attempt_To_Abduct_Human" s="215148008884324789">
+  <V n="_saveable" t="disabled" />
+  <V n="outcome" t="single">
+    <U n="single">
+      <U n="actions">
+        <L n="continuation">
+          <U>
+            <T n="affordance">2400829702527701296<!--SocialMixerInteraction: SimSnatcher_Attempt_To_Abduct_Default--></T>
+            <T n="si_affordance_override">13998<!--SocialSuperInteraction: sim_Chat--></T>
+            <E n="target">TargetSim</E>
+          </U>
+        </L>
+        <T n="force_outcome_on_exit">True</T>
+      </U>
+    </U>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

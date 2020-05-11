@@ -1,0 +1,23 @@
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Abduction_Buff_Abduction_Reaction_Abduction_Success" s="16487754375683946244">
+  <V n="_temporary_commodity_info" t="enabled">
+    <U n="enabled">
+      <L n="categories">
+        <E>Social_Buffs</E>
+        <E>Confident_Buffs</E>
+      </L>
+      <T n="max_duration">240</T>
+    </U>
+  </V>
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="buff_description">0xBB37CECC</T>
+  <T n="buff_name">0xFA157005</T>
+  <T n="icon" p="">2f7d0004:00000000:898BCC5A07F0F1D7</T>
+  <T n="mood_type">14634<!--Mood: Mood_Confident--></T>
+  <T n="mood_weight">2</T>
+  <T n="refresh_on_add">True</T>
+  <T n="success_modifier">0</T>
+  <T n="ui_sort_order">1</T>
+  <T n="visible">True</T>
+  <V n="walkstyle" t="disabled" />
+</I>

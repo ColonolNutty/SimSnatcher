@@ -1,0 +1,16 @@
+<I c="SSOpenSettingsInteraction" i="interaction" m="cnsimsnatcher.settings.interactions.open_settings" n="SimSnatcher_Open_Settings" s="17997355933418421807">
+  <V n="_saveable" t="disabled" />
+  <T n="category">2953704054832033008<!--PieMenuCategory: SimSnatcher_Pie_Sim_Snatcher--></T>
+  <T n="display_name">0xF96AE223<!--Sim Snatcher Settings--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:2d62d7495b01c1a8</T>
+      </U>
+    </V>
+  </V>
+</I>

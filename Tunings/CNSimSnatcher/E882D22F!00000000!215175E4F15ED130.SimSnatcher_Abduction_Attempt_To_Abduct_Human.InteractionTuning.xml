@@ -1,0 +1,261 @@
+<I c="SSAbductionAttemptToAbductInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.player.player_attempt_to_abduct" n="SimSnatcher_Abduction_Attempt_To_Abduct_Human" s="2400829702527701296">
+  <V n="_icon" t="resource_key">
+    <U n="resource_key">
+      <T n="key" p="InGame\UI\Icons\InteractionQueueSubInteractions\icon_queuesubinteraction_mean.png">2f7d0004:00000000:3d35761f11f0418c</T>
+    </U>
+  </V>
+  <T n="allow_autonomous">False</T>
+  <T n="allow_user_directed">True</T>
+  <L n="appropriateness_tags">
+    <E>Appropriateness_Touching</E>
+  </L>
+  <L n="basic_extras">
+    <V t="loot">
+      <U n="loot">
+        <L n="loot_list">
+          <T>162659<!--LootActions: loot_Commodity_Culling_GhostAdd_target--></T>
+        </L>
+      </U>
+    </V>
+    <V t="loot">
+      <U n="loot">
+        <L n="loot_list">
+          <T>165621<!--LootActions: loot_ChildhoodPhase_Clingy_SocialBuffs--></T>
+        </L>
+        <V n="timing" t="at_beginning" />
+      </U>
+    </V>
+    <V t="loot">
+      <U n="loot">
+        <L n="loot_list">
+          <T>168132<!--LootActions: loot_FamilyRelBitAcquired_Rivalry_LargeGain--></T>
+        </L>
+      </U>
+    </V>
+    <V t="loot">
+      <U n="loot">
+        <L n="loot_list">
+          <T>195995<!--LootActions: loot_Fame_Quirks_ASeriousActor_MaxCommodity--></T>
+        </L>
+      </U>
+    </V>
+  </L>
+  <T n="category">15509<!--PieMenuCategory: sim_Mean--></T>
+  <V n="content_score" t="enabled">
+    <U n="enabled">
+      <T n="base_score">500</T>
+    </U>
+  </V>
+  <T n="display_name">0xE880745F<!--Attempt To Abduct--></T>
+  <T n="display_name_target">0x783BCE8C<!--Fight Off Capture--></T>
+  <U n="display_name_text_tokens">
+    <L n="tokens">
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Actor</E>
+            </U>
+          </V>
+        </U>
+      </V>
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Object</E>
+            </U>
+          </V>
+        </U>
+      </V>
+    </L>
+  </U>
+  <V n="display_name_wrappers" t="enabled">
+    <U n="enabled">
+      <L n="wrappers">
+        <U>
+          <L n="test">
+            <L>
+              <V t="sim_info_gameplay_options" />
+              <V t="relationship">
+                <U n="relationship">
+                  <U n="required_relationship_bits">
+                    <L n="match_any">
+                      <T>193944<!--RelationshipBit: relationshipBit_Feud_Target--></T>
+                    </L>
+                  </U>
+                  <L n="subject">
+                    <E>Actor</E>
+                  </L>
+                  <L n="target_sim">
+                    <E>TargetSim</E>
+                  </L>
+                </U>
+              </V>
+              <V t="trait">
+                <U n="trait">
+                  <L n="blacklist_traits">
+                    <T>200510<!--Trait: trait_Hidden_isDisguised--></T>
+                  </L>
+                </U>
+              </V>
+            </L>
+            <L>
+              <V t="sim_info_gameplay_options" />
+              <V t="bucks_perks_test">
+                <U n="bucks_perks_test">
+                  <T n="bucks_perk">193737<!--BucksPerk: famePerks_BadReputation_WhosBad--></T>
+                </U>
+              </V>
+              <V t="trait">
+                <U n="trait">
+                  <L n="blacklist_traits">
+                    <T>200510<!--Trait: trait_Hidden_isDisguised--></T>
+                  </L>
+                </U>
+              </V>
+            </L>
+          </L>
+          <T n="wrapper">0xD20B3C9B<!--{0.String} <font color='#199C2C'>(+Fame)</font>--></T>
+        </U>
+      </L>
+    </U>
+  </V>
+  <L n="interaction_category_tags">
+    <E>Interaction_Chat</E>
+    <E>Interaction_Mixer</E>
+    <E>Interaction_All</E>
+    <E>Interaction_SocialAll</E>
+    <E>Interaction_SocialMixer</E>
+    <E>Interaction_Social_Contagious</E>
+    <E>Interaction_Skill_Child_Social</E>
+    <E>Interaction_Social_Touching</E>
+  </L>
+  <V n="outcome" t="test_based">
+    <U n="test_based">
+      <L n="fallback_outcomes">
+        <U>
+          <U n="outcome">
+            <E n="outcome_result">FAILURE</E>
+            <V n="animation_ref" t="enabled">
+              <U n="enabled">
+                <T n="factory">11973<!--AnimationElement: Soc_Mischief_T_HandBuzzer_Fail_basic--></T>
+              </U>
+            </V>
+            <L n="loot_list">
+              <T>36610<!--LootActions: Loot_Buff_Social_Threaten_Actor--></T>
+              <T>36611<!--LootActions: Loot_Buff_Social_Threaten_Target--></T>
+              <T>11044<!--LootActions: Rel_Loss_TankRel--></T>
+              <T>23797<!--LootActions: Loot_EmbarrassedSocialCommodity_20--></T>
+              <T>10954<!--LootActions: Loot_ForSocialsSocialMotiveMedium--></T>
+              <T>36121<!--LootActions: Skill_Loot_Dynamic_Small_ChildrenOnly_Social--></T>
+              <T>27832<!--LootActions: Loot_Buff_Social_RiledUp_Target_Hothead_50--></T>
+              <T>76171<!--LootActions: Loot_Commodity_CareerBenefit_Criminal_Main--></T>
+              <T>96898<!--LootActions: Loot_Commodity_CareerBenefit_Criminal_Main_Social--></T>
+              <T>11080<!--LootActions: Skill_Loot_Dynamic_Small--></T>
+              <T>99714<!--LootActions: Loot_DidNegativeSocial--></T>
+              <T>76190<!--LootActions: Loot_Commodity_CareerBenefit_Agent_Villain--></T>
+              <T>104567<!--LootActions: loot_Relationship_Bit_KnowsIsAlien--></T>
+            </L>
+            <V n="response" t="enabled">
+              <V n="enabled" t="individual">
+                <U n="individual">
+                  <L n="animations">
+                    <U>
+                      <E n="target">Actor</E>
+                      <U n="animation">
+                        <T n="factory">28357<!--AnimationElement: Socials_Responses_Embarrassed_HighIntensity--></T>
+                      </U>
+                    </U>
+                    <U>
+                      <E n="target">Listeners</E>
+                      <U n="animation">
+                        <T n="factory">99344<!--AnimationElement: Socials_Responses_Miscellaneous_Relieved--></T>
+                      </U>
+                    </U>
+                  </L>
+                </U>
+              </V>
+            </V>
+          </U>
+        </U>
+      </L>
+      <L n="tested_outcomes">
+        <U>
+          <L n="potential_outcomes">
+            <U>
+              <U n="outcome">
+                <E n="outcome_result">SUCCESS</E>
+                <V n="cancel_si" t="enabled" />
+                <V n="animation_ref" t="enabled">
+                  <U n="enabled">
+                    <T n="factory">11974<!--AnimationElement: Soc_Mischief_T_HandBuzzer_Succeed_basic--></T>
+                  </U>
+                </V>
+                <L n="loot_list">
+                  <T>36610<!--LootActions: Loot_Buff_Social_Threaten_Actor--></T>
+                  <T>36611<!--LootActions: Loot_Buff_Social_Threaten_Target--></T>
+                  <T>11044<!--LootActions: Rel_Loss_TankRel--></T>
+                  <T>23797<!--LootActions: Loot_EmbarrassedSocialCommodity_20--></T>
+                  <T>11080<!--LootActions: Skill_Loot_Dynamic_Small--></T>
+                  <T>10954<!--LootActions: Loot_ForSocialsSocialMotiveMedium--></T>
+                  <T>27832<!--LootActions: Loot_Buff_Social_RiledUp_Target_Hothead_50--></T>
+                  <T>36121<!--LootActions: Skill_Loot_Dynamic_Small_ChildrenOnly_Social--></T>
+                  <T>96898<!--LootActions: Loot_Commodity_CareerBenefit_Criminal_Main_Social--></T>
+                  <T>99714<!--LootActions: Loot_DidNegativeSocial--></T>
+                  <T>76190<!--LootActions: Loot_Commodity_CareerBenefit_Agent_Villain--></T>
+                  <T>104567<!--LootActions: loot_Relationship_Bit_KnowsIsAlien--></T>
+                  <T>201718<!--LootActions: loot_FamePerk_FeudBringer_Relationship_Gain_Small--></T>
+                </L>
+                <V n="response" t="enabled">
+                  <V n="enabled" t="individual">
+                    <U n="individual">
+                      <L n="animations">
+                        <U>
+                          <E n="target">Actor</E>
+                          <U n="animation">
+                            <T n="factory">28391<!--AnimationElement: Socials_Responses_Miscellaneous_Maniacal--></T>
+                          </U>
+                        </U>
+                        <U>
+                          <E n="target">Listeners</E>
+                          <U n="animation">
+                            <T n="factory">28379<!--AnimationElement: Socials_Responses_Miscellaneous_Horrified--></T>
+                          </U>
+                        </U>
+                      </L>
+                    </U>
+                  </V>
+                </V>
+              </U>
+            </U>
+          </L>
+          <L n="tests">
+            <L>
+              <V t="test_based_score_threshold">
+                <U n="test_based_score_threshold">
+                  <T n="test_based_score">6388593619507325903<!--TestBasedScore: SimSnatcher_Abduction_Test_Scores_Attempt_To_Abduct_Human--></T>
+                  <U n="threshold">
+                    <E n="comparison">GREATER_OR_EQUAL</E>
+                    <T n="value">1</T>
+                  </U>
+                </U>
+              </V>
+            </L>
+          </L>
+        </U>
+      </L>
+    </U>
+  </V>
+  <U n="posture_preferences">
+    <T n="apply_penalties">False</T>
+  </U>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <U n="sub_action">
+    <T n="base_weight">2</T>
+  </U>
+  <E n="target_type">TARGET</E>
+  <T n="visible">True</T>
+</I>

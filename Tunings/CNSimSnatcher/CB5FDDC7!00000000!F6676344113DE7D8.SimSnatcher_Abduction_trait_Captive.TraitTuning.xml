@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="SimSnatcher_Abduction_trait_Captive" s="17755269199929665496">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0x08624668<!--Hostage--></T>
+  <T n="display_name_gender_neutral">0x08624668<!--Hostage--></T>
+  <T p="SlaveIcon" n="icon">2f7d0004:00000000:F838AC7741A8AFC6</T>
+  <T n="trait_description">0x15C5E2AE<!--Was Captured--></T>
+  <T n="trait_origin_description">0xCD3AC35F<!--From Being Abducted--></T>
+  <E n="trait_type">GAMEPLAY</E>
+</I>

@@ -1,0 +1,48 @@
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Buff_Prevent_Leave_Invisible" s="17783615372645687397">
+  <U n="game_effect_modifier">
+    <L n="_game_effect_modifiers">
+      <V t="autonomy_modifier">
+        <U n="autonomy_modifier">
+          <V n="provided_affordance_compatibility" t="literal">
+            <U n="literal">
+              <V n="default_inclusion" t="include_all">
+                <U n="include_all">
+                  <L n="exclude_affordances">
+                    <T>30917<!--SocialPickerSuperInteraction: SocialPickerSI--></T>
+                    <T>166360<!--NPCLeaveLotInteraction: npcLeaveLot_Pet--></T>
+                    <T>13002<!--SocialSuperInteraction: ask_toLeaveLot--></T>
+                    <T>150258<!--SocialSuperInteraction: ask_toLeaveLot_RejectHangout--></T>
+                    <T>155559<!--SocialSuperInteraction: ask_toLeaveLot_IntriguedNoise--></T>
+                    <T>155560<!--SocialSuperInteraction: ask_toLeaveLot_IntriguedSmell--></T>
+                    <T>130313<!--SocialSuperInteraction: ask_toLeaveLot_HiredNPC--></T>
+                    <T>156214<!--SocialSuperInteraction: ask_toLeaveLot_HiredNPC_Organist--></T>
+                    <T>150350<!--SocialSuperInteraction: ask_toLeaveLot_Event_NPC--></T>
+                    <T>24236<!--NPCLeaveLotInteraction: npc_leave_lot_now--></T>
+                    <T>24309<!--NPCLeaveLotInteraction: npc_leave_lot_now_must_run--></T>
+                    <T>99554<!--NPCLeaveLotInteraction: npc_leave_lot_now_must_run_ss3_request--></T>
+                    <T>124972<!--NPCLeaveLotInteraction: npc_Leave_Lot_Now_Must_Run_Klobber_Everything--></T>
+                    <T>112420<!--SuperInteraction: NPCLeaveLot_Player_WaveGoodBye--></T>
+                    <T>200918<!--SuperInteraction: NPCLeaveLotNow_VIPRope_Denied--></T>
+                    <T>112429<!--SuperInteraction: NPCLeaveLotNow_NPC_WaveGoodBye--></T>
+                    <T>112433<!--SuperInteraction: NPCLeaveLotNow_NPC_MustRun_WaveGoodBye--></T>
+                    <T>176461<!--SuperInteraction: Push_Leave_Lot--></T>
+                    <T>169886<!--ImmediateSuperInteraction: Push_Leave_Lot_Immediate--></T>
+                    <T>169887<!--ImmediateSuperInteraction: Push_Leave_Lot_Must_Run_Immediate--></T>
+                    <T>24458<!--SuperInteraction: npc_choose_to_leave_for_motive_or_homesickness--></T>
+                    <T>197607<!--RabbitHoleLeaveEarlyInteraction: RabbitHoleLeaveEarlyInteraction--></T>
+                  </L>
+                </U>
+              </V>
+            </U>
+          </V>
+          <E n="super_affordance_suppression_mode">AUTONOMOUS_ONLY</E>
+        </U>
+      </V>
+    </L>
+  </U>
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="icon" p="InGame\UI\Icons\Debug\missing_image.png">2f7d0004:00000000:30f0846c783606f9</T>
+  <T n="show_timeout">False</T>
+  <T n="visible">False</T>
+</I>

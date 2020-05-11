@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SimData version="0x00000101" u="0x00000000">
+  <Instances>
+    <I name="SimSnatcher_Slavery_relBit_Master_Sim_To_Slave_Sim_RelBit" schema="RelationshipBit" type="Object">
+      <T name="bit_description">0x00000000</T>
+      <L name="collection_ids" />
+      <T name="display_name">0x9B6DB4C5</T>
+      <T name="display_priority">0</T>
+      <T name="icon">00B2D882-00000000-4AC74D0EBE4EA19D</T>
+    </I>
+  </Instances>
+  <Schemas>
+    <Schema name="RelationshipBit" schema_hash="0xB72E10E7">
+      <Columns>
+        <Column name="bit_description" type="LocalizationKey" flags="0x00000000" />
+        <Column name="collection_ids" type="Vector" flags="0x00000000" />
+        <Column name="display_name" type="LocalizationKey" flags="0x00000000" />
+        <Column name="display_priority" type="Int32" flags="0x00000000" />
+        <Column name="icon" type="ResourceKey" flags="0x00000000" />
+      </Columns>
+    </Schema>
+  </Schemas>
+</SimData>

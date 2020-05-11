@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SimData version="0x00000101" u="0x00000000">
+  <Instances>
+    <I name="SimSnatcher_Skill_Abduction" schema="Skill" type="Object">
+      <L name="ages">
+        <T type="Int64">2</T>
+        <T type="Int64">4</T>
+        <T type="Int64">8</T>
+        <T type="Int64">16</T>
+        <T type="Int64">32</T>
+        <T type="Int64">64</T>
+      </L>
+      <L name="genders" />
+      <T name="hidden">0</T>
+      <T name="icon">2F7D0004-00000000-EF143059300B1048</T>
+      <T name="locked_description">0x7C633ABC</T>
+      <T name="mood_id">0</T>
+      <L name="next_level_teaser" />
+      <T name="priority">4</T>
+      <T name="skill_description">0xB335D5DF</T>
+      <T name="skill_level_type">1</T>
+      <T name="stat_name">0xE43D49E1</T>
+      <L name="tooltip_icon_list" />
+    </I>
+  </Instances>
+  <Schemas>
+    <Schema name="Skill" schema_hash="0xF80AB94B">
+      <Columns>
+        <Column name="ages" type="Vector" flags="0x00000000" />
+        <Column name="genders" type="Vector" flags="0x00000000" />
+        <Column name="hidden" type="Boolean" flags="0x00000000" />
+        <Column name="icon" type="ResourceKey" flags="0x00000000" />
+        <Column name="locked_description" type="LocalizationKey" flags="0x00000000" />
+        <Column name="mood_id" type="TableSetReference" flags="0x00000000" />
+        <Column name="next_level_teaser" type="Vector" flags="0x00000000" />
+        <Column name="priority" type="Int32" flags="0x00000000" />
+        <Column name="skill_description" type="LocalizationKey" flags="0x00000000" />
+        <Column name="skill_level_type" type="Int64" flags="0x00000000" />
+        <Column name="stat_name" type="LocalizationKey" flags="0x00000000" />
+        <Column name="tooltip_icon_list" type="Vector" flags="0x00000000" />
+      </Columns>
+    </Schema>
+  </Schemas>
+</SimData>

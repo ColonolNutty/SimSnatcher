@@ -1,0 +1,9 @@
+<I c="SSAbductionPlayerAbductedNPCSituation" i="situation" m="cnsimsnatcher.abduction.situations.player_abducted_npc_situation" n="SimSnatcher_Abduction_Situation_Player_Has_Abducted_NPC" s="6077877712849474601">
+  <U n="hostage_sim_job">
+    <T n="situation_job">17290962707486841600<!--SituationJob: SimSnatcher_Abduction_Situation_Job_Abducted_NPC--></T>
+    <T n="staying_role_state">11021602906305446263<!--RoleState: SimSnatcher_Abduction_Situation_Role_Abducted_NPC--></T>
+  </U>
+  <U n="when_to_refresh_situation">
+    <T n="hours">6</T>
+  </U>
+</I>

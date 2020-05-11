@@ -1,0 +1,24 @@
+<I c="SSSlaveryAttemptToEnslaveSuccessInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.player.player_attempt_to_enslave_outcome" n="SimSnatcher_Slavery_Attempt_To_Enslave_Human_Success" s="8861145126927277848">
+  <V n="_saveable" t="disabled" />
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <L n="basic_extras">
+    <V t="create_situation">
+      <U n="create_situation">
+        <V n="create_situation" t="situation_start">
+          <U n="situation_start">
+            <T n="situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+            <T n="user_facing">False</T>
+            <T n="invite_actor">False</T>
+            <T n="invite_target_sim">True</T>
+            <V n="linked_sim_participant">
+              <E>TargetSim</E>
+            </V>
+          </U>
+        </V>
+      </U>
+    </V>
+  </L>
+  <E n="target_type">OBJECT</E>
+</I>

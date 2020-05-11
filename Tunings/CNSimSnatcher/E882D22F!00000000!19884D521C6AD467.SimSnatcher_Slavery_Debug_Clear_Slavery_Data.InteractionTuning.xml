@@ -1,0 +1,16 @@
+<I c="SSSlaveryClearDataInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.debug.clear_slavery_data" n="SimSnatcher_Slavery_Debug_Clear_Slavery_Data" s="1839805462840267879">
+  <V n="_saveable" t="disabled" />
+  <T n="debug">True</T>
+  <T n="cheat">True</T>
+  <V n="content_score" t="disabled" />
+  <T n="category">8788496810823505546 <!--Slavery Parent--></T>
+  <T n="display_name">0x663FBC5E<!--Clear Slavery Data--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="pie_menu_priority">0</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

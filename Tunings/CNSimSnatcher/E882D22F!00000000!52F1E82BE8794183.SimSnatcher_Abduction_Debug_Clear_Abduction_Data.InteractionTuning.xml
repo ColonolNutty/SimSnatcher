@@ -1,0 +1,16 @@
+<I c="SSAbductionClearDataInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.debug.clear_abduction_data" n="SimSnatcher_Abduction_Debug_Clear_Abduction_Data" s="5976813455778857347">
+  <V n="_saveable" t="disabled" />
+  <T n="debug">True</T>
+  <T n="cheat">True</T>
+  <V n="content_score" t="disabled" />
+  <T n="category">14301318989422970065 <!--Abduction Parent--></T>
+  <T n="display_name">0x413AB3F7<!--Clear Abduction Data--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="pie_menu_priority">0</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

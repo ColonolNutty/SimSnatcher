@@ -1,0 +1,125 @@
+<I c="Skill" i="statistic" m="statistics.skill" n="SimSnatcher_Skill_Abduction" s="9691605280024687972">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <T n="icon" p="InGame\UI\Icons\Buffs\buffs_nemesis.png">2f7d0004:00000000:ef143059300b1048</T>
+  <T n="initial_value">100</T>
+  <T n="is_default">False</T>
+  <L n="level_data">
+    <U>
+      <T n="key">1</T>
+      <U n="value">
+        <U n="level_up_notification">
+          <E n="expand_behavior">FORCE_EXPAND</E>
+          <V n="text" t="single">
+            <T n="single">0x1D720B13</T>
+          </V>
+          <V n="title" t="enabled">
+            <T n="enabled">0x3D514F05</T>
+          </V>
+        </U>
+      </U>
+    </U>
+    <U>
+      <T n="key">2</T>
+      <U n="value">
+        <U n="level_up_notification">
+          <V n="audio_sting" t="enabled">
+            <U n="enabled">
+              <T n="audio" p="InGame\Audio\Stings\sting_skill_progress.propx">39b2aa4a:00000000:54381264540dd53c</T>
+            </U>
+          </V>
+          <V n="text" t="single">
+            <T n="single">0xB5AC61FE</T>
+          </V>
+          <V n="title" t="enabled">
+            <T n="enabled">0xBAF3448B</T>
+          </V>
+        </U>
+        <V n="level_up_screen_slam" t="enabled">
+          <V n="enabled" t="reference">
+            <T n="reference">3624856483578376636<!--ScreenSlam: SimSnatcher_Skill_Abduction_ScreenSlam_LevelUp--></T>
+          </V>
+        </V>
+      </U>
+    </U>
+    <U>
+      <T n="key">5</T>
+      <U n="value">
+        <U n="level_up_notification">
+          <V n="audio_sting" t="enabled">
+            <U n="enabled">
+              <T n="audio" p="InGame\Audio\Stings\sting_skill_highest.propx">39b2aa4a:00000000:321d9f89413aeb9b</T>
+            </U>
+          </V>
+          <V n="text" t="single">
+            <T n="single">0x4A03B8F6</T>
+          </V>
+          <V n="title" t="enabled">
+            <T n="enabled">0x3A6BA72F</T>
+          </V>
+        </U>
+        <V n="level_up_screen_slam" t="enabled">
+          <V n="enabled" t="reference">
+            <T n="reference">5998303485030777527<!--ScreenSlam: SimSnatcher_Skill_Abduction_ScreenSlam_MaxLevel--></T>
+          </V>
+        </V>
+      </U>
+    </U>
+  </L>
+  <T n="locked_description">0x7C633ABC</T>
+  <T n="priority">4</T>
+  <T n="skill_description">0xB335D5DF</T>
+  <E n="skill_level_type">MINOR</E>
+  <U n="stat_asm_param">
+    <T n="asm_param_name">statLevel</T>
+    <L n="level_ranges">
+      <U>
+        <T n="key">low</T>
+        <U n="value">
+          <T n="lower_bound">0</T>
+          <T n="upper_bound">1</T>
+        </U>
+      </U>
+      <U>
+        <T n="key">medium</T>
+        <U n="value">
+          <T n="lower_bound">3</T>
+          <T n="upper_bound">3</T>
+        </U>
+      </U>
+      <U>
+        <T n="key">mediumLow</T>
+        <U n="value">
+          <T n="lower_bound">2</T>
+          <T n="upper_bound">2</T>
+        </U>
+      </U>
+      <U>
+        <T n="key">mediumHigh</T>
+        <U n="value">
+          <T n="lower_bound">4</T>
+          <T n="upper_bound">4</T>
+        </U>
+      </U>
+      <U>
+        <T n="key">high</T>
+        <U n="value">
+          <T n="lower_bound">5</T>
+          <T n="upper_bound">100</T>
+        </U>
+      </U>
+    </L>
+  </U>
+  <T n="stat_name">0xE43D49E1</T>
+  <L n="tags">
+    <E>Skill_SimSnatcher_Abduction</E>
+    <E>Skill_SimSnatcher_All</E>
+    <E>Skill_All</E>
+  </L>
+</I>

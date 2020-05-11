@@ -1,0 +1,17 @@
+<I c="WeightedSingleSimLootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Abduction_Loot_Action_Abducted_NPC" s="8281991620631746869">
+  <L n="loot_actions">
+    <U>
+      <U n="buff_loot">
+        <L n="buffs">
+          <U>
+            <T n="key">29679<!--Buff: buff_NPC_Sad--></T>
+            <T n="value">1</T>
+          </U>
+        </L>
+        <U n="chance">
+          <T n="base_chance">100</T>
+        </U>
+      </U>
+    </U>
+  </L>
+</I>

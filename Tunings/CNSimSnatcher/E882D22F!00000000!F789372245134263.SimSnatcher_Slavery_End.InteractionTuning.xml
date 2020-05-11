@@ -1,0 +1,9 @@
+<I c="SSSlaveryEndSlaveryInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.player.player_end_slavery" n="SimSnatcher_Slavery_End" s="17836848419504865891">
+  <V n="_saveable" t="disabled" />
+  <T n="category">8788496810823505546<!--Slavery Parent--></T>
+  <T n="display_name">0x8B3C5DD5<!--Release Slave--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

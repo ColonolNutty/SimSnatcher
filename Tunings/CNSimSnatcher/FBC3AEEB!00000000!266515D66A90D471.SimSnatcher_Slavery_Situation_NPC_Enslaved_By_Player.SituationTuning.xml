@@ -1,0 +1,9 @@
+<I c="SSSlaveryNPCEnslavedByPlayerSituation" i="situation" m="cnsimsnatcher.slavery.situations.npc_enslaved_by_player_situation" n="SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player" s="2766641556744098929">
+  <U n="slave_sim_job">
+    <T n="situation_job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+    <T n="staying_role_state">13426034656131085789<!--RoleState: SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Idle--></T>
+  </U>
+  <U n="when_to_refresh_situation">
+    <T n="hours">6</T>
+  </U>
+</I>

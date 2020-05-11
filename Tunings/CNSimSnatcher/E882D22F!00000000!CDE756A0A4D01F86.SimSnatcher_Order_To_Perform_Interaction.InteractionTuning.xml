@@ -1,0 +1,9 @@
+<I c="SSOrderToPerformInteractionInteraction" i="interaction" m="cnsimsnatcher.order_to.interactions.order_to_perform_interaction" n="SimSnatcher_Order_To_Perform_Interaction" s="14836922745355247494">
+  <V n="_saveable" t="disabled" />
+  <T n="category">13588939680020394476<!--Order To Parent--></T>
+  <T n="display_name">0xFB56BE70<!--Perform Interaction--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

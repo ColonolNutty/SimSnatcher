@@ -1,0 +1,34 @@
+<I c="SituationJob" i="situation_job" m="situations.situation_job" n="SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle" s="13815321600439200334">
+  <T n="can_be_hired">False</T>
+  <E n="died_or_left_action">END_SITUATION</E>
+  <L n="emotional_setup">
+    <U>
+      <T n="single_sim_loot_actions">8281991620631746869<!--WeightedSingleSimLootActions: SimSnatcher_Abduction_Loot_Action_Abducted_NPC--></T>
+    </U>
+  </L>
+  <T n="filter">15940<!--BlankFilter: sim_filter_blank_do_not_touch--></T>
+  <T n="goal_scoring">10</T>
+  <V n="goodbye_notification" t="notification">
+    <V n="notification" t="reference">
+      <T n="reference">98015<!--Notification: notification_Sim_Goodbye--></T>
+    </V>
+  </V>
+  <L n="location_based_filter_terms">
+    <V t="reference">
+      <T n="reference">203033<!--LocationBasedFilterTerms: Keep_Strangeville_Npcs_In_Strangerville--></T>
+    </V>
+    <V t="reference">
+      <T n="reference">212643<!--LocationBasedFilterTerms: LocationBasedFilterTerm_Islander--></T>
+    </V>
+  </L>
+  <E n="no_show_action">DO_NOTHING</E>
+  <T n="participating_npcs_should_ignore_work">True</T>
+  <L n="sim_spawner_tags">
+    <E>Spawn_VisitorArrival</E>
+  </L>
+  <U n="tooltip_name_text_tokens">
+    <L n="tokens">
+      <V t="participant_type" />
+    </L>
+  </U>
+</I>

@@ -1,0 +1,7 @@
+<I c="SSSlaveryAttemptToEnslaveFailureInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.player.player_attempt_to_enslave_outcome" n="SimSnatcher_Slavery_Attempt_To_Enslave_Human_Failure" s="2873430086891705235">
+  <V n="_saveable" t="disabled" />
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

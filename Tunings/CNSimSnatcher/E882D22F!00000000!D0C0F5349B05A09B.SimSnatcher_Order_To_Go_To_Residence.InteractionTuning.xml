@@ -1,0 +1,10 @@
+<I c="SSOrderToGoToResidenceInteraction" i="interaction" m="cnsimsnatcher.order_to.interactions.order_to_go_to_residence" n="SimSnatcher_Order_To_Go_To_Residence" s="15042292361705398427">
+  <V n="_saveable" t="disabled" />
+  <T n="category">13588939680020394476<!--Order To Parent--></T>
+  <T n="display_name">0x5DF72476<!--Go To Residence--></T>
+  <T n="allow_autonomous">False</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

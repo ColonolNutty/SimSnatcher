@@ -1,0 +1,15 @@
+<I c="SSDebugLogAllInteractionsInteraction" i="interaction" m="cnsimsnatcher.debug.interactions.log_all_interactions" n="SimSnatcher_Debug_Log_All_Interactions" s="14801299013239108791">
+  <V n="_saveable" t="disabled" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="category">13588939680020394476<!--PieMenuCategory: Order To Pie Parent--></T>
+  <T n="display_name">0xBABE8AF7<!--Log All Interactions--></T>
+  <T n="pie_menu_priority">9</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

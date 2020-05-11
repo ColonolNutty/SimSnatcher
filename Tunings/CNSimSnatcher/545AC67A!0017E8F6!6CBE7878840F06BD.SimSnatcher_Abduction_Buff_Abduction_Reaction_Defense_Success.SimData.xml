@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SimData version="0x00000101" u="0x00000000">
+  <Instances>
+    <I name="SimSnatcher_Abduction_Buff_Abduction_Reaction_Defense_Success" schema="Buff" type="Object">
+      <T name="audio_sting_on_add">39B2AA4A-00000000-8AF8B916CF64C646</T>
+      <T name="audio_sting_on_remove">39B2AA4A-00000000-3BF33216A25546EA</T>
+      <T name="buff_description">0xBAF34350</T>
+      <T name="buff_name">0xF6187659</T>
+      <T name="icon">00B2D882-00000000-898BCC5A07F0F1D7</T>
+      <T name="mood_type">14634</T>
+      <T name="mood_weight">2</T>
+      <T name="timeout_string">0x00000000</T>
+      <T name="ui_sort_order">1</T>
+    </I>
+  </Instances>
+  <Schemas>
+    <Schema name="Buff" schema_hash="0x71722956">
+      <Columns>
+        <Column name="audio_sting_on_add" type="ResourceKey" flags="0x00000000" />
+        <Column name="audio_sting_on_remove" type="ResourceKey" flags="0x00000000" />
+        <Column name="buff_description" type="LocalizationKey" flags="0x00000000" />
+        <Column name="buff_name" type="LocalizationKey" flags="0x00000000" />
+        <Column name="icon" type="ResourceKey" flags="0x00000000" />
+        <Column name="mood_type" type="TableSetReference" flags="0x00000000" />
+        <Column name="mood_weight" type="Int32" flags="0x00000000" />
+        <Column name="timeout_string" type="LocalizationKey" flags="0x00000000" />
+        <Column name="ui_sort_order" type="Int32" flags="0x00000000" />
+      </Columns>
+    </Schema>
+  </Schemas>
+</SimData>

@@ -1,0 +1,7 @@
+<I c="SSAbductionAttemptToAbductFailureInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.player.player_attempt_to_abduct_outcome" n="SimSnatcher_Abduction_Attempt_To_Abduct_Human_Failure" s="8737107597856615939">
+  <V n="_saveable" t="disabled" />
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

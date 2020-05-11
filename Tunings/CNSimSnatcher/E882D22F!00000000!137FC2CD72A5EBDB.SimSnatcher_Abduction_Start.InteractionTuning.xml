@@ -1,0 +1,9 @@
+<I c="SSAbductionStartAbductionInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.player.player_start_abduction" n="SimSnatcher_Abduction_Start" s="1405055796410444763">
+  <V n="_saveable" t="disabled" />
+  <T n="category">14301318989422970065<!--Abduction Parent--></T>
+  <T n="display_name">0x0655D41C<!--Attempt To Abduct Sim--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

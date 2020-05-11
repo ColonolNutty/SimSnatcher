@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RelationshipBit" i="relbit" m="relationships.relationship_bit" n="SimSnatcher_Slavery_relBit_Sim_Is_Master_Of_Sim_RelBit" s="1350192551">
+  <E n="directionality">UNIDIRECTIONAL</E>
+  <T n="display_name">0xF9D01A72<!--Slave--></T>
+  <T n="icon" p="InGame\UI\Icons\Relationships\icon_r_neighbors.png">2f7d0004:00000000:4ac74d0ebe4ea19d</T>
+  <T n="visible">True</T>
+</I>

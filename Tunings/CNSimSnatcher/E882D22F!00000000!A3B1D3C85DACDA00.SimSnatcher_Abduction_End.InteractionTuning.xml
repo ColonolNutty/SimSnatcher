@@ -1,0 +1,9 @@
+<I c="SSAbductionEndAbductionInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.player.player_end_abduction" n="SimSnatcher_Abduction_End" s="11795441756578568704">
+  <V n="_saveable" t="disabled" />
+  <T n="category">14301318989422970065<!--Abduction Parent--></T>
+  <T n="display_name">0x3237D54A<!--Release Captive--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

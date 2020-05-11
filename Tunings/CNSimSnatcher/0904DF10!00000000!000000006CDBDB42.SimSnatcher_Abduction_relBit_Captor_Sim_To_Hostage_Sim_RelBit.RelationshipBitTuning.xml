@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RelationshipBit" i="relbit" m="relationships.relationship_bit" n="SimSnatcher_Abduction_relBit_Captor_Sim_To_Hostage_Sim_RelBit" s="1826347842">
+  <E n="directionality">BIDIRECTIONAL</E>
+  <T n="display_name">0x74873A6C<!--Engaged In Abduction With--></T>
+  <T n="icon" p="InGame\UI\Icons\Relationships\icon_r_neighbors.png">2f7d0004:00000000:4ac74d0ebe4ea19d</T>
+  <T n="visible">False</T>
+</I>
