@@ -15,8 +15,8 @@ except:
         pass
 
 
-class SSRelationshipBitId(Int):
-    """ Relationship Bit identifiers used by SS. """
+class SSAbductionRelationshipBitId(Int):
+    """ Relationship Bit identifiers used by SS Abduction. """
     CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT = 1826347842
     SIM_IS_CAPTIVE_OF_SIM_REL_BIT = 1469359226
     SIM_IS_CAPTOR_OF_REL_BIT = 1758575024

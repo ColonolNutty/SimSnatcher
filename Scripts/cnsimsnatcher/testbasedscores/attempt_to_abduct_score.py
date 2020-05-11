@@ -5,12 +5,12 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from cnsimsnatcher.abduction.enums.skill_ids import SSAbductionSkillId
+from cnsimsnatcher.abduction.settings.setting_utils import SSAbductionSettingUtils
 from interactions import ParticipantType
-from cnsimsnatcher.enums.skill_ids import SSSkillId
-from cnsimsnatcher.enums.statistic_ids import SSStatisticId
+from cnsimsnatcher.abduction.enums.statistic_ids import SSAbductionStatisticId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
-from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from event_testing.test_based_score import TestBasedScore
 from sims.sim_info import SimInfo
 from sims4.sim_irq_service import yield_to_irq
@@ -53,15 +53,15 @@ class SSAbductionAttemptToAbductTestBasedScore(TestBasedScore):
         sim_info = CommonSimUtils.get_sim_info(sim)
         target_sim_info = CommonSimUtils.get_sim_info(target)
         result = cls._get_result(sim_info, target_sim_info)
-        CommonSimStatisticUtils.set_statistic_value(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS, result)
+        CommonSimStatisticUtils.set_statistic_value(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS, result)
         return result
 
     @classmethod
     def _get_result(cls, sim_info: SimInfo, target_sim_info: SimInfo) -> int:
-        if SSSettingUtils().cheats.always_successful():
+        if SSAbductionSettingUtils().cheats.always_successful():
             log.debug('Guaranteed Abduction Attempt. Always successful setting is enabled.')
             return 1
-        if CommonSimSkillUtils.is_at_max_skill_level(sim_info, SSSkillId.SS_ABDUCTION):
+        if CommonSimSkillUtils.is_at_max_skill_level(sim_info, SSAbductionSkillId.ABDUCTION):
             log.debug('Success, Active Sim is max level Domination.')
             return 1
         if SSAbductionSuccessChanceOperation.abduction_is_successful(sim_info):

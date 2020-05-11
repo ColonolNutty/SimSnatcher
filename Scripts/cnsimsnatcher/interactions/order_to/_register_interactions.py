@@ -19,7 +19,7 @@ class _SSOrderToInteractionHandler(CommonScriptObjectInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_ORDER_TO_GO_TO_RESIDENCE,
+            SSInteractionId.SS_ORDER_TO_GO_TO_RESIDENCE,
         )
         return result
 
@@ -34,7 +34,7 @@ class _SSOrderToPerformInteractionInteractionHandler(CommonScriptObjectInteracti
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_ORDER_TO_PERFORM_INTERACTION,
+            SSInteractionId.SS_ORDER_TO_PERFORM_INTERACTION,
         )
         return result
 
@@ -49,7 +49,7 @@ class _SSOrderToTerrainInteractionHandler(CommonInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_ORDER_TO_GO_HERE,
-            SSInteractionId.SS_ABDUCTION_ORDER_TO_PERFORM_INTERACTION
+            SSInteractionId.SS_ORDER_TO_GO_HERE,
+            SSInteractionId.SS_ORDER_TO_PERFORM_INTERACTION
         )
         return result

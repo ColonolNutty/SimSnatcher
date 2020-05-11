@@ -18,7 +18,6 @@ from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 
 
 class SSAbductionEndAbductionInteraction(CommonImmediateSuperInteraction):

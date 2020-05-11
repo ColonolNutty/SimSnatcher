@@ -13,12 +13,12 @@ from sims4communitylib.services.interactions.interaction_registration_service im
 
 
 @CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
-class _SSAbductionLogAllInteractionsInteractionHandler(CommonScriptObjectInteractionHandler):
+class _SSLogAllInteractionsInteractionHandler(CommonScriptObjectInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_DEBUG_LOG_ALL_INTERACTIONS,
+            SSInteractionId.SS_DEBUG_LOG_ALL_INTERACTIONS,
         )
         return result
 
@@ -28,11 +28,11 @@ class _SSAbductionLogAllInteractionsInteractionHandler(CommonScriptObjectInterac
 
 
 @CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_TERRAIN_LOAD)
-class _SSAbductionLogAllInteractionsTerrainInteractionHandler(CommonInteractionHandler):
+class _SSLogAllInteractionsTerrainInteractionHandler(CommonInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_DEBUG_LOG_ALL_INTERACTIONS,
+            SSInteractionId.SS_DEBUG_LOG_ALL_INTERACTIONS,
         )
         return result

@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
 
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
+from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
 from objects.script_object import ScriptObject
 from sims4communitylib.services.interactions.interaction_registration_service import CommonInteractionRegistry, \
     CommonInteractionType, CommonScriptObjectInteractionHandler
@@ -20,7 +20,7 @@ class _SSAbductionDebugSimInteractionHandler(CommonScriptObjectInteractionHandle
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_DEBUG_CLEAR_ABDUCTION_DATA,
+            SSAbductionInteractionId.DEBUG_CLEAR_ABDUCTION_DATA,
         )
         return result
 

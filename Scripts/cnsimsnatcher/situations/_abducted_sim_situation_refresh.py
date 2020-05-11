@@ -6,7 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
+
+from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim_info import SimInfo
@@ -67,7 +68,7 @@ class _SSAbductionRefreshSituation(CommonService, HasLog):
                 self.log.debug('Refreshing the abduction status of \'{}\' for their captor \'{}\'.'.format(CommonSimNameUtils.get_full_name(captive_sim_info), CommonSimNameUtils.get_full_name(captor_sim_info)))
                 CommonSimInteractionUtils.queue_interaction(
                     captor_sim_info,
-                    SSInteractionId.SS_ABDUCTION_ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME,
+                    SSAbductionInteractionId.ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME,
                     target=sim_instance
                 )
             self.log.debug('Done refreshing enslaved status.')

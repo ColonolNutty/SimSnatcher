@@ -38,7 +38,7 @@ class SSAbductionAttemptToAbductSuccessInteraction(CommonImmediateSuperInteracti
         captive_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         result, reason = SSAbductionStateUtils().create_captive(captive_sim_info, captor_sim_info)
         if not result:
-            log.debug(reason)
+            self.log.debug(reason)
         SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captor_sim_info)
         SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captive_sim_info)
         self.log.debug('Finished succeeding abduction.')

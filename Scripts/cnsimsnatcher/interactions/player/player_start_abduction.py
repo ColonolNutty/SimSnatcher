@@ -7,6 +7,8 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
+from cnsimsnatcher.abduction.settings.setting_utils import SSAbductionSettingUtils
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from interactions.context import InteractionContext
@@ -15,7 +17,6 @@ from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOpe
 from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from event_testing.results import TestResult
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.utils.abduction_utils import SSAbductionUtils
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
@@ -42,7 +43,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
     @classmethod
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         cls.get_log().debug('Testing to see if sim can be abducted')
-        if not SSSettingUtils().interactions_are_enabled():
+        if not SSAbductionSettingUtils().interactions_are_enabled():
             cls.get_log().debug('Failed, Abduction interactions are disabled.')
             return TestResult.NONE
         if not CommonTypeUtils.is_sim_instance(interaction_target):
@@ -96,7 +97,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         self.log.debug('Queuing "Attempt To Abduct" interaction.')
         queue_result = CommonSimInteractionUtils.queue_interaction(
             sim_info,
-            SSInteractionId.SS_ABDUCTION_TRIGGER_ATTEMPT_TO_ABDUCT_HUMAN_DEFAULT,
+            SSAbductionInteractionId.TRIGGER_ATTEMPT_TO_ABDUCT_HUMAN_DEFAULT,
             target=CommonSimUtils.get_sim_instance(interaction_target),
             skip_if_running=True
         )

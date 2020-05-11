@@ -7,13 +7,13 @@ Copyright (c) COLONOLNUTTY
 """
 
 
-class SSSetting:
-    """ Settings used by SS. """
+class SSAbductionSetting:
+    """ Settings used by SS Abduction. """
+
+    # MAIN
+    ABDUCTION_INTERACTIONS_SWITCH = 'ss_abduction_interactions_switch'
 
     # CHEATS
-    SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER = 'ss_enable_debug_interactions_for_perform_interaction_order'
-
-    # DISCLAIMERS
-    ORDER_TO_DISCLAIMER_SHOWN = 'ss_order_to_disclaimer_shown'
+    ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH = 'ss_abduction_always_successful_switch'
 
     VERSION = 'version'

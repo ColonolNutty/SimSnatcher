@@ -7,13 +7,13 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
+from cnsimsnatcher.abduction.enums.statistic_ids import SSAbductionStatisticId
+from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from distributor.shared_messages import IconInfoData
 from interactions.interaction_finisher import FinishingType
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
-from cnsimsnatcher.enums.statistic_ids import SSStatisticId
-from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
 from sims.sim import Sim
@@ -66,19 +66,19 @@ class SSAbductionAttemptToAbductInteraction(CommonSocialMixerInteraction):
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         target_sim_instance = CommonSimUtils.get_sim_instance(target_sim_info)
-        success_commodity = CommonSimStatisticUtils.get_statistic_value(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS)
+        success_commodity = CommonSimStatisticUtils.get_statistic_value(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS)
         self.log.format_with_message('Checking if abduction is successful.', success_commodity=success_commodity)
         if SSAbductionSuccessChanceOperation.abduction_is_successful(sim_info):
             self.log.debug('Abduction was successful.')
             if CommonSimInteractionUtils.queue_interaction(
                 sim_info,
-                SSInteractionId.SS_ABDUCTION_ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME,
+                SSAbductionInteractionId.ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME,
                 target=target_sim_instance,
                 must_run_next=True
             ):
                 CommonBasicNotification(
-                    SSStringId.ABDUCTION,
-                    SSStringId.SIM_HAS_ABDUCTED_SIM,
+                    SSAbductionStringId.ABDUCTION,
+                    SSAbductionStringId.SIM_HAS_ABDUCTED_SIM,
                     description_tokens=(sim_info, target_sim_info)
                 ).show(
                     icon=IconInfoData(obj_instance=sim_info),
@@ -89,13 +89,13 @@ class SSAbductionAttemptToAbductInteraction(CommonSocialMixerInteraction):
             self.log.debug('Attempt not successful.')
             if CommonSimInteractionUtils.queue_interaction(
                 sim_info,
-                SSInteractionId.SS_ABDUCTION_ATTEMPT_TO_ABDUCT_HUMAN_FAILURE_OUTCOME,
+                SSAbductionInteractionId.ATTEMPT_TO_ABDUCT_HUMAN_FAILURE_OUTCOME,
                 target=target_sim_instance,
                 must_run_next=True
             ):
                 CommonBasicNotification(
-                    SSStringId.ABDUCTION,
-                    SSStringId.SIM_FAILED_TO_ABDUCT_SIM,
+                    SSAbductionStringId.ABDUCTION,
+                    SSAbductionStringId.SIM_FAILED_TO_ABDUCT_SIM,
                     description_tokens=(sim_info, target_sim_info)
                 ).show(
                     icon=IconInfoData(obj_instance=sim_info),

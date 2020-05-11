@@ -15,6 +15,6 @@ except:
         pass
 
 
-class SSSkillId(Int):
-    """ Skill identifiers used by SS. """
-    SS_ABDUCTION = 9691605280024687972
+class SSAbductionSituationId(Int):
+    """ Situation identifiers used by SS Abduction. """
+    PLAYER_ABDUCTED_NPC = 6077877712849474601

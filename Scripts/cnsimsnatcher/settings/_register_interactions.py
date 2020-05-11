@@ -20,7 +20,7 @@ class _SSOpenSettingsInteractionHandler(CommonScriptObjectInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ABDUCTION_OPEN_SETTINGS,
+            SSInteractionId.SS_OPEN_SETTINGS,
         )
         return result
 

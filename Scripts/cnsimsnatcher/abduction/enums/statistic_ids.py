@@ -15,7 +15,7 @@ except:
         pass
 
 
-class SSStatisticId(Int):
-    """ Statistic identifiers used by SS. """
-    SS_ABDUCTION_COMMODITY_WAS_SUCCESS = 7779095003538788002
+class SSAbductionStatisticId(Int):
+    """ Statistic identifiers used by SS Abduction. """
+    ABDUCTION_WAS_SUCCESS = 7779095003538788002
     SKILL_ABDUCTION_LEVEL = 16132061470889775549

@@ -6,45 +6,47 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Dict
+
+from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.settings import SSSetting
 from ssutilities.commonlib.data_management.common_settings_manager import CommonSettingsManager
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 
 
-class SSSettingsManager(CommonSettingsManager):
-    """ Manager of settings for SS. """
-    IDENTIFIER = 'ss_settings'
+class SSAbductionSettingsManager(CommonSettingsManager):
+    """ Manager of settings for SS Abduction. """
+    IDENTIFIER = 'ss_abduction_settings'
     MOD_IDENTITY = ModInfo.get_identity()
 
     @property
     def name(self) -> str:
         """ The name of the data manager. """
-        return SSSettingsManager.IDENTIFIER
+        return SSAbductionSettingsManager.IDENTIFIER
 
     @property
     def mod_identity(self) -> CommonModIdentity:
         """ The Identity of the mod that owns this class. """
-        return SSSettingsManager.MOD_IDENTITY
+        return SSAbductionSettingsManager.MOD_IDENTITY
 
     @property
     def log_identifier(self) -> str:
         """ An identifier for the Log of this class. """
-        return 'ss_mod_settings_manager'
+        return 'ss_abduction_mod_settings_manager'
 
     @property
     def _version(self) -> int:
-        return 4
+        return 1
 
     @property
     def _default_data(self) -> Dict[str, Any]:
         """ Default Settings. """
         return {
-            SSSetting.VERSION: self._version,
+            SSAbductionSetting.VERSION: self._version,
+
+            # Main
+            SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH: 1,
 
             # Cheats
-            SSSetting.ORDER_TO_DISCLAIMER_SHOWN: 0,
-
-            # Cheats
-            SSSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER: 0
+            SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH: 0
         }.copy()

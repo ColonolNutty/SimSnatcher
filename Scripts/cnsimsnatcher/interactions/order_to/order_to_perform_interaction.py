@@ -274,8 +274,8 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
                     SSSettingUtils().flag_disclaimer_as_shown()
 
                 CommonOkDialog(
-                    SSStringId.DISCLAIMER_NAME,
-                    SSStringId.SS_ABDUCTION_DISCLAIMER
+                    SSStringId.ORDER_TO_DISCLAIMER_NAME,
+                    SSStringId.ORDER_TO_DISCLAIMER_DESCRIPTION
                 ).show(on_acknowledged=_on_acknowledged)
 
         self.log.debug('Opening dialog.')

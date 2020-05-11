@@ -34,28 +34,18 @@ class SSSettingUtils(CommonService):
     def disclaimer_has_been_shown(self) -> bool:
         """ Determine if the disclaimer has been shown already. """
         from cnsimsnatcher.settings.settings import SSSetting
-        return self._settings_manager.get_setting(SSSetting.ABDUCTION_DISCLAIMER_SHOWN, variable_type=bool)
+        return self._settings_manager.get_setting(SSSetting.ORDER_TO_DISCLAIMER_SHOWN, variable_type=bool)
 
     def flag_disclaimer_as_shown(self) -> None:
         """ Flag the disclaimer as shown already so it no longer shows. """
         from cnsimsnatcher.settings.settings import SSSetting
-        self._settings_manager.set_setting(SSSetting.ABDUCTION_DISCLAIMER_SHOWN, 1)
-
-    def interactions_are_enabled(self) -> bool:
-        """ Determine if abduction interactions are enabled. """
-        from cnsimsnatcher.settings.settings import SSSetting
-        return self._settings_manager.get_setting(SSSetting.ABDUCTION_INTERACTIONS_SWITCH, variable_type=bool)
+        self._settings_manager.set_setting(SSSetting.ORDER_TO_DISCLAIMER_SHOWN, 1)
 
     class Cheats(CommonService):
         """ Cheat settings. """
         def __init__(self, settings_manager: CommonSettingsManager) -> None:
             super().__init__()
             self._settings_manager = settings_manager
-
-        def always_successful(self) -> bool:
-            """ Determine if attempted abductions will always succeed. """
-            from cnsimsnatcher.settings.settings import SSSetting
-            return self._settings_manager.get_setting(SSSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH, variable_type=bool)
 
         def should_show_debug_interactions_for_perform_interaction(self) -> bool:
             """ Determine if debug interactions should be filtered out of the Perform Interaction order. """

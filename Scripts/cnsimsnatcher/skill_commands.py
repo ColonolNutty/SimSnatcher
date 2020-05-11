@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 import sims4.commands
-from cnsimsnatcher.enums.skill_ids import SSSkillId
+from cnsimsnatcher.abduction.enums.skill_ids import SSAbductionSkillId
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.sims.common_sim_skill_utils import CommonSimSkillUtils
 
@@ -24,7 +24,7 @@ def _ss_command_set_sim_abduction_skill_level(*args, _connection: int=None):
         output('Incorrect <level> variable!')
         return
     if level > 0:
-        CommonSimSkillUtils.set_current_skill_level(sim_info, SSSkillId.SS_ABDUCTION, level)
+        CommonSimSkillUtils.set_current_skill_level(sim_info, SSAbductionSkillId.ABDUCTION, level)
     else:
-        CommonSimSkillUtils.remove_skill(sim_info, SSSkillId.SS_ABDUCTION)
+        CommonSimSkillUtils.remove_skill(sim_info, SSAbductionSkillId.ABDUCTION)
     output('Sim Abduction skill has been set to level {}.'.format(level))

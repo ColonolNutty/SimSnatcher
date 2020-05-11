@@ -6,6 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any
+
+from cnsimsnatcher.abduction.settings.setting_utils import SSAbductionSettingUtils
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
@@ -36,7 +38,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
     @classmethod
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         cls.get_log().format_with_message('Running \'{}\' on_test.'.format(cls.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target, interaction_context=interaction_context, kwargles=kwargs)
-        if not SSSettingUtils().interactions_are_enabled():
+        if not SSAbductionSettingUtils().interactions_are_enabled():
             cls.get_log().debug('Failed, Abduction interactions are disabled.')
             return TestResult.NONE
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):

@@ -6,8 +6,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Dict
-from cnsimsnatcher.enums.skill_ids import SSSkillId
-from cnsimsnatcher.enums.statistic_ids import SSStatisticId
+
+from cnsimsnatcher.abduction.enums.skill_ids import SSAbductionSkillId
+from cnsimsnatcher.abduction.enums.statistic_ids import SSAbductionStatisticId
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from sims.sim_info import SimInfo
 from ssutilities.commonlib.services.skillutility_service import CommonSkillUtilityService, CommonSkillIncreaseReason, CommonSkillDecreaseReason
@@ -44,12 +45,12 @@ class SSAbductionAbductionSkillUtilityService(CommonSkillUtilityService):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def skill_identifier(self) -> int:
-        return SSSkillId.SS_ABDUCTION
+        return SSAbductionSkillId.ABDUCTION
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def skill_commodity(self) -> int:
-        return SSStatisticId.SKILL_ABDUCTION_LEVEL
+        return SSAbductionStatisticId.SKILL_ABDUCTION_LEVEL
 
     # noinspection PyMissingOrEmptyDocstring
     @property

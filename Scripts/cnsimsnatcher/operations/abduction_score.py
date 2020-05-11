@@ -8,8 +8,8 @@ Copyright (c) COLONOLNUTTY
 import random
 from typing import Tuple
 
-from cnsimsnatcher.enums.skill_ids import SSSkillId
-from cnsimsnatcher.enums.statistic_ids import SSStatisticId
+from cnsimsnatcher.abduction.enums.skill_ids import SSAbductionSkillId
+from cnsimsnatcher.abduction.enums.statistic_ids import SSAbductionStatisticId
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.skills_enum import CommonSkillId
@@ -33,9 +33,9 @@ class SSAbductionSuccessChanceOperation:
         max_chance = 100
         modifier = 0
         # Sim skills
-        min_chance += SSAbductionSuccessChanceOperation._calculate_skill_chance(sim_info, SSSkillId.SS_ABDUCTION)
+        min_chance += SSAbductionSuccessChanceOperation._calculate_skill_chance(sim_info, SSAbductionSkillId.ABDUCTION)
         # Target skills
-        max_chance -= SSAbductionSuccessChanceOperation._calculate_skill_chance(target_sim_info, SSSkillId.SS_ABDUCTION)
+        max_chance -= SSAbductionSuccessChanceOperation._calculate_skill_chance(target_sim_info, SSAbductionSkillId.ABDUCTION)
 
         min_fitness_chance, max_fitness_chance = SSAbductionSuccessChanceOperation._calculate_fitness_chance(sim_info, target_sim_info)
         min_chance += min_fitness_chance
@@ -82,16 +82,16 @@ class SSAbductionSuccessChanceOperation:
     @staticmethod
     def abduction_is_successful(sim_info: SimInfo) -> bool:
         """ Determine if the abduction was successful. """
-        return CommonSimStatisticUtils.get_statistic_value(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS) == 1
+        return CommonSimStatisticUtils.get_statistic_value(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS) == 1
 
     @staticmethod
     def abduction_is_failure(sim_info: SimInfo) -> bool:
         """ Determine if the abduction was a failure. """
-        if not CommonSimStatisticUtils.has_statistic(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS):
+        if not CommonSimStatisticUtils.has_statistic(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS):
             return False
-        return CommonSimStatisticUtils.get_statistic_value(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS) != 1
+        return CommonSimStatisticUtils.get_statistic_value(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS) != 1
 
     @staticmethod
     def remove_abduction_success_statistic(sim_info: SimInfo):
         """ Reset the abduction success statistic. """
-        CommonSimStatisticUtils.remove_statistic(sim_info, SSStatisticId.SS_ABDUCTION_COMMODITY_WAS_SUCCESS)
+        CommonSimStatisticUtils.remove_statistic(sim_info, SSAbductionStatisticId.ABDUCTION_WAS_SUCCESS)
