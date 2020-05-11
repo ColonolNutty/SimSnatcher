@@ -23,16 +23,16 @@ from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_time_utils import CommonTimeUtils
 
 
-class SSAbductionDemandOperations:
-    """ Utilities for demand success. """
+class SSOrderToOperations:
+    """ Utilities for ordering Sims. """
     @staticmethod
     def demand_sim_go_to_home_lot(sim_info: SimInfo, target_sim_info: SimInfo) -> bool:
-        """ Demand a sim to go to the home lot of a sim. """
+        """ Demand a Sim to go to the home lot of a sim. """
         to_zone_id = CommonHouseholdUtils.get_household_lot_id(sim_info)
         if to_zone_id == services.current_zone_id():
             return False
 
-        additional_sims = SSAbductionDemandOperations._collect_always_travel_companions(sim_info)
+        additional_sims = SSOrderToOperations._collect_always_travel_companions(sim_info)
         additional_sims.append(CommonSimUtils.get_sim_instance(target_sim_info))
 
         sim = sim_info.get_sim_instance(allow_hidden_flags=ALL_HIDDEN_REASONS)

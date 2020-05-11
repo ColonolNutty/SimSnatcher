@@ -7,38 +7,44 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Dict
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.settings.settings import SSSetting
+from cnsimsnatcher.order_to.settings.settings import SSOrderToSetting
 from ssutilities.commonlib.data_management.common_settings_manager import CommonSettingsManager
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 
 
-class SSSettingsManager(CommonSettingsManager):
-    """ Manager of settings for SS. """
-    IDENTIFIER = 'ss_settings'
+class SSOrderToSettingsManager(CommonSettingsManager):
+    """ Manager of settings for SS Order To. """
+    IDENTIFIER = 'ss_order_to_settings'
     MOD_IDENTITY = ModInfo.get_identity()
 
     @property
     def name(self) -> str:
         """ The name of the data manager. """
-        return SSSettingsManager.IDENTIFIER
+        return SSOrderToSettingsManager.IDENTIFIER
 
     @property
     def mod_identity(self) -> CommonModIdentity:
         """ The Identity of the mod that owns this class. """
-        return SSSettingsManager.MOD_IDENTITY
+        return SSOrderToSettingsManager.MOD_IDENTITY
 
     @property
     def log_identifier(self) -> str:
         """ An identifier for the Log of this class. """
-        return 'ss_mod_settings_manager'
+        return 'sso_mod_settings_manager'
 
     @property
     def _version(self) -> int:
-        return 5
+        return 1
 
     @property
     def _default_data(self) -> Dict[str, Any]:
         """ Default Settings. """
         return {
-            SSSetting.VERSION: self._version,
+            SSOrderToSetting.VERSION: self._version,
+
+            # Cheats
+            SSOrderToSetting.ORDER_TO_DISCLAIMER_SHOWN: 0,
+
+            # Cheats
+            SSOrderToSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER: 0
         }.copy()

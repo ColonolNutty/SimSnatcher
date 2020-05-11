@@ -25,6 +25,7 @@ from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
+from sims4communitylib.utils.sims.common_sim_type_utils import CommonSimTypeUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
 from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
@@ -189,9 +190,10 @@ class SSSlaveryStateUtils(HasLog):
             self.log.debug('Attempting to remove situations.')
             CommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
             self.log.debug('Done removing sim from situations.')
-            self.log.debug('Making Sim leave.')
-            CommonSituationUtils.make_sim_leave(slave_sim_info)
-            self.log.debug('Made Sim leave.')
+            if not CommonSimTypeUtils.is_player_sim(slave_sim_info):
+                self.log.debug('Attempting to make Sim leave.')
+                CommonSituationUtils.make_sim_leave(slave_sim_info)
+                self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)

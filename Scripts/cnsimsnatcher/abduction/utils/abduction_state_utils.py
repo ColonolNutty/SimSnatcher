@@ -23,6 +23,7 @@ from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtil
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.enums.situations_enum import CommonSituationId
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
+from sims4communitylib.utils.sims.common_sim_type_utils import CommonSimTypeUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
 from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
@@ -160,9 +161,10 @@ class SSAbductionStateUtils(HasLog):
             self.log.debug('Attempting to remove situations.')
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
             self.log.debug('Done removing Sim from situations.')
-            self.log.debug('Attempting to make Sim leave.')
-            CommonSituationUtils.make_sim_leave(captive_sim_info)
-            self.log.debug('Done making Sim leave.')
+            if not CommonSimTypeUtils.is_player_sim(captive_sim_info):
+                self.log.debug('Attempting to make Sim leave.')
+                CommonSituationUtils.make_sim_leave(captive_sim_info)
+                self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)

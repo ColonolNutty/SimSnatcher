@@ -9,8 +9,8 @@ import routing
 import objects.terrain
 import sims4.math
 from typing import Any, Callable
-from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from interactions.base.interaction import Interaction
@@ -73,7 +73,7 @@ class SSOrderToDialog(HasLog):
         sim_info_list += tuple(SSSlaveryStateUtils().get_slaves(requester_sim_info))
 
         option_dialog = CommonChooseSimOptionDialog(
-            SSStringId.CHOOSE_A_SIM_FOR_ORDER,
+            SSOrderToStringId.CHOOSE_A_SIM_FOR_ORDER,
             0,
             on_close=_on_close
         )
@@ -93,8 +93,8 @@ class SSOrderToDialog(HasLog):
         if not option_dialog.has_options():
             self.log.debug('No captives or slaves found.')
             CommonOkDialog(
-                SSStringId.NO_CAPTIVES_OR_SLAVES,
-                SSStringId.NO_CAPTIVES_OR_SLAVES_FOUND_ON_ACTIVE_LOT,
+                SSOrderToStringId.NO_CAPTIVES_OR_SLAVES,
+                SSOrderToStringId.NO_CAPTIVES_OR_SLAVES_FOUND_ON_ACTIVE_LOT,
                 description_tokens=('', requester_sim_info)
             ).show()
             _on_close()

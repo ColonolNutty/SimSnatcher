@@ -5,6 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from cnsimsnatcher.order_to.settings.data.manager import SSOrderToSettingsManager
 from ssutilities.commonlib.data_management.data_manager_registry import CommonDataManagerRegistry
 from cnsimsnatcher.abduction.settings.data.manager import SSAbductionSettingsManager
 from cnsimsnatcher.settings.data.manager import SSSettingsManager
@@ -20,6 +21,7 @@ class SSDataManagerUtils(CommonService):
         self._global_mod_settings_manager: SSSettingsManager = None
         self._slavery_mod_settings_manager: SSSlaverySettingsManager = None
         self._abduction_mod_settings_manager: SSAbductionSettingsManager = None
+        self._order_to_mod_settings_manager: SSOrderToSettingsManager = None
 
     def get_global_mod_settings_manager(self) -> SSSettingsManager:
         """ Retrieve the Global Settings Manager. """
@@ -50,3 +52,13 @@ class SSDataManagerUtils(CommonService):
                     SSSlaverySettingsManager.IDENTIFIER
                 )
         return self._slavery_mod_settings_manager
+
+    def get_order_to_mod_settings_manager(self) -> SSOrderToSettingsManager:
+        """ Retrieve the Order To Settings Manager. """
+        if self._order_to_mod_settings_manager is None:
+            self._order_to_mod_settings_manager: SSOrderToSettingsManager = CommonDataManagerRegistry.get()\
+                .locate_data_manager(
+                    SSOrderToSettingsManager.MOD_IDENTITY,
+                    SSOrderToSettingsManager.IDENTIFIER
+                )
+        return self._order_to_mod_settings_manager

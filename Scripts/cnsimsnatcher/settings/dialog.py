@@ -11,15 +11,14 @@ from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from cnsimsnatcher.abduction.settings.dialog import SSAbductionSettingsDialog
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.settings.settings import SSSetting
+from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
+from cnsimsnatcher.order_to.settings.dialog import SSOrderToSettingsDialog
 from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
 from cnsimsnatcher.slavery.settings.dialog import SSSlaverySettingsDialog
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
     CommonDialogActionOption
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
-from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_branch_option import CommonDialogOpenDialogOption
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
-from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_toggle_option import CommonDialogToggleOption
 from sims4communitylib.dialogs.option_dialogs.common_choose_object_option_dialog import CommonChooseObjectOptionDialog
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -91,51 +90,12 @@ class SSSettingsDialog(HasLog):
         )
 
         option_dialog.add_option(
-            CommonDialogOpenDialogOption(
-                self._cheat_settings,
+            CommonDialogActionOption(
                 CommonDialogOptionContext(
-                    SSStringId.CHEAT_SETTINGS_NAME,
-                    SSStringId.CHEAT_SETTINGS_DESCRIPTION
-                )
-            )
-        )
-        return option_dialog
-
-    def _cheat_settings(self) -> CommonChooseObjectOptionDialog:
-        self.log.debug('Building SS Cheat Settings.')
-
-        def _on_close() -> None:
-            self.log.debug('SS Cheat Settings closed.')
-            self.open()
-
-        def _reopen(*_, **__) -> None:
-            self.log.debug('Reopening SS Cheat Settings.')
-            self._cheat_settings().show()
-
-        option_dialog = CommonChooseObjectOptionDialog(
-            SSStringId.CHEAT_SETTINGS_NAME,
-            SSStringId.CHEAT_SETTINGS_DESCRIPTION,
-            on_close=_on_close
-        )
-
-        def _on_setting_changed(setting_name: str, setting_value: bool):
-            if setting_value is not None:
-                self.log.debug('Updating Cheat setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
-                self._settings_manager.set_setting(setting_name, setting_value)
-            _reopen()
-
-        option_dialog.add_option(
-            CommonDialogToggleOption(
-                SSSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER,
-                self._settings_manager.get_setting(
-                    SSSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER,
-                    variable_type=bool
+                    SSOrderToStringId.ORDER_TO_SETTINGS_NAME,
+                    SSOrderToStringId.ORDER_TO_SETTINGS_DESCRIPTION,
                 ),
-                CommonDialogOptionContext(
-                    SSStringId.SHOW_DEBUG_INTERACTIONS_IN_PERFORM_INTERACTION_DIALOG_NAME,
-                    SSStringId.SHOW_DEBUG_INTERACTIONS_IN_PERFORM_INTERACTION_DIALOG_DESCRIPTION
-                ),
-                on_chosen=_on_setting_changed
+                on_chosen=SSOrderToSettingsDialog(on_close=_reopen).open
             )
         )
 

@@ -10,7 +10,7 @@ try:
     from cnsimsnatcher.enums.string_ids import SSStringId
     from cnsimsnatcher.modinfo import ModInfo
     from cnsimsnatcher.settings.dialog import SSSettingsDialog
-    from cnsimsnatcher.settings.open_settings import SSOpenSettingsInteraction
+    from cnsimsnatcher.settings.interactions.open_settings import SSOpenSettingsInteraction
     from typing import Callable, Any, Union
     from sims.sim_info import SimInfo
     from sims4communitylib.mod_support.mod_identity import CommonModIdentity

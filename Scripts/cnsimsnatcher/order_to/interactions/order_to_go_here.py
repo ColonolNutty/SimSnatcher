@@ -7,12 +7,12 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from distributor.shared_messages import IconInfoData
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
-from cnsimsnatcher.dialog.order_hostage_to_dialog import SSOrderToDialog
-from cnsimsnatcher.enums.string_ids import SSStringId
+from cnsimsnatcher.order_to.dialogs.order_hostage_to_dialog import SSOrderToDialog
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
@@ -24,12 +24,9 @@ from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
 from sims4communitylib.utils.sims.common_sim_location_utils import CommonSimLocationUtils
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
-from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
-
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_order_to_go_here')
 
 
 class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
@@ -77,6 +74,7 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity(), fallback_return=False)
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
+        self.log.format_with_message('Running \'{}\' on_started.'.format(self), interaction_sim=interaction_sim, interaction_target=interaction_target)
         self.log.debug('Running go to residence interaction')
         source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         location_position = CommonTerrainUtils.get_route_surface_position_from_interaction_context(self.context) or CommonTerrainUtils.get_route_surface_position(interaction_target)
@@ -91,15 +89,15 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
             ):
                 self.log.debug('Success, hostage will go there!')
                 CommonBasicNotification(
-                    SSStringId.ORDER_ACCEPTED,
-                    SSStringId.SIM_WILL_CARRY_OUT_ORDER,
+                    SSOrderToStringId.ORDER_ACCEPTED,
+                    SSOrderToStringId.SIM_WILL_CARRY_OUT_ORDER,
                     description_tokens=(hostage_sim_info, )
                 ).show(icon=IconInfoData(obj_instance=hostage_sim_info))
             else:
                 self.log.debug('Failed, could not tell hostage to go there!')
                 CommonBasicNotification(
-                    SSStringId.ORDER_REFUSED,
-                    SSStringId.SIM_REFUSED_TO_CARRY_OUT_ORDER,
+                    SSOrderToStringId.ORDER_REFUSED,
+                    SSOrderToStringId.SIM_REFUSED_TO_CARRY_OUT_ORDER,
                     description_tokens=(hostage_sim_info, )
                 ).show(icon=IconInfoData(obj_instance=hostage_sim_info))
 

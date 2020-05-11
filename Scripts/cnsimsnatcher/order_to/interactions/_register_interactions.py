@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
-from cnsimsnatcher.enums.interaction_ids import SSInteractionId
+from cnsimsnatcher.order_to.enums.interaction_ids import SSOrderToInteractionId
 from objects.script_object import ScriptObject
 from sims4communitylib.services.interactions.interaction_registration_service import CommonInteractionRegistry, \
     CommonInteractionType, CommonScriptObjectInteractionHandler, CommonInteractionHandler
@@ -19,7 +19,7 @@ class _SSOrderToInteractionHandler(CommonScriptObjectInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ORDER_TO_GO_TO_RESIDENCE,
+            SSOrderToInteractionId.GO_TO_RESIDENCE,
         )
         return result
 
@@ -34,7 +34,7 @@ class _SSOrderToPerformInteractionInteractionHandler(CommonScriptObjectInteracti
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ORDER_TO_PERFORM_INTERACTION,
+            SSOrderToInteractionId.PERFORM_INTERACTION,
         )
         return result
 
@@ -49,7 +49,7 @@ class _SSOrderToTerrainInteractionHandler(CommonInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSInteractionId.SS_ORDER_TO_GO_HERE,
-            SSInteractionId.SS_ORDER_TO_PERFORM_INTERACTION
+            SSOrderToInteractionId.GO_HERE,
+            SSOrderToInteractionId.PERFORM_INTERACTION
         )
         return result

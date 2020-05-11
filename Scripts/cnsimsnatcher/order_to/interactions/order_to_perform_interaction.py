@@ -7,13 +7,14 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
+from cnsimsnatcher.order_to.settings.setting_utils import SSOrderToSettingUtils
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from distributor.shared_messages import IconInfoData
 from event_testing.results import TestResult
 from interactions.base.interaction import Interaction
 from interactions.context import InteractionContext
-from cnsimsnatcher.dialog.order_hostage_to_dialog import SSOrderToDialog
-from cnsimsnatcher.enums.string_ids import SSStringId
+from cnsimsnatcher.order_to.dialogs.order_hostage_to_dialog import SSOrderToDialog
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
@@ -150,10 +151,10 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
                 current_obj_users = interaction_target.get_users(sims_only=True)
                 if len(current_obj_users) > 1:
                     cls.get_log().debug('Failed, Location is reserved by more than one sim.')
-                    return cls.create_test_result(False, reason='Object is reserved.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSStringId.OBJECT_IS_IN_USE))
+                    return cls.create_test_result(False, reason='Object is reserved.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSOrderToStringId.OBJECT_IS_IN_USE))
                 if len(current_obj_users) == 1:
                     cls.get_log().debug('Failed, Location is reserved already.')
-                    return cls.create_test_result(False, reason='The object is currently in use.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSStringId.OBJECT_IS_IN_USE))
+                    return cls.create_test_result(False, reason='The object is currently in use.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSOrderToStringId.OBJECT_IS_IN_USE))
         else:
             cls.get_log().debug('Failed, Target was not valid.')
             return TestResult.NONE
@@ -176,7 +177,7 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
             return True
 
         def _debug_interaction_with_name(interaction: Interaction) -> bool:
-            if SSSettingUtils().cheats.should_show_debug_interactions_for_perform_interaction():
+            if SSOrderToSettingUtils().cheats.should_show_debug_interactions_for_perform_interaction():
                 return True
             interaction_short_name = CommonInteractionUtils.get_interaction_short_name(interaction)
             self.log.format_with_message('Checking interaction with short name: ', interaction_short_name=interaction_short_name)
@@ -195,8 +196,8 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
             self.log.format_with_message('Found interactions', interactions=interactions_list)
             hostage_interaction_context: InteractionContext = self.context.clone_for_sim(hostage_sim_instance)
             option_dialog = CommonChooseObjectOptionDialog(
-                SSStringId.CHOOSE_INTERACTION,
-                SSStringId.CHOOSE_INTERACTION_TO_PERFORM,
+                SSOrderToStringId.CHOOSE_INTERACTION,
+                SSOrderToStringId.CHOOSE_INTERACTION_TO_PERFORM,
                 mod_identity=ModInfo.get_identity()
             )
 
@@ -209,15 +210,15 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
                 ):
                     self.log.debug('Success, Sim will do the interaction!')
                     CommonBasicNotification(
-                        SSStringId.ORDER_ACCEPTED,
-                        SSStringId.SIM_WILL_CARRY_OUT_ORDER,
+                        SSOrderToStringId.ORDER_ACCEPTED,
+                        SSOrderToStringId.SIM_WILL_CARRY_OUT_ORDER,
                         description_tokens=(hostage_sim_info, )
                     ).show(icon=IconInfoData(obj_instance=hostage_sim_info))
                 else:
                     self.log.debug('Failed, could not tell Sim will do the interaction!')
                     CommonBasicNotification(
-                        SSStringId.ORDER_REFUSED,
-                        SSStringId.SIM_REFUSED_TO_CARRY_OUT_ORDER,
+                        SSOrderToStringId.ORDER_REFUSED,
+                        SSOrderToStringId.SIM_REFUSED_TO_CARRY_OUT_ORDER,
                         description_tokens=(hostage_sim_info, )
                     ).show(icon=IconInfoData(obj_instance=hostage_sim_info))
 
@@ -259,23 +260,23 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
             if not option_dialog.has_options():
                 self.log.debug('No interactions found.')
                 CommonOkDialog(
-                    SSStringId.NO_INTERACTIONS_FOUND,
+                    SSOrderToStringId.NO_INTERACTIONS_FOUND,
                     0
                 ).show()
                 return
 
-            if SSSettingUtils().disclaimer_has_been_shown():
+            if SSOrderToSettingUtils().disclaimer_has_been_shown():
                 self.log.debug('Showing interaction dialog.')
                 option_dialog.show(sim_info=hostage_sim_info)
             else:
                 def _on_acknowledged(_: Any) -> None:
                     self.log.debug('Showing interaction dialog.')
                     option_dialog.show(sim_info=hostage_sim_info)
-                    SSSettingUtils().flag_disclaimer_as_shown()
+                    SSOrderToSettingUtils().flag_disclaimer_as_shown()
 
                 CommonOkDialog(
-                    SSStringId.ORDER_TO_DISCLAIMER_NAME,
-                    SSStringId.ORDER_TO_DISCLAIMER_DESCRIPTION
+                    SSOrderToStringId.ORDER_TO_DISCLAIMER_NAME,
+                    SSOrderToStringId.ORDER_TO_DISCLAIMER_DESCRIPTION
                 ).show(on_acknowledged=_on_acknowledged)
 
         self.log.debug('Opening dialog.')
