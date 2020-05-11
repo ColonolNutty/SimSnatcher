@@ -12,7 +12,7 @@ from cnsimsnatcher.slavery.operations.enslave_score import SSEnslaveAttemptSucce
 from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from cnsimsnatcher.slavery.utils.slavery_utils import SSSlaveryUtils
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from interactions.context import InteractionContext

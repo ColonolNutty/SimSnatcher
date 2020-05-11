@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
@@ -31,7 +31,7 @@ class SSAbductionEndAbductionInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_end_abduction'
+        return 'ssa_end_abduction'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod

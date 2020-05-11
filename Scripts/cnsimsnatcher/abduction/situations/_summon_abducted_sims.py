@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Tuple
 
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from protocolbuffers.Math_pb2 import Vector3
 from routing import Location
 from sims.sim_info import SimInfo
@@ -36,7 +36,7 @@ class _SSAbductionSummonHostages(HasLog):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 'ss_abduction_summon_hostages'
+        return 'ssa_summon_hostages'
 
     def _summon_hostages(self, zone: Zone, household_id: int) -> bool:
         self.log.debug('Attempting to summon hostage Sims to active lot.')

@@ -13,12 +13,12 @@ from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from event_testing.results import TestResult
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
-from cnsimsnatcher.utils.abduction_utils import SSAbductionUtils
+from cnsimsnatcher.abduction.utils.abduction_utils import SSAbductionUtils
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
@@ -37,7 +37,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_abduction'
+        return 'ssa_start_abduction'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -54,16 +54,16 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             cls.get_log().debug('Failed, Active Sim or Target Sim is not available for interactions.')
             return TestResult.NONE
-        if not SSAbductionUtils.can_engage_in_abduction(sim_info) or not SSAbductionUtils.can_engage_in_abduction(target_sim_info):
+        if not SSAbductionUtils().can_engage_in_abduction(sim_info) or not SSAbductionUtils().can_engage_in_abduction(target_sim_info):
             cls.get_log().debug('Failed, Active Sim or Target Sim cannot engage in abduction.')
             return TestResult.NONE
         if sim_info is target_sim_info:
             cls.get_log().debug('Failed, Cannot abduct self')
             return TestResult.NONE
-        if not SSAbductionUtils.is_allowed_to_abduct_others(sim_info):
+        if not SSAbductionUtils().is_allowed_to_abduct_others(sim_info):
             cls.get_log().debug('Failed, Active Sim not allowed to abduct other sims.')
             return TestResult.NONE
-        if not SSAbductionUtils.is_allowed_to_be_abducted(target_sim_info):
+        if not SSAbductionUtils().is_allowed_to_be_abducted(target_sim_info):
             cls.get_log().debug('Failed, Target Sim is not allowed to be abducted.')
             return TestResult.NONE
         if CommonSimStateUtils.is_dying(sim_info):

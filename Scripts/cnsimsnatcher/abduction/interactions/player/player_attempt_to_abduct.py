@@ -15,7 +15,7 @@ from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimI
 from distributor.shared_messages import IconInfoData
 from interactions.interaction_finisher import FinishingType
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
+from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_social_mixer_interaction import CommonSocialMixerInteraction
 from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
@@ -34,7 +34,7 @@ class SSAbductionAttemptToAbductInteraction(CommonSocialMixerInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_abduction'
+        return 'ssa_start_abduction'
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:

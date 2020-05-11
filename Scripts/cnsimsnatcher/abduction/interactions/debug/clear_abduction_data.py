@@ -12,7 +12,7 @@ from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -32,7 +32,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_clear_abduction_data'
+        return 'ssa_clear_abduction_data'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod

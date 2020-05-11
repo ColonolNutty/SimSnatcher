@@ -8,8 +8,8 @@ Copyright (c) COLONOLNUTTY
 from typing import Any
 
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -27,7 +27,7 @@ class SSAbductionAttemptToAbductSuccessInteraction(CommonImmediateSuperInteracti
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_abduction'
+        return 'ssa_start_abduction'
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
@@ -56,7 +56,7 @@ class SSAbductionAttemptToAbductFailureInteraction(CommonImmediateSuperInteracti
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 'ss_start_abduction'
+        return 'ssa_start_abduction'
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:

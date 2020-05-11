@@ -9,7 +9,6 @@ from typing import Any, Dict
 
 from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.settings.settings import SSSetting
 from ssutilities.commonlib.data_management.common_settings_manager import CommonSettingsManager
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 

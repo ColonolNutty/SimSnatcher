@@ -26,11 +26,8 @@ from sims4communitylib.exceptions.common_exceptions_handler import CommonExcepti
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
 from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
-from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_abduction_state_utils')
 
 
 class SSAbductionStateUtils(HasLog):
@@ -44,7 +41,7 @@ class SSAbductionStateUtils(HasLog):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 'ss_abduction_state_utils'
+        return 'ssa_state_utils'
 
     def has_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> bool:
         """ Determine if a Sim has abducted any Sims. """

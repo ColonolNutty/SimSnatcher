@@ -9,7 +9,7 @@ from typing import Any
 
 from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.events.interval.common_interval_event_service import CommonIntervalEventRegistry
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
@@ -35,7 +35,7 @@ class _SSAbductionRefreshSituation(CommonService, HasLog):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 'ss_abduction_refresh_situation'
+        return 'ssa_refresh_situation'
 
     def _refresh_sim_situations(self, *_, **__) -> bool:
         sims_needing_refresh = CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=self._state_utils.has_invalid_abduction_state)

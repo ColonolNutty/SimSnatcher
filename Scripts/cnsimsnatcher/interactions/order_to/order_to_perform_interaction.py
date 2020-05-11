@@ -16,7 +16,7 @@ from cnsimsnatcher.dialog.order_hostage_to_dialog import SSOrderToDialog
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from sims.sim_info import SimInfo
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction

@@ -13,7 +13,6 @@ from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.objects.common_object_interaction_utils import CommonObjectInteractionUtils
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils

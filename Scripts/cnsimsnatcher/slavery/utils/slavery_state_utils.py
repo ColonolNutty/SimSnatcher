@@ -126,7 +126,7 @@ class SSSlaveryStateUtils(HasLog):
         try:
             if slave_sim_info is master_sim_info:
                 return False, 'Failed, \'{}\' cannot be a Slave to themselves.'.format(slave_sim_name)
-            from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+            from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
             if not SSAbductionStateUtils().release_captive(slave_sim_info):
                 return False, 'Failed, failed to clear abduction data before converting \'{}\' to Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
             if not CommonRelationshipUtils.has_met(master_sim_info, slave_sim_info) and not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, CommonRelationshipBitId.HAS_MET):

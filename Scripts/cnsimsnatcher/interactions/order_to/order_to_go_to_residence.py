@@ -13,7 +13,7 @@ from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.operations.order_operations import SSAbductionDemandOperations
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_super_interaction import CommonSuperInteraction
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler

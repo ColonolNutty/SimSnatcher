@@ -12,7 +12,7 @@ from typing import Any, Callable
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
-from cnsimsnatcher.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from interactions.base.interaction import Interaction
 from interactions.context import InteractionContext
 from server.pick_info import PickType

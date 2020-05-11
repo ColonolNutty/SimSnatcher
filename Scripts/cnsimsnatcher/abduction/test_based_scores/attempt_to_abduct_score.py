@@ -10,7 +10,7 @@ from cnsimsnatcher.abduction.settings.setting_utils import SSAbductionSettingUti
 from interactions import ParticipantType
 from cnsimsnatcher.abduction.enums.statistic_ids import SSAbductionStatisticId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.operations.abduction_score import SSAbductionSuccessChanceOperation
+from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
 from event_testing.test_based_score import TestBasedScore
 from sims.sim_info import SimInfo
 from sims4.sim_irq_service import yield_to_irq
@@ -20,7 +20,7 @@ from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimSta
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_attempt_to_abduct_score')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ssa_attempt_to_abduct_score')
 
 
 class SSAbductionAttemptToAbductTestBasedScore(TestBasedScore):
