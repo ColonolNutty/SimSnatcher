@@ -13,6 +13,7 @@ from cnsimsnatcher.abduction.enums.situation_ids import SSAbductionSituationId
 from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from cnsimsnatcher.abduction.enums.trait_ids import SSAbductionTraitId
 from cnsimsnatcher.enums.buff_ids import SSBuffId
+from cnsimsnatcher.enums.relationship_track_ids import SSRelationshipTrackId
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_log import HasLog
@@ -113,6 +114,7 @@ class SSAbductionStateUtils(HasLog):
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+            CommonRelationshipUtils.change_relationship_level_of_sims(captive_sim_info, captor_sim_info, SSRelationshipTrackId.OBEDIENCE, 50.0)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Captive \'{}\' with Captor \'{}\'.'.format(captive_sim_name, captor_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'

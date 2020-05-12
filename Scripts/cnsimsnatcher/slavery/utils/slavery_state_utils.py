@@ -124,6 +124,7 @@ class SSSlaveryStateUtils(HasLog):
         if slave_sim_info is None or master_sim_info is None:
             return False, 'Failed, missing Slave or Master data.'
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
+        master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
         try:
             if slave_sim_info is master_sim_info:
                 return False, 'Failed, \'{}\' cannot be a Slave to themselves.'.format(slave_sim_name)
@@ -142,7 +143,7 @@ class SSSlaveryStateUtils(HasLog):
             CommonBuffUtils.add_buff(slave_sim_info, SSBuffId.PREVENT_LEAVE_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSSlaveryStringId.BEING_ENSLAVED))
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
         except Exception as ex:
-            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\'.'.format(slave_sim_name), exception=ex)
+            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
 

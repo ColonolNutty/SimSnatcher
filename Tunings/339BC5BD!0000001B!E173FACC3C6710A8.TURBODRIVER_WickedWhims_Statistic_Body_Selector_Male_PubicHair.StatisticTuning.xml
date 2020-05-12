@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Commodity" i="statistic" m="statistics.commodity" n="TURBODRIVER:WickedWhims_Statistic_Body_Selector_Male_PubicHair" s="16245604035949170856">
+  <T n="_default_convergence_value">0</T>
+  <E n="_time_passage_fixup_type">DO_NOT_FIXUP</E>
+  <U n="arrow_data">
+    <T n="negative_double_arrow">-20</T>
+    <T n="negative_single_arrow">-1</T>
+    <T n="negative_triple_arrow">-30</T>
+    <T n="positive_double_arrow">20</T>
+    <T n="positive_single_arrow">1</T>
+    <T n="positive_triple_arrow">30</T>
+  </U>
+  <T n="decay_rate">0.0</T>
+  <E n="gallery_load_behavior">DONT_LOAD</E>
+  <U n="initial_tuning">
+    <T n="_use_auto_satisfy_curve_as_initial_value">False</T>
+    <T n="_value">0.0</T>
+  </U>
+  <T n="min_value_tuning">0.0</T>
+  <T n="max_value_tuning">99999999.0</T>
+  <T n="remove_on_convergence">False</T>
+  <T n="ui_sort_order">0</T>
+</I>
