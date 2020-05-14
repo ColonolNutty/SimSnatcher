@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RelationshipTrack" i="statistic" m="relationships.relationship_track" n="SimSnatcher_LTR_Obedience_Main" s="3550104368">
+  <L n="_decay_rate_overrides">
+    <U>
+      <T n="decay_override">0.00104</T>
+      <U n="interval">
+        <T n="lower_bound">0</T>
+        <T n="upper_bound">60</T>
+      </U>
+    </U>
+    <U>
+      <T n="decay_override">0.000695</T>
+      <U n="interval">
+        <T n="lower_bound">60</T>
+        <T n="upper_bound">100</T>
+      </U>
+    </U>
+    <U>
+      <T n="decay_override">0.000695</T>
+      <U n="interval">
+        <T n="lower_bound">100</T>
+        <T n="upper_bound">100</T>
+      </U>
+    </U>
+  </L>
+  <T n="_default_convergence_value">0</T>
+  <T n="_neutral_bit">832837799<!--SimSnatcher_Obedience_relationshipBits_No_Obedience--></T>
+  <L n="ad_data">
+    <U>
+      <T n="x">-100</T>
+      <T n="y">0</T>
+    </U>
+    <U>
+      <T n="x">0</T>
+      <T n="y">1</T>
+    </U>
+    <U>
+      <T n="x">35</T>
+      <T n="y">1.5</T>
+    </U>
+    <U>
+      <T n="x">100</T>
+      <T n="y">1.75</T>
+    </U>
+  </L>
+  <V n="bit_data_tuning" t="bit_set">
+    <U n="bit_set">
+      <L n="bit_data">
+        <U>
+          <T n="add_value">35</T>
+          <T n="bit">44559644<!--SimSnatcher_Obedience_relationshipBits_Low_Obedience--></T>
+          <T n="remove_value">0</T>
+        </U>
+        <U>
+          <T n="add_value">60</T>
+          <T n="bit">4197058299<!--SimSnatcher_Obedience_relationshipBits_Medium_Obedience--></T>
+          <T n="remove_value">55</T>
+        </U>
+        <U>
+          <T n="add_value">80</T>
+          <T n="bit">2721362982<!--SimSnatcher_Obedience_relationshipBits_High_Obedience--></T>
+          <T n="remove_value">70</T>
+        </U>
+        <U>
+          <T n="add_value">100</T>
+          <T n="bit">1486572297<!--SimSnatcher_Obedience_relationshipBits_Full_Obedience--></T>
+          <T n="remove_value">90</T>
+        </U>
+      </L>
+    </U>
+  </V>
+  <T n="causes_delayed_removal_on_convergence">True</T>
+  <V n="decay_affecting_played_sims" t="enabled">
+    <U n="enabled">
+      <U n="range_decay_threshold">
+        <T n="lower_bound">-20</T>
+        <T n="upper_bound">20</T>
+      </U>
+    </U>
+  </V>
+  <T n="decay_rate">0.000695</T>
+  <V n="delay_until_decay_is_applied" t="enabled">
+    <T n="enabled">1440</T>
+  </V>
+  <T n="display_popup_priority">1</T>
+  <T n="display_priority">0</T>
+  <V n="headline" t="enabled">
+    <T n="enabled">3517493183<!--SimSnatcher_Obedience_relationship_headline--></T>
+  </V>
+  <T n="initial_value">0</T>
+  <T n="min_value_tuning">0</T>
+  <T n="max_value_tuning">100</T>
+  <T n="persist_at_convergence">True</T>
+  <U n="relationship_obj_prefence_curve">
+    <L n="curve_points">
+      <U>
+        <T n="x">-100</T>
+      </U>
+      <U />
+      <U>
+        <T n="x">100</T>
+        <T n="y">100</T>
+      </U>
+    </L>
+  </U>
+  <V n="species_requirements" t="enabled">
+    <U n="enabled">
+      <L n="species_list_one">
+        <E>HUMAN</E>
+        <E>CAT</E>
+        <E>DOG</E>
+      </L>
+      <L n="species_list_two">
+        <E>HUMAN</E>
+        <E>CAT</E>
+        <E>DOG</E>
+      </L>
+    </U>
+  </V>
+</I>

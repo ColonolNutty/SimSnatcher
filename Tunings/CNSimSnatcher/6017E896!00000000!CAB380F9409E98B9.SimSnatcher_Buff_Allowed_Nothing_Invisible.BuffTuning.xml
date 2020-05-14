@@ -1,5 +1,5 @@
 <I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Buff_Allowed_Nothing_Invisible" s="14606159824511998137">
-  <L n="_appropriateness_tags">
+  <L n="_inappropriateness_tags">
 	<E>Appropriateness_Bartending</E>
 	<E>Appropriateness_Bathing</E>
 	<E>Appropriateness_Cake</E>

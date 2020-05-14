@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SimData version="0x00000100" u="0x00000000">
+  <Instances>
+    <I name="SimSnatcher_LTR_Obedience_Main" schema="RelationshipTrack" type="Object">
+      <T name="display_popup_priority">1</T>
+      <T name="display_priority">0</T>
+    </I>
+  </Instances>
+  <Schemas>
+    <Schema name="RelationshipTrack" schema_hash="0x728E4793">
+      <Columns>
+        <Column name="display_popup_priority" type="Int32" flags="0x00000000" />
+        <Column name="display_priority" type="Int32" flags="0x00000000" />
+      </Columns>
+    </Schema>
+  </Schemas>
+</SimData>

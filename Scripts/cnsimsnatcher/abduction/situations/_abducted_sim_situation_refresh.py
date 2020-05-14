@@ -78,6 +78,6 @@ class _SSAbductionRefreshSituation(CommonService, HasLog):
         return True
 
 
-@CommonIntervalEventRegistry.run_every(ModInfo.get_identity())
+# @CommonIntervalEventRegistry.run_every(ModInfo.get_identity())
 def _ss_abduction_refresh_abducted_sim_situations_on_game_update(*_, **__) -> Any:
     return _SSAbductionRefreshSituation()._refresh_sim_situations(*_, **__)

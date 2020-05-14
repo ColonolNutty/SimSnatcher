@@ -1,0 +1,53 @@
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Buff_Trait_Captive" s="4145718180400226536">
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="icon" p="InGame\UI\Icons\Debug\missing_image.png">2f7d0004:00000000:30f0846c783606f9</T>
+  <T n="show_timeout">False</T>
+  <T n="visible">False</T>
+  <V n="auto_situation" t="enabled">
+    <U n="enabled">
+      <V n="actor_init_job" t="specify_job">
+        <T n="specify_job">17290962707486841600<!--SimSnatcher_Abduction_Situation_Job_Abducted_NPC--></T>
+      </V>
+      <T n="situation">6077877712849474601<!--SimSnatcher_Abduction_Situation_Player_Has_Abducted_NPC--></T>
+      <V n="situation_guest_info" t="enabled">
+        <U n="enabled">
+          <E n="request_spawning_option">CANNOT_SPAWN</E>
+        </U>
+      </V>
+      <T n="user_facing">False</T>
+    </U>
+  </V>
+  <V n="routing_periodic_stat_change" t="enabled">
+    <U n="enabled">
+      <L n="operations">
+        <V t="statistic_change">
+          <U n="statistic_change">
+            <T n="amount">5</T>
+            <T n="stat">16655<!--motive_Fun--></T>
+            <L n="subject">
+              <E>Actor</E>
+            </L>
+          </U>
+        </V>
+        <V t="dynamic_skill">
+          <U n="dynamic_skill">
+            <U n="skill_loot_data_override">
+              <E n="effectiveness">StandardPeriodic</E>
+              <T n="stat">16659<!--skill_Fitness--></T>
+            </U>
+          </U>
+        </V>
+        <V t="statistic_change">
+          <U n="statistic_change">
+            <T n="amount">1</T>
+            <T n="stat">227648<!--commodity_Object_Bike_Buff--></T>
+            <L n="subject">
+              <E>Actor</E>
+            </L>
+          </U>
+        </V>
+      </L>
+    </U>
+  </V>
+</I>

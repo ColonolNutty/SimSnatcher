@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RelationshipBit" i="relbit" m="relationships.relationship_bit" n="SimSnatcher_Obedience_relationshipBits_Medium_Obedience" s="4197058299">
+  <L n="bit_added_loot_list">
+    <T>192941<!--loot_Reputation_Gain_Large--></T>
+    <T>195353<!--loot_DramaNode_Reputation_Dialog_Good_Friends--></T>
+  </L>
+  <V n="bit_added_notification" t="enabled">
+    <U n="enabled">
+      <V n="notification" t="literal">
+        <U n="literal">
+          <V n="icon" t="enabled">
+            <V n="enabled" t="participant">
+              <U n="participant">
+                <L n="participant_type">
+                  <E>TargetSim</E>
+                </L>
+              </U>
+            </V>
+          </V>
+          <V n="secondary_icon" t="enabled">
+            <V n="enabled" t="participant" />
+          </V>
+          <V n="text" t="single">
+            <T n="single">0x81524F7F<!--{1.SimFirstName} just became Good Friends with {0.SimFirstName}.--></T>
+          </V>
+        </U>
+      </V>
+    </U>
+  </V>
+  <T n="bit_description">0x671CB37A<!--Medium Obedience Description--></T>
+  <L n="buffs_on_add_bit">
+    <U>
+      <U n="buff_ref">
+        <V n="buff_reason" t="enabled">
+          <T n="enabled">0xB7E97F7F<!--(From Socialization)--></T>
+        </V>
+        <T n="buff_type">12472<!--Buff_NewGoodFriend--></T>
+      </U>
+    </U>
+  </L>
+  <L n="buffs_to_add_if_on_active_lot">
+    <U>
+      <T n="buff_type">75272<!--buff_RelationshipAppropriateness_Friends--></T>
+    </U>
+  </L>
+  <L n="collection_ids">
+    <E>SSObedience</E>
+  </L>
+  <T n="depth">50</T>
+  <T n="display_name">0xAB3AA9F4<!--Medium Obedience--></T>
+  <T n="icon" p="InGame\UI\Icons\Relationships\icon_r_goodfriends.png">2f7d0004:00000000:74bdd7ff248bac12</T>
+  <T n="priority">100</T>
+  <E n="relationship_culling_prevention">PLAYED_AND_UNPLAYED</E>
+  <T n="triggered_track">3550104368<!--SimSnatcher_LTR_Obedience_Main--></T>
+</I>

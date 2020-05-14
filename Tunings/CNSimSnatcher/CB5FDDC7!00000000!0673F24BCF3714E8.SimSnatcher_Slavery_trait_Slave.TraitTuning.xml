@@ -8,6 +8,20 @@
     <E>ADULT</E>
     <E>ELDER</E>
   </L>
+  <L n="conflicting_traits">
+    <T>17755269199929665496<!--SimSnatcher_Abduction_trait_Captive--></T>
+  </L>
+  <L n="buffs">
+    <U>
+      <T n="buff_type">17783615372645687397<!--SimSnatcher_Buff_Prevent_Leave_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">14606159824511998137<!--SimSnatcher_Buff_Allowed_Nothing_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">7485149001666339643<!--SimSnatcher_Buff_Trait_Slave--></T>
+    </U>
+  </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0xF9D01A72<!--Slave--></T>
   <T n="display_name_gender_neutral">0xF9D01A72<!--Slave--></T>

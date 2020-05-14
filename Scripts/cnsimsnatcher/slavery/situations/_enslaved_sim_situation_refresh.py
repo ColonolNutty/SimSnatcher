@@ -77,6 +77,6 @@ class _SSSlaveryRefreshSituation(CommonService, HasLog):
         return True
 
 
-@CommonIntervalEventRegistry.run_every(ModInfo.get_identity())
+# @CommonIntervalEventRegistry.run_every(ModInfo.get_identity())
 def _ss_slavery_refresh_enslaved_sim_situations_on_game_update(*_, **__) -> Any:
     return _SSSlaveryRefreshSituation()._refresh_sim_situations(*_, **__)

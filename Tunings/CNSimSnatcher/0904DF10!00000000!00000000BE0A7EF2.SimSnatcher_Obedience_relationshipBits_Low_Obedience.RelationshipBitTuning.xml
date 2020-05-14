@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RelationshipBit" i="relbit" m="relationships.relationship_bit" n="SimSnatcher_Obedience_relationshipBits_Low_Obedience" s="3188358898">
+  <L n="bit_added_loot_list">
+    <T>126429<!--loot_DramaNode_NewFriend--></T>
+    <T>129296<!--Loot_HasBeenFriends--></T>
+    <T>165657<!--loot_ChildhoodPhase_Reduction_Clingy_NewFriend--></T>
+    <T>192939<!--loot_Reputation_Gain_Medium--></T>
+    <T>202261<!--loot_Celebrity_StanRemove--></T>
+  </L>
+  <V n="bit_added_notification" t="disabled" />
+  <T n="bit_description">0xFE578B7B<!--Low Obedience Description.--></T>
+  <L n="buffs_on_add_bit">
+    <U>
+      <U n="buff_ref">
+        <V n="buff_reason" t="enabled">
+          <T n="enabled">0x30C86379<!--(From Making a Friend)--></T>
+        </V>
+        <T n="buff_type">97650<!--buff_Relationship_NewFriend--></T>
+      </U>
+      <T n="only_add_once">True</T>
+    </U>
+  </L>
+  <L n="buffs_to_add_if_on_active_lot">
+    <U>
+      <T n="buff_type">74424<!--buff_Relationship_VeryAppropriate--></T>
+    </U>
+  </L>
+  <L n="collection_ids">
+    <E>SSObedience</E>
+  </L>
+  <T n="depth">25</T>
+  <T n="display_name">0x2DD08DE1<!--Low Obedience--></T>
+  <T n="icon" p="InGame\UI\Icons\Relationships\icon_r_friends.png">2f7d0004:00000000:8c2bd9ca6b51cfbf</T>
+  <T n="priority">100</T>
+  <E n="relationship_culling_prevention">PLAYED_AND_UNPLAYED</E>
+  <T n="triggered_track">3550104368<!--SimSnatcher_LTR_Obedience_Main--></T>
+</I>

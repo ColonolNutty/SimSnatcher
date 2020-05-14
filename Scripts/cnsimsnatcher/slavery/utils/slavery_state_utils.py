@@ -17,6 +17,7 @@ from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
 from cnsimsnatcher.slavery.enums.trait_ids import SSSlaveryTraitId
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
+from sims4communitylib.enums.tags_enum import CommonGameTag
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -139,13 +140,57 @@ class SSSlaveryStateUtils(HasLog):
                 self.log.error('Failed to add Master Relationship Bit.')
             if not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT):
                 self.log.error('Failed to add Slave Relationship Bit.')
-            CommonBuffUtils.add_buff(slave_sim_info, SSBuffId.ALLOWED_NOTHING_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSSlaveryStringId.BEING_ENSLAVED))
-            CommonBuffUtils.add_buff(slave_sim_info, SSBuffId.PREVENT_LEAVE_INVISIBLE, buff_reason=CommonLocalizationUtils.create_localized_string(SSSlaveryStringId.BEING_ENSLAVED))
+            self._remove_appropriateness_related_buffs(slave_sim_info)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
+
+    def _remove_appropriateness_related_buffs(self, sim_info: SimInfo):
+        appropriateness_buffs = {
+            CommonGameTag.APPROPRIATENESS_BARTENDING,
+            CommonGameTag.APPROPRIATENESS_BATHING,
+            CommonGameTag.APPROPRIATENESS_CAKE,
+            CommonGameTag.APPROPRIATENESS_CALL_TO_MEAL,
+            CommonGameTag.APPROPRIATENESS_CLEANING,
+            CommonGameTag.APPROPRIATENESS_COMPUTER,
+            CommonGameTag.APPROPRIATENESS_COOKING,
+            CommonGameTag.APPROPRIATENESS_DANCING,
+            CommonGameTag.APPROPRIATENESS_EATING,
+            CommonGameTag.APPROPRIATENESS_FRONT_DESK,
+            CommonGameTag.APPROPRIATENESS_GRAB_SNACK,
+            CommonGameTag.APPROPRIATENESS_GUEST,
+            CommonGameTag.APPROPRIATENESS_HIRED_WORKER,
+            CommonGameTag.APPROPRIATENESS_HOST,
+            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK,
+            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK_LUNCH,
+            CommonGameTag.APPROPRIATENESS_PHONE,
+            CommonGameTag.APPROPRIATENESS_PHONE_GAME,
+            CommonGameTag.APPROPRIATENESS_PLAY_INSTRUMENT,
+            CommonGameTag.APPROPRIATENESS_PLAYING,
+            CommonGameTag.APPROPRIATENESS_READ_BOOKS,
+            CommonGameTag.APPROPRIATENESS_SERVICE_NPC,
+            CommonGameTag.APPROPRIATENESS_SHOWER,
+            CommonGameTag.APPROPRIATENESS_SINGING,
+            CommonGameTag.APPROPRIATENESS_SLEEPING,
+            CommonGameTag.APPROPRIATENESS_SOCIAL_PICKER,
+            CommonGameTag.APPROPRIATENESS_STEREO,
+            CommonGameTag.APPROPRIATENESS_TV_WATCHING,
+            CommonGameTag.APPROPRIATENESS_TIP,
+            CommonGameTag.APPROPRIATENESS_TOUCHING,
+            CommonGameTag.APPROPRIATENESS_TRASH,
+            CommonGameTag.APPROPRIATENESS_VIEW,
+            CommonGameTag.APPROPRIATENESS_VISITOR,
+            CommonGameTag.APPROPRIATENESS_WORK_SCIENTIST,
+            CommonGameTag.APPROPRIATENESS_WORKOUT
+        }
+        for buff in CommonBuffUtils.get_buffs(sim_info):
+            appropriateness = buff.get_appropriateness(appropriateness_buffs)
+            if appropriateness == Appropriateness.DONT_CARE:
+                continue
+            self.log.debug('Removing buff {}'.format(pformat(buff)))
+            CommonBuffUtils.remove_buff(sim_info, CommonBuffUtils.get_buff_id(buff))
 
     def release_slave(self, slave_sim_info: SimInfo, releasing_sim_info: SimInfo=None) -> bool:
         """release_slave(slave_sim_info, releasing_sim_info=None)

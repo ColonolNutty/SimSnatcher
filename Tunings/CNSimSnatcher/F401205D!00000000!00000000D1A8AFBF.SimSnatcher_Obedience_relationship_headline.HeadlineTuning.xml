@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Headline" i="headline" m="headlines.headline" n="SimSnatcher_Obedience_relationship_headline" s="3517493183">
+  <L n="levels">
+    <U>
+      <T n="key">-2</T>
+      <U n="value">
+        <T n="icon" p="InGame\UI\Icons\Flyaways\FlyAway_Rel_MinusMinus.png">2f7d0004:00000000:fa111614bd43db2d</T>
+        <T n="maximum_value">-5</T>
+        <T n="minimum_value">-200</T>
+      </U>
+    </U>
+    <U>
+      <T n="key">-1</T>
+      <U n="value">
+        <T n="icon" p="InGame\UI\Icons\Flyaways\FlyAway_Rel_Minus.png">2f7d0004:00000000:07195e1efcce487f</T>
+        <T n="maximum_value">0</T>
+        <T n="minimum_value">-5</T>
+      </U>
+    </U>
+    <U>
+      <T n="key">1</T>
+      <U n="value">
+        <T n="icon" p="InGame\UI\Icons\Flyaways\FlyAway_Rel_Plus.png">2f7d0004:00000000:804995492AB7A480</T>
+        <T n="maximum_value">5</T>
+      </U>
+    </U>
+    <U>
+      <T n="key">2</T>
+      <U n="value">
+        <T n="icon" p="InGame\UI\Icons\Flyaways\FlyAway_Rel_PlusPlus.png">2f7d0004:00000000:804995492AB7A480</T>
+        <T n="maximum_value">200</T>
+        <T n="minimum_value">5</T>
+      </U>
+    </U>
+  </L>
+</I>
