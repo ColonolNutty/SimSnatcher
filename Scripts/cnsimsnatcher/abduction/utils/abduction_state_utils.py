@@ -5,10 +5,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from pprint import pformat
-from typing import Tuple
+from typing import Tuple, Callable
 import sims4.commands
-from buffs import Appropriateness
 from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteractionId
 from cnsimsnatcher.abduction.enums.relationship_bit_ids import SSAbductionRelationshipBitId
 from cnsimsnatcher.abduction.enums.situation_ids import SSAbductionSituationId
@@ -16,10 +14,11 @@ from cnsimsnatcher.abduction.enums.trait_ids import SSAbductionTraitId
 from cnsimsnatcher.enums.buff_ids import SSBuffId
 from cnsimsnatcher.enums.relationship_track_ids import SSRelationshipTrackId
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.utils.buff_utils import SSBuffUtils
 from sims.sim_info import SimInfo
-from sims4communitylib.enums.tags_enum import CommonGameTag
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
+from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
@@ -35,6 +34,9 @@ from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
 class SSAbductionStateUtils(HasLog):
     """ Utilities for managing Abduction state. """
+    def __init__(self) -> None:
+        super().__init__()
+        self._buff_utils = SSBuffUtils()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -84,6 +86,22 @@ class SSAbductionStateUtils(HasLog):
         """ Retrieve a collection of Sims that are a Captor of the specified Sim. """
         return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(captive_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT, instanced_only=instanced_only))
 
+    def get_all_captors(self, include_sim_callback: Callable[[SimInfo], bool]=None, instanced_only: bool=True) -> Tuple[SimInfo]:
+        """ Retrieve a collection of Sims that are Captors of Captives. """
+        _has_captives = CommonFunctionUtils.run_predicates_as_one(
+            (
+                include_sim_callback,
+                CommonFunctionUtils.run_with_arguments(
+                    self.has_captives,
+                    instanced_only=False
+                )
+            )
+        )
+        if instanced_only:
+            return tuple(CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=_has_captives))
+        else:
+            return tuple(CommonSimUtils.get_sim_info_for_all_sims_generator(include_sim_callback=_has_captives))
+
     def create_captive(self, captive_sim_info: SimInfo, captor_sim_info: SimInfo) -> Tuple[bool, str]:
         """create_captive(captive_sim_info, captor_sim_info)
 
@@ -109,7 +127,7 @@ class SSAbductionStateUtils(HasLog):
                 self.log.error('Failed to add Captor Relationship Bit.')
             if not CommonRelationshipUtils.add_relationship_bit(captor_sim_info, captive_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT):
                 self.log.error('Failed to add Captive Relationship Bit.')
-            self._remove_appropriateness_related_buffs(captive_sim_info)
+            self._buff_utils.remove_appropriateness_related_buffs(captive_sim_info)
 
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
@@ -120,51 +138,6 @@ class SSAbductionStateUtils(HasLog):
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Captive \'{}\' with Captor \'{}\'.'.format(captive_sim_name, captor_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(captive_sim_info))
-
-    def _remove_appropriateness_related_buffs(self, sim_info: SimInfo):
-        appropriateness_buffs = {
-            CommonGameTag.APPROPRIATENESS_BARTENDING,
-            CommonGameTag.APPROPRIATENESS_BATHING,
-            CommonGameTag.APPROPRIATENESS_CAKE,
-            CommonGameTag.APPROPRIATENESS_CALL_TO_MEAL,
-            CommonGameTag.APPROPRIATENESS_CLEANING,
-            CommonGameTag.APPROPRIATENESS_COMPUTER,
-            CommonGameTag.APPROPRIATENESS_COOKING,
-            CommonGameTag.APPROPRIATENESS_DANCING,
-            CommonGameTag.APPROPRIATENESS_EATING,
-            CommonGameTag.APPROPRIATENESS_FRONT_DESK,
-            CommonGameTag.APPROPRIATENESS_GRAB_SNACK,
-            CommonGameTag.APPROPRIATENESS_GUEST,
-            CommonGameTag.APPROPRIATENESS_HIRED_WORKER,
-            CommonGameTag.APPROPRIATENESS_HOST,
-            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK,
-            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK_LUNCH,
-            CommonGameTag.APPROPRIATENESS_PHONE,
-            CommonGameTag.APPROPRIATENESS_PHONE_GAME,
-            CommonGameTag.APPROPRIATENESS_PLAY_INSTRUMENT,
-            CommonGameTag.APPROPRIATENESS_PLAYING,
-            CommonGameTag.APPROPRIATENESS_READ_BOOKS,
-            CommonGameTag.APPROPRIATENESS_SERVICE_NPC,
-            CommonGameTag.APPROPRIATENESS_SHOWER,
-            CommonGameTag.APPROPRIATENESS_SINGING,
-            CommonGameTag.APPROPRIATENESS_SLEEPING,
-            CommonGameTag.APPROPRIATENESS_SOCIAL_PICKER,
-            CommonGameTag.APPROPRIATENESS_STEREO,
-            CommonGameTag.APPROPRIATENESS_TV_WATCHING,
-            CommonGameTag.APPROPRIATENESS_TIP,
-            CommonGameTag.APPROPRIATENESS_TOUCHING,
-            CommonGameTag.APPROPRIATENESS_TRASH,
-            CommonGameTag.APPROPRIATENESS_VIEW,
-            CommonGameTag.APPROPRIATENESS_VISITOR,
-            CommonGameTag.APPROPRIATENESS_WORK_SCIENTIST,
-            CommonGameTag.APPROPRIATENESS_WORKOUT
-        }
-        for buff in CommonBuffUtils.get_buffs(sim_info):
-            appropriateness = buff.get_appropriateness(appropriateness_buffs)
-            if appropriateness == Appropriateness.DONT_CARE:
-                continue
-            self.log.debug('Removing buff {}'.format(pformat(buff)))
-            CommonBuffUtils.remove_buff(sim_info, CommonBuffUtils.get_buff_id(buff))
 
     def release_captive(self, captive_sim_info: SimInfo, releasing_sim_info: SimInfo=None) -> bool:
         """release_captive(captive_sim_info, releasing_sim_info=None)

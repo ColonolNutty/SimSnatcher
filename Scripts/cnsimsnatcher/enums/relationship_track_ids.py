@@ -5,9 +5,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-# noinspection PyBroadException
 from relationships.relationship_bit import RelationshipBitCollectionUid
 
+# noinspection PyBroadException
 try:
     # noinspection PyUnresolvedReferences
     from enum import Int

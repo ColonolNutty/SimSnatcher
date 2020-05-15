@@ -18,7 +18,6 @@ from sims4communitylib.events.zone_spin.events.zone_late_load import S4CLZoneLat
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
-from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.location.common_location_utils import CommonLocationUtils
 from sims4communitylib.utils.sims.common_sim_location_utils import CommonSimLocationUtils
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
@@ -28,6 +27,10 @@ from zone import Zone
 
 
 class _SSSlaverySummonSlaves(HasLog):
+    def __init__(self) -> None:
+        super().__init__()
+        self._state_utils = SSSlaveryStateUtils()
+
     # noinspection PyMissingOrEmptyDocstring
     @property
     def mod_identity(self) -> CommonModIdentity:
@@ -51,7 +54,7 @@ class _SSSlaverySummonSlaves(HasLog):
             self.log.debug('Attempting to locate slaves for \'{}\'.'.format(master_sim_name))
             master_position = CommonSimLocationUtils.get_position(master_sim_info)
             master_location = CommonSimLocationUtils.get_location(master_sim_info)
-            slave_sim_info_list = self._get_slaves_of(master_sim_info, instanced_only=False)
+            slave_sim_info_list = self._get_slaves(master_sim_info)
             self.log.format_with_message('Found slaves.', slaves=CommonSimNameUtils.get_full_names(slave_sim_info_list))
             for slave_sim_info in slave_sim_info_list:
                 slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
@@ -83,19 +86,10 @@ class _SSSlaverySummonSlaves(HasLog):
         return False
 
     def _get_masters(self) -> Tuple[SimInfo]:
-        _has_slaves = CommonFunctionUtils.run_predicates_as_one(
-            (
-                CommonHouseholdUtils.is_part_of_active_household,
-                CommonFunctionUtils.run_with_arguments(
-                    SSSlaveryStateUtils().has_slaves,
-                    instanced_only=False
-                )
-            )
-        )
-        return tuple(CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=_has_slaves))
+        return self._state_utils.get_all_masters(include_sim_callback=CommonHouseholdUtils.is_part_of_active_household, instanced_only=True)
 
-    def _get_slaves_of(self, master_sim_info: SimInfo, instanced_only: bool=False) -> Tuple[SimInfo]:
-        return SSSlaveryStateUtils().get_slaves(master_sim_info, instanced_only=instanced_only)
+    def _get_slaves(self, master_sim_info: SimInfo) -> Tuple[SimInfo]:
+        return self._state_utils.get_slaves(master_sim_info, instanced_only=False)
 
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())

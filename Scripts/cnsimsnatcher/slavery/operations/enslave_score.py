@@ -12,7 +12,7 @@ from sims4communitylib.exceptions.common_exceptions_handler import CommonExcepti
 from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimStatisticUtils
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 
-log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'ss_attempt_to_enslave_score')
+log = CommonLogRegistry.get().register_log(ModInfo.get_identity(), 'sss_attempt_to_enslave_score')
 
 
 class SSEnslaveAttemptSuccessChanceOperation:

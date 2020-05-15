@@ -13,7 +13,6 @@ from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_terrain_interaction import CommonTerrainInteraction
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils

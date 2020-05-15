@@ -20,7 +20,8 @@ class _SSAbductionDebugSimInteractionHandler(CommonScriptObjectInteractionHandle
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSAbductionInteractionId.DEBUG_CLEAR_ABDUCTION_DATA,
+            SSAbductionInteractionId.CLEAR_ABDUCTION_DATA,
+            SSAbductionInteractionId.FORCE_ABDUCT,
         )
         return result
 

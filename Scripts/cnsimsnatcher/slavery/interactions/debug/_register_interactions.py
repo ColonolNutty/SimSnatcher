@@ -20,6 +20,7 @@ class _SSSlaveryDebugSimInteractionHandler(CommonScriptObjectInteractionHandler)
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
             SSSlaveryInteractionId.CLEAR_SLAVERY_DATA,
+            SSSlaveryInteractionId.FORCE_ENSLAVE,
         )
         return result
 
