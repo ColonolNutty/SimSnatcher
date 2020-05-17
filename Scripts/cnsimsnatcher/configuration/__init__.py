@@ -5,13 +5,3 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-
-
-class SSSlaverySetting:
-    """ Settings used by SS Slavery. """
-
-    # Main
-    SLAVERY_INTERACTIONS_SWITCH = 'ss_slavery_interactions_switch'
-
-    # Global
-    VERSION = 'version'

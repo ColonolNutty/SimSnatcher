@@ -46,6 +46,9 @@ class SSAbductionForceAbductInteraction(CommonImmediateSuperInteraction):
             return TestResult.NONE
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
+        if sim_info is target_sim_info:
+            cls.get_log().debug('Failed, Active Sim is the Target Sim.')
+            return TestResult.NONE
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             cls.get_log().debug("Failed, Active Sim or Target Sim are not enabled for interactions.")
             return TestResult.NONE

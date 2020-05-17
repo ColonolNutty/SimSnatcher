@@ -19,6 +19,8 @@ class SSInteractionId(Int):
     """ Interaction identifiers used by SS. """
     # Settings
     SS_OPEN_SETTINGS = 17997355933418421807
+
+    CONFIGURE_CAPTIVE_SLAVE = 1987689498033677476
     
     # Debug Interactions
     SS_DEBUG_LOG_ALL_INTERACTIONS = 14801299013239108791

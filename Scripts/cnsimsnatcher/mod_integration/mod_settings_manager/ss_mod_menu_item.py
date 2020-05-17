@@ -69,7 +69,7 @@ try:
                 return False
             if not SSSettingUtils().is_enabled_for_interactions(source_sim_info):
                 self.log.debug('Failed, Source Sim is not enabled for interactions.')
-                return TestResult.NONE
+                return False
             target_sim_info = CommonSimUtils.get_sim_info(target)
             if not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
                 self.log.debug('Failed, Target Sim is not enabled for interactions.')
@@ -87,7 +87,8 @@ try:
             **kwargs
         ):
             self.log.debug('Showing SS Settings.')
-            SSSettingsDialog(on_close=on_close).open()
+            target_sim_info = CommonSimUtils.get_sim_info(target)
+            SSSettingsDialog(on_close=on_close).open(target_sim_info)
 
 
     S4MSMModSettingsRegistry().register_menu_item(_SSMSMMenuItem())

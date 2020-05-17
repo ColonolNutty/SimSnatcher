@@ -15,6 +15,7 @@ except:
         pass
 
 
-class SSBuffId(Int):
-    """ Buff identifiers used by SS. """
-    PREVENT_LEAVE_INVISIBLE = 17783615372645687397
+class SSTraitId(Int):
+    """ Trait identifiers used by SS. """
+
+    PREVENT_LEAVE = 4342592222107139124

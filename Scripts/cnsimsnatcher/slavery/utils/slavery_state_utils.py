@@ -8,7 +8,9 @@ Copyright (c) COLONOLNUTTY
 import sims4.commands
 from typing import Tuple, Callable
 
-from cnsimsnatcher.enums.buff_ids import SSBuffId
+from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
+from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
+from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
 from cnsimsnatcher.slavery.enums.relationship_bit_ids import SSSlaveryRelationshipBitId
@@ -21,7 +23,6 @@ from sims4communitylib.exceptions.common_exceptions_handler import CommonExcepti
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
-from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
@@ -159,7 +160,10 @@ class SSSlaveryStateUtils(HasLog):
             if not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT):
                 self.log.error('Failed to add Slave Relationship Bit.')
             self._buff_utils.remove_appropriateness_related_buffs(slave_sim_info)
+            CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+            CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+            SSAllowanceUtils().add_allowance_traits(slave_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
@@ -183,7 +187,7 @@ class SSSlaveryStateUtils(HasLog):
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
         try:
             self.log.debug('Attempting to release Slave \'{}\'.'.format(slave_sim_name))
-            if releasing_sim_info is not None and self.is_slave_of(slave_sim_info, releasing_sim_info):
+            if releasing_sim_info is not None and self.is_master_of(releasing_sim_info, slave_sim_info):
                 master_sim_info_list = (releasing_sim_info,)
             else:
                 master_sim_info_list = self.get_masters(slave_sim_info)
@@ -203,8 +207,9 @@ class SSSlaveryStateUtils(HasLog):
             self.log.debug('Attempting to remove traits.')
             CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
             self.log.debug('Attempting to remove buffs.')
-            CommonBuffUtils.remove_buff(slave_sim_info, SSBuffId.ALLOWED_NOTHING_INVISIBLE)
-            CommonBuffUtils.remove_buff(slave_sim_info, SSBuffId.PREVENT_LEAVE_INVISIBLE)
+            CommonTraitUtils.remove_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+            CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
+            SSAllowanceUtils().remove_allowance_traits(slave_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             CommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)

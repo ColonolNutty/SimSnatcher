@@ -41,7 +41,7 @@ class CommonPersistedDataManager(CommonDataManager):
 
     @property
     def _version(self) -> int:
-        raise NotImplementedError('Missing _version.')
+        raise NotImplementedError('Missing _version for \'{}\'.'.format(self.__class__.__name__))
 
     @property
     def _default_data(self) -> Dict[str, Any]:
@@ -102,8 +102,15 @@ class CommonPersistedDataManager(CommonDataManager):
             return dict(self._default_data)
 
         if ('version' not in loaded_data or int(loaded_data['version']) != int(self._version)) and 'version' in self._default_data:
-            self.log.debug('Data was outdated, returning default data.')
-            return dict(self._default_data)
+            self.log.debug('Data was outdated, returning loaded data with new data.')
+            new_data = dict(loaded_data)
+            default_data = dict(self._default_data)
+            for default_data_key in default_data.keys():
+                # If Data has the key, we don't want to override it. Keep the old data.
+                if default_data_key in new_data:
+                    continue
+                new_data[default_data_key] = default_data[default_data_key]
+            return new_data
         self.log.format_with_message('Done loading data \'{}\'.'.format(data_name), data=loaded_data)
         return loaded_data
 
@@ -150,9 +157,12 @@ class CommonPersistedDataManager(CommonDataManager):
         return result
 
     def reset(self, prevent_save: bool=False):
-        """
-            Reset the data store to default values.
-        :param prevent_save: If True, when the game is saved, the data will not be persisted.
+        """reset(prevent_save=False)
+
+        Reset the data store to default values.
+
+        :param prevent_save: If True, when the game is saved, the data will not be persisted. Default is False.
+        :type prevent_save: bool, optional
         """
         try:
             self.remove()

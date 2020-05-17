@@ -48,8 +48,11 @@ class SSSlaveryEndSlaveryInteraction(CommonImmediateSuperInteraction):
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             cls.get_log().debug('Failed, Active Sim or Target Sim are not enabled for interactions.')
             return TestResult.NONE
-        if not SSSlaveryStateUtils().is_slave_of(target_sim_info, sim_info):
+        if not SSSlaveryStateUtils().has_masters(target_sim_info, instanced_only=False):
             cls.get_log().debug('Failed, Target Sim has not been enslaved.')
+            return TestResult.NONE
+        if not SSSlaveryStateUtils().is_master_of(sim_info, target_sim_info):
+            cls.get_log().debug('Failed, Target Sim has not been enslaved by Source Sim.')
             return TestResult.NONE
         cls.get_log().debug('Success, Target Sim can be released.')
         return TestResult.TRUE

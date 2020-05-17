@@ -58,5 +58,6 @@ class SSOpenSettingsInteraction(CommonTerrainInteraction):
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self), interaction_sim=interaction_sim, interaction_target=interaction_target)
-        self._settings_dialog.open()
+        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
+        self._settings_dialog.open(target_sim_info)
         return True

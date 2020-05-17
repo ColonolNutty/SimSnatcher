@@ -9,12 +9,15 @@ from typing import Any, Callable
 
 from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from cnsimsnatcher.abduction.settings.dialog import SSAbductionSettingsDialog
+from cnsimsnatcher.configuration.allowance.dialogs.allowance_config_dialog import SSAllowanceConfigDialog
+from cnsimsnatcher.configuration.allowance.enums.string_ids import SSAllowanceStringId
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
 from cnsimsnatcher.order_to.settings.dialog import SSOrderToSettingsDialog
 from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
 from cnsimsnatcher.slavery.settings.dialog import SSSlaverySettingsDialog
+from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
     CommonDialogActionOption
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
@@ -45,12 +48,12 @@ class SSSettingsDialog(HasLog):
         return 'ss_settings_dialog'
 
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
-    def open(self) -> None:
+    def open(self, target_sim_info: SimInfo) -> None:
         """ Open SS Settings. """
         self.log.debug('Opening SS Settings.')
-        self._settings().show()
+        self._settings(target_sim_info).show(sim_info=target_sim_info)
 
-    def _settings(self) -> CommonChooseObjectOptionDialog:
+    def _settings(self, target_sim_info: SimInfo) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building SS Settings.')
 
         def _on_close() -> None:
@@ -61,7 +64,7 @@ class SSSettingsDialog(HasLog):
 
         def _reopen(*_, **__) -> None:
             self.log.debug('Reopening SS Settings.')
-            self.open()
+            self.open(target_sim_info)
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.SIM_SNATCHER_SETTINGS_NAME,
@@ -98,5 +101,18 @@ class SSSettingsDialog(HasLog):
                 on_chosen=SSOrderToSettingsDialog(on_close=_reopen).open
             )
         )
+
+        from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
+        from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
+        if SSSlaveryStateUtils().has_masters(target_sim_info) or SSAbductionStateUtils().has_captors(target_sim_info):
+            option_dialog.add_option(
+                CommonDialogActionOption(
+                    CommonDialogOptionContext(
+                        SSAllowanceStringId.CHANGE_ALLOWANCE_NAME,
+                        SSAllowanceStringId.CHANGE_ALLOWANCE_DESCRIPTION,
+                    ),
+                    on_chosen=lambda *_, **__: SSAllowanceConfigDialog(on_close=_reopen).open(target_sim_info)
+                )
+            )
 
         return option_dialog
