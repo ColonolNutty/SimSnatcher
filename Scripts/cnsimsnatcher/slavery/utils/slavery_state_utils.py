@@ -163,7 +163,8 @@ class SSSlaveryStateUtils(HasLog):
             CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
-            SSAllowanceUtils().add_allowance_traits(slave_sim_info)
+            SSAllowanceUtils().add_all_allowance_traits(slave_sim_info)
+            SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
@@ -209,7 +210,7 @@ class SSSlaveryStateUtils(HasLog):
             self.log.debug('Attempting to remove buffs.')
             CommonTraitUtils.remove_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
-            SSAllowanceUtils().remove_allowance_traits(slave_sim_info)
+            SSAllowanceUtils().remove_all_allowance_traits(slave_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             CommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
@@ -219,6 +220,7 @@ class SSSlaveryStateUtils(HasLog):
                 CommonSituationUtils.make_sim_leave(slave_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
+            SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)
             return False

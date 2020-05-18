@@ -14,22 +14,22 @@ from sims4communitylib.enums.tags_enum import CommonGameTag
 from tag import Tag
 
 
-class SSAllowedGuest(SSAllowanceData):
+class SSAllowedNotDuringWorkLunch(SSAllowanceData):
     """ Data for an allowance. """
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return SSAllowanceStringId.ALLOWED_GUEST
+        return SSAllowanceStringId.ALLOWED_NOT_DURING_WORK_LUNCH
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def trait_id(self) -> int:
-        return SSAllowanceTraitId.ALLOWED_GUEST
+        return SSAllowanceTraitId.ALLOWED_NOT_DURING_WORK_LUNCH
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def appropriateness_tags(self) -> Set[Tag]:
         return {
-            CommonGameTag.APPROPRIATENESS_GUEST
+            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK_LUNCH
         }

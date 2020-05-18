@@ -1,5 +1,15 @@
+"""
+Sim Snatcher is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Copyright (c) COLONOLNUTTY
+"""
+from typing import Set
+
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
+from tag import Tag
 
 
 class SSAllowanceData:
@@ -18,6 +28,11 @@ class SSAllowanceData:
     @property
     def trait_id(self) -> int:
         """ The trait that allows/disallows something. """
+        raise NotImplementedError()
+
+    @property
+    def appropriateness_tags(self) -> Set[Tag]:
+        """ The appropriateness tags associated with the allowance. """
         raise NotImplementedError()
 
     def toggle_allowance(self, sim_info: SimInfo) -> bool:

@@ -148,7 +148,8 @@ class SSAbductionStateUtils(HasLog):
             CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
-            SSAllowanceUtils().add_allowance_traits(captive_sim_info)
+            SSAllowanceUtils().add_all_allowance_traits(captive_sim_info)
+            SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Captive \'{}\' with Captor \'{}\'.'.format(captive_sim_name, captor_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
@@ -178,6 +179,7 @@ class SSAbductionStateUtils(HasLog):
                 captor_sim_info_list = self.get_captors(captive_sim_info)
 
             for captor_sim_info in captor_sim_info_list:
+                captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
                 self.log.format_with_message('Attempting to remove relationship bits between Sims.', sim=captive_sim_info, target=captor_sim_info)
                 CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSAbductionRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSAbductionRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
@@ -185,7 +187,7 @@ class SSAbductionStateUtils(HasLog):
                 CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTIVE_OF_SIM_REL_BIT)
-                self.log.debug('Done removing relationship bits.')
+                self.log.debug('Done removing relationship bits between Master \'{}\' and Slave \'{}\'.'.format(captor_sim_name, captive_sim_name))
             self.log.debug('Done removing Captor relationships.')
 
             self.log.debug('Attempting to remove traits.')
@@ -193,7 +195,7 @@ class SSAbductionStateUtils(HasLog):
             self.log.debug('Attempting to remove buffs.')
             CommonTraitUtils.remove_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.remove_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
-            SSAllowanceUtils().remove_allowance_traits(captive_sim_info)
+            SSAllowanceUtils().remove_all_allowance_traits(captive_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             CommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
@@ -203,6 +205,7 @@ class SSAbductionStateUtils(HasLog):
                 CommonSituationUtils.make_sim_leave(captive_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
+            SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)
             return False

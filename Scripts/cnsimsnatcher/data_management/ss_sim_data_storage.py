@@ -1,5 +1,13 @@
+"""
+Sim Snatcher is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Copyright (c) COLONOLNUTTY
+"""
 from typing import Set
 
+from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.modinfo import ModInfo
 from sims4communitylib.enums.tags_enum import CommonGameTag
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -21,43 +29,7 @@ class SSSimDataStorage(CommonSimDataStorage):
     @property
     def allowances(self) -> Set[CommonGameTag]:
         """ Retrieve the allowances for the Sim. """
-        return self.get_data(default={
-            CommonGameTag.APPROPRIATENESS_BARTENDING,
-            CommonGameTag.APPROPRIATENESS_BATHING,
-            CommonGameTag.APPROPRIATENESS_CAKE,
-            CommonGameTag.APPROPRIATENESS_CALL_TO_MEAL,
-            CommonGameTag.APPROPRIATENESS_CLEANING,
-            CommonGameTag.APPROPRIATENESS_COMPUTER,
-            CommonGameTag.APPROPRIATENESS_COOKING,
-            CommonGameTag.APPROPRIATENESS_DANCING,
-            CommonGameTag.APPROPRIATENESS_EATING,
-            CommonGameTag.APPROPRIATENESS_FRONT_DESK,
-            CommonGameTag.APPROPRIATENESS_GRAB_SNACK,
-            CommonGameTag.APPROPRIATENESS_GUEST,
-            CommonGameTag.APPROPRIATENESS_HIRED_WORKER,
-            CommonGameTag.APPROPRIATENESS_HOST,
-            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK,
-            CommonGameTag.APPROPRIATENESS_NOT_DURING_WORK_LUNCH,
-            CommonGameTag.APPROPRIATENESS_PHONE,
-            CommonGameTag.APPROPRIATENESS_PHONE_GAME,
-            CommonGameTag.APPROPRIATENESS_PLAY_INSTRUMENT,
-            CommonGameTag.APPROPRIATENESS_PLAYING,
-            CommonGameTag.APPROPRIATENESS_READ_BOOKS,
-            CommonGameTag.APPROPRIATENESS_SERVICE_NPC,
-            CommonGameTag.APPROPRIATENESS_SHOWER,
-            CommonGameTag.APPROPRIATENESS_SINGING,
-            CommonGameTag.APPROPRIATENESS_SLEEPING,
-            CommonGameTag.APPROPRIATENESS_SOCIAL_PICKER,
-            CommonGameTag.APPROPRIATENESS_STEREO,
-            CommonGameTag.APPROPRIATENESS_TV_WATCHING,
-            CommonGameTag.APPROPRIATENESS_TIP,
-            CommonGameTag.APPROPRIATENESS_TOUCHING,
-            CommonGameTag.APPROPRIATENESS_TRASH,
-            CommonGameTag.APPROPRIATENESS_VIEW,
-            CommonGameTag.APPROPRIATENESS_VISITOR,
-            CommonGameTag.APPROPRIATENESS_WORK_SCIENTIST,
-            CommonGameTag.APPROPRIATENESS_WORKOUT
-        })
+        return self.get_data(default=SSAllowanceUtils().get_appropriateness_tags(self.sim_info))
 
     @allowances.setter
     def allowances(self, value: Set[CommonGameTag]):

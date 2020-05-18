@@ -33,9 +33,9 @@ class _SSVanillaBuffComponent:
         log.debug('Checking if \'{}\' is allowed.'.format(CommonSimNameUtils.get_full_name(owning_sim_info)))
         sim_data = SSSimDataStorage(owning_sim_info)
         if not sim_data.allowances & tags:
-            log.debug('Not allowed. Tags: \'{}\''.format(pformat(tags)))
+            log.debug('Not allowed. Allowance Tags: \'{}\' Tags: \'{}\''.format(pformat(sim_data.allowances), pformat(tags)))
             return False
-        log.debug('Allowed. Tags: \'{}\''.format(pformat(tags)))
+        log.debug('Allowed. Allowance Tags: \'{}\' Tags: \'{}\''.format(pformat(sim_data.allowances), pformat(tags)))
         return True
 
 
