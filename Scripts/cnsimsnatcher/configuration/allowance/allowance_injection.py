@@ -18,8 +18,7 @@ from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
-log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'allowance_injection')
-log.enable()
+log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'ss_allowance_injection')
 
 
 class _SSVanillaBuffComponent:
