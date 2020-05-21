@@ -5,6 +5,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
+from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from distributor.shared_messages import IconInfoData
 from event_testing.test_events import TestEvent
 from sims.household import Household
@@ -14,6 +16,7 @@ from sims4.tuning.instances import lock_instance_tunables
 from sims4.tuning.tunable import TunableTuple, TunableMapping
 from sims4.tuning.tunable_base import GroupNames
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
+from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from situations.complex.service_npc_situation import TunableFinishJobStateAndTest
 from situations.service_npcs import ServiceNpcEndWorkReason
 from situations.service_npcs.butler.butler_loot_ops import ButlerSituationStates
@@ -46,11 +49,8 @@ class SSSlaveSituationStateMixin(CommonSituationState):
 
     def handle_event(self, sim_info: SimInfo, event: Any, resolver: Any) -> Any:
         """ What happens when an event occurs. """
-        finish_job_states = self.owner.finish_job_states
-        for (finish_reason, finish_job_state) in finish_job_states.items():
-            if resolver(finish_job_state.enter_state_test):
-                self._change_state(SSLeaveSituationState(finish_reason))
-                break
+        if not SSAbductionStateUtils().has_captors(sim_info) and not SSSlaveryStateUtils().has_masters(sim_info):
+            self._change_state(SSLeaveSituationState('Released From Slavery'))
 
     def _test_event(self, event: Any, sim_info: SimInfo, resolver, test) -> Any:
         if event in test.test_events:
@@ -90,7 +90,7 @@ class _SSSlaveGardeningState(SSSlaveSituationStateMixin):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def next_state(self) -> Any:
-        return self.owner.slave_job_states.repair_state
+        return self.owner.slave_job_states.childcare_state
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -103,7 +103,7 @@ class _SSSlaveChildcareState(SSSlaveSituationStateMixin):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def next_state(self) -> Any:
-        return self.owner.slave_job_states.default_state
+        return self.owner.slave_job_states.repair_state
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -116,7 +116,7 @@ class _SSSlaveRepairState(SSSlaveSituationStateMixin):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def next_state(self) -> Any:
-        return self.owner.slave_job_states.childcare_state
+        return self.owner.slave_job_states.default_state
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -145,6 +145,7 @@ class SSLeaveSituationState(SituationState):
         self._leave_role_reason = leave_role_reason
 
     def on_activate(self, reader=None) -> None:
+        """ What happens when the state is activated. """
         super().on_activate(reader)
         if reader is not None:
             return
@@ -228,6 +229,11 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
     def start_situation(self) -> None:
         """ Start the situation. """
         super().start_situation()
+        master_sim_info = next(iter(SSSlaveryStateUtils().get_masters(self.slave_sim_info())))
+        if master_sim_info is None:
+            self._owning_household = CommonHouseholdUtils.get_active_household()
+        else:
+            self._owning_household = CommonHouseholdUtils.get_household(master_sim_info)
         self._change_state(self.slave_job_states.default_state())
 
     def _destroy(self) -> None:
@@ -248,22 +254,25 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
         self._change_state(new_situation_state)
 
     def slave_sim(self) -> Sim:
-        """ The slave Sim. """
-        sim = next(self.all_sims_in_situation_gen(), None)
-        return sim
+        """ The Slave Sim. """
+        return next(self.all_sims_in_situation_gen(), None)
+
+    def slave_sim_info(self) -> SimInfo:
+        """ The SimInfo of the Slave Sim. """
+        return CommonSimUtils.get_sim_info(self.slave_sim())
 
     def enable_situation_state(self, new_situation_state) -> None:
         """ Enables a state. """
         if new_situation_state in self._locked_states:
             self._locked_states.remove(new_situation_state)
-        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim().sim_info)
+        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim_info())
 
     def disable_situation_state(self, new_situation_state) -> None:
         """ Disables a state. """
         self._locked_states.add(new_situation_state)
         if self._cur_state.situation_state == new_situation_state:
             self.try_set_next_state(self._cur_state)
-        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim().sim_info)
+        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim_info())
 
     @property
     def is_in_childcare_state(self) -> bool:
@@ -277,7 +286,7 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
         # noinspection PyUnresolvedReferences
         self._owning_household.object_preference_tracker.update_preference_if_possible(sim.sim_info)
-        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim().sim_info)
+        services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim_info())
 
     def _on_leaving_situation(self, end_work_reason: str) -> str:
         return end_work_reason
