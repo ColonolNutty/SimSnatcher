@@ -155,6 +155,24 @@ class SSAbductionStateUtils(HasLog):
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(captive_sim_info))
 
+    def refresh_captive(self, captive_sim_info: SimInfo) -> bool:
+        """refresh_captive(slave_sim_info)
+
+        Refresh the state of a Captive Sim.
+
+        :param captive_sim_info: The Sim to refresh the state of.
+        :type captive_sim_info: SimInfo
+        :return: True, if the Sim was refreshed successfully. False, if not.
+        :rtype: bool
+        """
+        CommonTraitUtils.remove_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+        CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+        CommonTraitUtils.remove_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
+        CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
+        CommonTraitUtils.remove_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+        CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+        return True
+
     def release_captive(self, captive_sim_info: SimInfo, releasing_sim_info: SimInfo=None) -> bool:
         """release_captive(captive_sim_info, releasing_sim_info=None)
 

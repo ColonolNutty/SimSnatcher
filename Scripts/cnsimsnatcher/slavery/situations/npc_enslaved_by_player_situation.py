@@ -5,29 +5,24 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
-from distributor.shared_messages import IconInfoData
 from event_testing.test_events import TestEvent
 from sims.household import Household
 from sims.sim import Sim
 from sims.sim_info import SimInfo
 from sims4.tuning.instances import lock_instance_tunables
-from sims4.tuning.tunable import TunableTuple, TunableMapping
+from sims4.tuning.tunable import TunableTuple
 from sims4.tuning.tunable_base import GroupNames
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from situations.complex.service_npc_situation import TunableFinishJobStateAndTest
-from situations.service_npcs import ServiceNpcEndWorkReason
 from situations.service_npcs.butler.butler_loot_ops import ButlerSituationStates
 from situations.situation import Situation
 from situations.situation_complex import CommonSituationState
-import event_testing
 import services
 from typing import Tuple, Any
 
 from role.role_state import RoleState
-from situations.situation_complex import SituationState, SituationStateData
+from situations.situation_complex import SituationStateData
 from situations.situation_job import SituationJob
 from situations.visiting.visiting_situation_common import VisitingNPCSituation
 import sims4.tuning.tunable
@@ -42,15 +37,10 @@ class SSSlaveSituationStateMixin(CommonSituationState):
     def on_activate(self, reader=None) -> Any:
         """ What happens when the state is activated. """
         super().on_activate(reader)
-        finish_job_states = self.owner.finish_job_states
-        for (_, finish_job_state) in finish_job_states.items():
-            for (_, custom_key) in finish_job_state.enter_state_test.get_custom_event_registration_keys():
-                self._test_event_register(event_testing.test_events.TestEvent.InteractionComplete, custom_key)
 
     def handle_event(self, sim_info: SimInfo, event: Any, resolver: Any) -> Any:
         """ What happens when an event occurs. """
-        if not SSAbductionStateUtils().has_captors(sim_info) and not SSSlaveryStateUtils().has_masters(sim_info):
-            self._change_state(SSLeaveSituationState('Released From Slavery'))
+        pass
 
     def _test_event(self, event: Any, sim_info: SimInfo, resolver, test) -> Any:
         if event in test.test_events:
@@ -137,25 +127,6 @@ class _SSSlaveDefaultState(SSSlaveSituationStateMixin):
         return ButlerSituationStates.DEFAULT
 
 
-class SSLeaveSituationState(SituationState):
-    """ A state that handles a Sim leaving. """
-
-    def __init__(self, leave_role_reason: str=None):
-        super().__init__()
-        self._leave_role_reason = leave_role_reason
-
-    def on_activate(self, reader=None) -> None:
-        """ What happens when the state is activated. """
-        super().on_activate(reader)
-        if reader is not None:
-            return
-        slave_sim = self.owner.slave_sim()
-        self.owner._on_leaving_situation(self._leave_role_reason)
-        if slave_sim is None:
-            return
-        services.get_zone_situation_manager().make_sim_leave_now_must_run(slave_sim)
-
-
 class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
     """ The situation used when the player enslaves an NPC. """
     INSTANCE_TUNABLES = {
@@ -188,16 +159,11 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
         'when_to_refresh_situation': tunable_time.TunableTimeSpan(
             description='\n            The amount of time that needs to pass before refreshing the situation.\n            ',
             default_hours=7
-        ),
-        'finish_job_states': TunableMapping(
-            description='\n            Tune pairs of job finish role states with job finish tests. When\n            those tests pass, the sim will transition to the paired role state.\n            The situation will also be transitioned to the Leaving situation\n            state.\n            ',
-            key_type=ServiceNpcEndWorkReason,
-            value_type=TunableFinishJobStateAndTest()
         )
     }
     REMOVE_INSTANCE_TUNABLES = Situation.NON_USER_FACING_REMOVE_INSTANCE_TUNABLES
 
-    __slots__ = {'slave_sim_job', 'slave_job_states', 'finish_job_states', 'when_to_refresh_situation'}
+    __slots__ = {'slave_sim_job', 'slave_job_states', 'when_to_refresh_situation'}
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -212,8 +178,7 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
             SituationStateData(2, _SSSlaveCleaningState, factory=cls.slave_job_states.default_state),
             SituationStateData(3, _SSSlaveGardeningState, factory=cls.slave_job_states.default_state),
             SituationStateData(4, _SSSlaveChildcareState, factory=cls.slave_job_states.default_state),
-            SituationStateData(5, _SSSlaveRepairState, factory=cls.slave_job_states.default_state),
-            SituationStateData(6, SSLeaveSituationState, factory=cls.slave_job_states.default_state)
+            SituationStateData(5, _SSSlaveRepairState, factory=cls.slave_job_states.default_state)
         )
         return result
 
@@ -229,11 +194,6 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
     def start_situation(self) -> None:
         """ Start the situation. """
         super().start_situation()
-        master_sim_info = next(iter(SSSlaveryStateUtils().get_masters(self.slave_sim_info())))
-        if master_sim_info is None:
-            self._owning_household = CommonHouseholdUtils.get_active_household()
-        else:
-            self._owning_household = CommonHouseholdUtils.get_household(master_sim_info)
         self._change_state(self.slave_job_states.default_state())
 
     def _destroy(self) -> None:
@@ -284,24 +244,18 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
         writer.write_uint64('household_id', self._owning_household.id)
 
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
+        sim_info = CommonSimUtils.get_sim_info(sim)
+        master_sim_info = next(iter(SSSlaveryStateUtils().get_masters(sim_info)))
+        if master_sim_info is None:
+            self._owning_household = CommonHouseholdUtils.get_active_household()
+        else:
+            self._owning_household = CommonHouseholdUtils.get_household(master_sim_info)
         # noinspection PyUnresolvedReferences
-        self._owning_household.object_preference_tracker.update_preference_if_possible(sim.sim_info)
+        self._owning_household.object_preference_tracker.update_preference_if_possible(sim_info)
         services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim_info())
 
     def _on_leaving_situation(self, end_work_reason: str) -> str:
         return end_work_reason
-
-    def _send_leave_notification(self, end_work_reason, *localization_args) -> None:
-        end_work_tuning = self.finish_job_states[end_work_reason]
-        notification = end_work_tuning.notification
-        if notification is None:
-            return
-        for client in services.client_manager().values():
-            recipient = client.active_sim
-            if recipient is not None:
-                dialog = notification(recipient)
-                dialog.show_dialog(additional_tokens=localization_args, icon_override=IconInfoData(obj_instance=self.slave_sim()))
-                break
 
 
 sims4.tuning.instances.lock_instance_tunables(

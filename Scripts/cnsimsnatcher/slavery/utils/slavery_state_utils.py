@@ -129,6 +129,24 @@ class SSSlaveryStateUtils(HasLog):
         else:
             return tuple(CommonSimUtils.get_sim_info_for_all_sims_generator(include_sim_callback=_has_slaves))
 
+    def refresh_slave(self, slave_sim_info: SimInfo) -> bool:
+        """refresh_slave(slave_sim_info)
+
+        Refresh the state of a Slave Sim.
+
+        :param slave_sim_info: The Sim to refresh the state of.
+        :type slave_sim_info: SimInfo
+        :return: True, if the Sim was turned into a Slave successfully. False, if not.
+        :rtype: bool
+        """
+        CommonTraitUtils.remove_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+        CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+        CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
+        CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
+        CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+        CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+        return True
+
     def create_slave(self, slave_sim_info: SimInfo, master_sim_info: SimInfo) -> Tuple[bool, str]:
         """create_slave(slave_sim_info, master_sim_info)
 
