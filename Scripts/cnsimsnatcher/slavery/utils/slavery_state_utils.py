@@ -94,7 +94,17 @@ class SSSlaveryStateUtils(HasLog):
         )
 
     def get_slaves(self, master_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
-        """ Retrieve a collection of Sims that are a Slave to the specified Sim. """
+        """get_slaves(master_sim_info, instanced_only=True)
+
+        Retrieve a collection of Sims that are a Slave to the specified Sim.
+
+        :param master_sim_info: An instance of a Sim.
+        :type master_sim_info: SimInfo
+        :param instanced_only: If True, only Slaves that are currently loaded will be retrieved. If False, all Slaves, including those not loaded will be retrieved. Default is True.
+        :type instanced_only: bool, optional
+        :return: A collection of Sims the specified Sim has Enslaved.
+        :rtype: Tuple[SimInfo]
+        """
         return tuple(
             CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
                 master_sim_info,
@@ -181,6 +191,7 @@ class SSSlaveryStateUtils(HasLog):
             CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
+            SSAllowanceUtils().set_allowed_everything(slave_sim_info, allowed=True)
             SSAllowanceUtils().add_all_allowance_traits(slave_sim_info)
             SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
         except Exception as ex:
@@ -238,6 +249,7 @@ class SSSlaveryStateUtils(HasLog):
                 CommonSituationUtils.make_sim_leave(slave_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
+            SSAllowanceUtils().set_allowed_everything(slave_sim_info, allowed=False)
             SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)

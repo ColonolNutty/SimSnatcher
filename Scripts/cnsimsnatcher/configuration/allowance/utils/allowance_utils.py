@@ -42,7 +42,9 @@ from cnsimsnatcher.configuration.allowance.allowances.allowed_visitor import SSA
 from cnsimsnatcher.configuration.allowance.allowances.allowed_work import SSAllowedWork
 from cnsimsnatcher.configuration.allowance.allowances.allowed_workout import SSAllowedWorkout
 from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowanceData
+from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from sims.sim_info import SimInfo
+from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
 from tag import Tag
 
 
@@ -91,6 +93,12 @@ class SSAllowanceUtils:
         from cnsimsnatcher.data_management.ss_sim_data_storage import SSSimDataStorage
         sim_data = SSSimDataStorage(sim_info)
         sim_data.allowances = set()
+
+    def set_allowed_everything(self, sim_info: SimInfo, allowed: bool=True) -> bool:
+        """ Toggle the allowed everything trait on a Sim. This trait will make everything appropriate. """
+        if allowed:
+            return CommonTraitUtils.add_trait(sim_info, SSAllowanceTraitId.ALLOWED_EVERYTHING)
+        return CommonTraitUtils.remove_trait(sim_info, SSAllowanceTraitId.ALLOWED_EVERYTHING)
 
     def get_allowance_data(self) -> Tuple[SSAllowanceData]:
         """ Retrieve a collection of allowance data. """

@@ -92,8 +92,24 @@ class SSAbductionStateUtils(HasLog):
         )
 
     def get_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
-        """ Retrieve a collection of Sims that are a Captive to the specified Sim. """
-        return tuple(CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(captor_sim_info, SSAbductionRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT, instanced_only=instanced_only))
+        """get_captives(captor_sim_info, instanced_only=True)
+
+        Retrieve a collection of Sims that are a Captive to the specified Sim.
+
+        :param captor_sim_info: An instance of a Sim.
+        :type captor_sim_info: SimInfo
+        :param instanced_only: If True, only Captives that are currently loaded will be retrieved. If False, all Captives, including those not loaded will be retrieved. Default is True.
+        :type instanced_only: bool, optional
+        :return: A collection of Sims the specified Sim has Captured.
+        :rtype: Tuple[SimInfo]
+        """
+        return tuple(
+            CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
+                captor_sim_info,
+                SSAbductionRelationshipBitId.SIM_IS_CAPTOR_OF_REL_BIT,
+                instanced_only=instanced_only
+            )
+        )
 
     def get_captors(self, captive_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
         """ Retrieve a collection of Sims that are a Captor of the specified Sim. """
@@ -148,6 +164,7 @@ class SSAbductionStateUtils(HasLog):
             CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
+            SSAllowanceUtils().set_allowed_everything(captive_sim_info, allowed=True)
             SSAllowanceUtils().add_all_allowance_traits(captive_sim_info)
             SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
         except Exception as ex:
@@ -223,6 +240,7 @@ class SSAbductionStateUtils(HasLog):
                 CommonSituationUtils.make_sim_leave(captive_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
+            SSAllowanceUtils().set_allowed_everything(captive_sim_info, allowed=False)
             SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)
