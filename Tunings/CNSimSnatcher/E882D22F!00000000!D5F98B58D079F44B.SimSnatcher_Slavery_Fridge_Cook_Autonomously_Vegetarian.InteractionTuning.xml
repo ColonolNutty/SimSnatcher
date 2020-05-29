@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="StartCraftingAutonomouslySuperInteraction" i="interaction" m="crafting.crafting_interactions" n="SimSnatcher_Slavery_Fridge_Cook_Autonomously_Vegetarian" s="15418508012850639947">
+  <L n="_false_advertisements">
+    <V t="statistic_change">
+      <U n="statistic_change">
+        <T n="amount">3.5</T>
+        <U n="chance">
+          <T n="base_chance">100</T>
+        </U>
+        <T n="stat">16656<!--motive_Hunger--></T>
+      </U>
+    </V>
+    <V t="statistic_change">
+      <U n="statistic_change">
+        <T n="amount">10</T>
+        <T n="stat">16624<!--commodity_Motive_Role_Caterer--></T>
+      </U>
+    </V>
+    <V t="statistic_change">
+      <U n="statistic_change">
+        <T n="amount">10</T>
+        <T n="stat">16625<!--commodity_Motive_Role_DinnerParty-Host--></T>
+      </U>
+    </V>
+  </L>
+  <V n="_icon" t="participant">
+    <U n="participant">
+      <L n="participant_type">
+        <E>Object</E>
+      </L>
+    </U>
+  </V>
+  <V n="_saveable" t="enabled" />
+  <L n="_static_commodities">
+    <U>
+      <T n="desire">4</T>
+      <T n="static_commodity">137861<!--StaticCommodity_RoleAutonomy_Career_SocialMedia_PersuadedToCook--></T>
+    </U>
+    <U>
+      <T n="desire">4</T>
+      <T n="static_commodity">228423</T>
+    </U>
+    <U>
+      <T n="static_commodity">106184<!--staticCommodity_SimRay_MindControl_Eat--></T>
+    </U>
+    <U>
+      <T n="static_commodity">145849<!--staticCommodity_Butler_CookMeal--></T>
+    </U>
+  </L>
+  <T n="allow_autonomous">True</T>
+  <L n="appropriateness_tags">
+    <E>Appropriateness_Cooking</E>
+  </L>
+  <T n="attention_cost">0.75</T>
+  <V n="basic_content" t="one_shot">
+    <U n="one_shot">
+      <V n="periodic_stat_change" t="enabled">
+        <U n="enabled">
+          <L n="operations">
+            <V t="statistic_set_max">
+              <U n="statistic_set_max">
+                <T n="stat">29084<!--commodity_Trait_Autonomy_Foodie--></T>
+                <L n="tests">
+                  <L>
+                    <V t="trait">
+                      <U n="trait">
+                        <L n="whitelist_traits">
+                          <T>27176<!--trait_Foodie--></T>
+                        </L>
+                      </U>
+                    </V>
+                  </L>
+                </L>
+              </U>
+            </V>
+          </L>
+          <T n="trigger_gain_on_start">True</T>
+        </U>
+      </V>
+    </U>
+  </V>
+  <V n="canonical_animation" t="enabled">
+    <U n="enabled">
+      <T n="factory">29356<!--Fridge_Create--></T>
+    </U>
+  </V>
+  <V n="content_score" t="disabled" />
+  <T n="display_name">0xA65ED8E1<!--Cook Meal--></T>
+  <U n="display_name_text_tokens">
+    <L n="tokens">
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Actor</E>
+            </U>
+          </V>
+        </U>
+      </V>
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Object</E>
+            </U>
+          </V>
+        </U>
+      </V>
+    </L>
+  </U>
+  <L n="interaction_category_tags">
+    <E>Interaction_Super</E>
+    <E>Interaction_All</E>
+  </L>
+  <V n="outcome" t="single">
+    <U n="single">
+      <U n="actions">
+        <L n="loot_list">
+          <T>39708<!--loot_Statistic_Breakage_Fridge--></T>
+        </L>
+      </U>
+    </U>
+  </V>
+  <L n="recipes">
+    <T>15759<!--recipe_Food_Homestyle_FrenchToast-Single--></T>
+    <T>15776<!--recipe_Food_Homestyle_Spaghetti-Single--></T>
+    <T>15762<!--recipe_Food_Homestyle_GardenSalad-Single--></T>
+    <T>15765<!--recipe_Food_Homestyle_GrilledCheese-Single--></T>
+    <T>15748<!--recipe_Food_Homestyle_BLT-Single--></T>
+    <T>15771<!--recipe_Food_Homestyle_Pancakes-Single--></T>
+    <T>15756<!--recipe_Food_Homestyle_Chili-Single--></T>
+    <T>15768<!--recipe_Food_Homestyle_Omelet-Single--></T>
+    <T>15753<!--recipe_Food_Homestyle_ChickenStirFry-Single--></T>
+    <T>32440<!--recipe_Food_Homestyle_EggsToast-Single--></T>
+    <T>32775<!--recipe_Food_Homestyle_ChipsSalsa-Single--></T>
+    <T>33396<!--recipe_Food_Homestyle_ScrambledEggs-Single--></T>
+    <T>76032<!--recipe_Food_Homestyle_Fish&Chips-Single--></T>
+    <T>33439<!--recipe_Food_Homestyle_MacNCheese-Single--></T>
+    <T>33452<!--recipe_Food_Homestyle_CasseroleTuna-Single--></T>
+    <T>118449<!--recipe_Food_Homestyle_QuinoaSalad_Single--></T>
+    <T>130667<!--recipe_Food_Homestyle_ClamChowder-Small--></T>
+    <T>130670<!--recipe_Food_Homestyle_FruitSalad-Small--></T>
+    <T>130673<!--recipe_Food_Homestyle_ItalianMeatballs-Small--></T>
+    <T>130676<!--recipe_Food_Homestyle_Minestrone-Small--></T>
+    <T>155342<!--recipe_Food_Homestyle_PlasmafruitSalad-Small--></T>
+    <T>153926<!--recipe_Food_Homestyle_PanDeMuerto_Single--></T>
+    <T>135953<!--recipe_Food_CulturalFood_BanhMi_Single--></T>
+    <T>133297<!--recipe_Food_CulturalFood_BhelPuri_Single--></T>
+    <T>133298<!--recipe_Food_CulturalFood_Brochette_Single--></T>
+    <T>135960<!--recipe_Food_CulturalFood_Burrito_BeanAndCheese_Single--></T>
+    <T>135963<!--recipe_Food_CulturalFood_Burrito_Chicken_Single--></T>
+    <T>40771<!--recipe_Food_Homestyle_GummyBearPancakes-Single--></T>
+    <T>135967<!--recipe_Food_CulturalFood_Burrito_VeggieInSpinachWrap_Single--></T>
+    <T>135970<!--recipe_Food_CulturalFood_Burrito_VeggieInTomatoWrap_Single--></T>
+    <T>133301<!--recipe_Food_CulturalFood_Curry_Single--></T>
+    <T>133304<!--recipe_Food_CulturalFood_Dango_Single--></T>
+    <T>135973<!--recipe_Food_CulturalFood_EggRoll_Single--></T>
+    <T>135976<!--recipe_Food_CulturalFood_Empanada_Single--></T>
+    <T>135980<!--recipe_Food_CulturalFood_Lumpia_Single--></T>
+    <T>133307<!--recipe_Food_CulturalFood_Merguez_Single--></T>
+    <T>133310<!--recipe_Food_CulturalFood_Nigiri_Single--></T>
+    <T>40815<!--recipe_Food_Homestyle_ProteinPlate-Single--></T>
+    <T>135995<!--recipe_Food_CulturalFood_Pho_Single--></T>
+    <T>135998<!--recipe_Food_CulturalFood_PorkAdobo_Single--></T>
+    <T>133420<!--recipe_Food_CulturalFood_PufferfishNigiri_Single--></T>
+    <T>133313<!--recipe_Food_CulturalFood_Ramen_Single--></T>
+    <T>133316<!--recipe_Food_CulturalFood_Samosa_Single--></T>
+    <T>136001<!--recipe_Food_CulturalFood_Siapao_Single--></T>
+    <T>136004<!--recipe_Food_CulturalFood_SummerRoll_Single--></T>
+    <T>136007<!--recipe_Food_CulturalFood_SweetAndSourEggplant_Single--></T>
+    <T>136010<!--recipe_Food_CulturalFood_SweetAndSourPork_Single--></T>
+    <T>40864<!--recipe_Food_Homestyle_SpaghettiFlaming-Single--></T>
+    <T>133319<!--recipe_Food_CulturalFood_Tajine_Single--></T>
+    <T>136013<!--recipe_Food_CulturalFood_Taquito_Single--></T>
+    <T>135986<!--recipe_Food_CulturalFood_MaoPaoTofu_Single--></T>
+    <T>153548<!--recipe_Food_CulturalFood_Ensaymada_Single--></T>
+    <T>76038<!--recipe_Food_Homestyle_BlackenedBass-Single--></T>
+    <T>76123<!--recipe_Food_Homestyle_PanFriedTilapia-Single--></T>
+    <T>169972<!--recipe_Food_Seafood_HaddockSandwich_Single--></T>
+    <T>169973<!--recipe_Food_Seafood_LobsterRoll_Single--></T>
+    <T>169974<!--recipe_Food_Seafood_PopcornShrimp_Single--></T>
+    <T>169975<!--recipe_Food_Seafood_SeafoodChowder_Single--></T>
+    <T>175059<!--recipe_Food_Homestyle_AncientSicknessCure_Stove_Single--></T>
+    <T>205439<!--recipe_Food_Homestyle_VeggieDumplings_Single--></T>
+    <T>205442<!--recipe_Food_Homestyle_MudCarp_Single--></T>
+    <T>76129<!--recipe_Food_Homestyle_FishTacos-Single--></T>
+    <T>177397<!--recipe_Food_JungleFood_ArepaPabellon_Single--></T>
+    <T>177400<!--recipe_Food_JungleFood_ArepaRellena_Single--></T>
+    <T>177403<!--recipe_Food_JungleFood_Baleada_Single--></T>
+    <T>177406<!--recipe_Food_JungleFood_Bunuelos_Single--></T>
+    <T>177409<!--recipe_Food_JungleFood_Curanto_Single--></T>
+    <T>176537<!--recipe_Food_JungleFood_EmpanadasVerde_Single--></T>
+    <T>177230<!--recipe_Food_JungleFood_Feijoada_Single--></T>
+    <T>177228<!--recipe_Food_JungleFood_PastelCamarao_Single--></T>
+    <T>177229<!--recipe_Food_JungleFood_PastelPalmito_Single--></T>
+    <T>176576<!--recipe_Food_JungleFood_PlantanosFritos_Single--></T>
+    <T>133247<!--recipe_Food_Homestyle_FauxBLT-Single--></T>
+    <T>133213<!--recipe_Food_Homestyle_CasseroleTofu-Single--></T>
+    <T>133210<!--recipe_Food_Homestyle_TofuStirFry-Single--></T>
+    <T>133207<!--recipe_Food_Homestyle_ChiliVegetable-Single--></T>
+    <T>133204<!--recipe_Food_Homestyle_TofuTacos-Single--></T>
+    <T>133201<!--recipe_Food_Homestyle_RoastTofuChicken-Single--></T>
+  </L>
+  <V n="route_start_balloon" t="enabled">
+    <U n="enabled">
+      <U n="balloon">
+        <L n="balloon_choices">
+          <U>
+            <V n="item" t="balloon_icon">
+              <U n="balloon_icon">
+                <V n="icon" t="participant">
+                  <U n="participant">
+                    <L n="participant_type">
+                      <E>Object</E>
+                    </L>
+                  </U>
+                </V>
+              </U>
+            </V>
+          </U>
+        </L>
+        <L n="balloon_target">
+          <E>Actor</E>
+        </L>
+      </U>
+    </U>
+  </V>
+  <E n="scoring_priority">LOW</E>
+  <T n="subaction_selection_weight">1</T>
+  <E n="target_type">OBJECT</E>
+  <L n="test_autonomous">
+    <L>
+      <V t="appropriateness" />
+      <V t="location">
+        <U n="location">
+          <U n="location_tests">
+            <V n="is_venue_type" t="enabled">
+              <U n="enabled">
+                <T n="negate">True</T>
+                <T n="venue_type">130713<!--venue_Restaurant--></T>
+              </U>
+            </V>
+          </U>
+        </U>
+      </V>
+      <V t="buff">
+        <U n="buff">
+          <L n="blacklist">
+            <T>151548<!--buff_Role_Butler_DontCook--></T>
+          </L>
+        </U>
+      </V>
+    </L>
+    <L>
+      <V t="buff">
+        <U n="buff">
+          <V n="whitelist" t="enabled">
+            <L n="enabled">
+              <T>136649<!--buff_Career_SocialMedia_PersuadedToCook--></T>
+            </L>
+          </V>
+        </U>
+      </V>
+    </L>
+    <L>
+      <V t="buff">
+        <U n="buff">
+          <V n="whitelist" t="enabled">
+            <L n="enabled">
+              <T>228421</T>
+            </L>
+          </V>
+        </U>
+      </V>
+    </L>
+  </L>
+  <L n="test_globals">
+    <V t="sim_info">
+      <U n="sim_info">
+        <V n="ages" t="specified" />
+        <V n="species" t="specified">
+          <U n="specified">
+            <L n="species">
+              <E />
+            </L>
+          </U>
+        </V>
+        <E n="who">Actor</E>
+      </U>
+    </V>
+    <V t="test_set_reference">
+      <T n="test_set_reference">28413<!--testSet_AgeChildAndOlder--></T>
+    </V>
+    <V t="trait">
+      <U n="trait">
+        <L n="blacklist_traits" />
+        <L n="whitelist_traits">
+          <T>132627<!--trait_Vegetarian--></T>
+        </L>
+      </U>
+    </V>
+    <V t="trait">
+      <U n="trait">
+        <L n="blacklist_traits">
+          <T>164763<!--trait_ChildhoodPhase_PickyEater_A--></T>
+          <T>164972<!--trait_ChildhoodPhase_PickyEater_B--></T>
+          <T>164973<!--trait_ChildhoodPhase_PickyEater_C--></T>
+          <T>164974<!--trait_ChildhoodPhase_PickyEater_D--></T>
+          <T>164975<!--trait_ChildhoodPhase_PickyEater_E--></T>
+        </L>
+      </U>
+    </V>
+    <V t="zone">
+      <U n="zone">
+        <U n="zone_tests">
+          <V n="venue_type" t="enabled">
+            <U n="enabled">
+              <V n="blacklist" t="specify">
+                <U n="specify">
+                  <L n="blacklist">
+                    <T>208182<!--Rentable University Housing--></T>
+                  </L>
+                </U>
+              </V>
+            </U>
+          </V>
+        </U>
+      </U>
+    </V>
+    <V t="trait">
+      <U n="trait">
+        <L n="blacklist_traits">
+          <T>162668<!--trait_PlantSim--></T>
+        </L>
+      </U>
+    </V>
+  </L>
+  <T n="time_overhead">60</T>
+  <V n="utility_info" t="enabled">
+    <L n="enabled">
+      <E>POWER</E>
+    </L>
+  </V>
+</I>

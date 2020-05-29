@@ -1,0 +1,16 @@
+<I c="SSSlaveryForceEnslaveInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.debug.force_enslave" n="SimSnatcher_Slavery_Debug_Force_Enslave" s="5926593070545897734">
+  <V n="_saveable" t="disabled" />
+  <T n="debug">True</T>
+  <T n="cheat">True</T>
+  <V n="content_score" t="disabled" />
+  <T n="category">8788496810823505546 <!--Slavery Parent--></T>
+  <T n="display_name">0x3609F548<!--Force Enslave--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="pie_menu_priority">0</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

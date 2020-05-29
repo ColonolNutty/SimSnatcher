@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="RoleState" i="role_state" m="role.role_state" n="SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Maid" s="15797370075757714486">
+  <L n="_buffs">
+    <U>
+      <T n="buff_type">7754882754190007674<!--SimSnatcher_Slavery_Buff_Role_Slave_NPC--></T>
+    </U>
+    <U>
+      <T n="buff_type">661496139598548792<!--SimSnatcher_Slavery_Buff_Role_Slave_MaidRole_NPC--></T>
+    </U>
+  </L>
+  <E n="_crafting_process_override">LOT_OWNER</E>
+  <U n="_off_lot_autonomy_buff">
+    <T n="buff_type">38292<!--buff_offLotAutonomyMod_OnLotOnly--></T>
+  </U>
+  <V n="_on_activate" t="parameterized_autonomy_ping">
+    <U n="parameterized_autonomy_ping">
+      <V n="full_ping_on_fail" t="enabled" />
+      <L n="static_commodities">
+        <T>33808<!--StaticCommodity_MaidClean--></T>
+      </L>
+    </U>
+  </V>
+  <L n="role_affordances">
+    <T>1375960884848182342<!--SimSnatcher_Slavery_Slave_Order_Greeting_Always_Invite--></T>
+    <T>42916644346470444<!--SimSnatcher_Slavery_Slave_Order_Greeting_Dont_Invite--></T>
+    <T>7868290547458644555<!--SimSnatcher_Slavery_Slave_Order_Greeting_Never_Invite--></T>
+    <T>148650<!--situation_Butler_Cheats_Idle--></T>
+    <T>148651<!--situation_Butler_Cheats_Idle_Fidget--></T>
+    <T>9403310944146129178<!--SimSnatcher_Slavery_Slave_Order_Immediate_Repair--></T>
+    <T>6062546360028322766<!--SimSnatcher_Slavery_Slave_Order_Immediate_Sleep--></T>
+    <T>5647040081185128031<!--SimSnatcher_Slavery_Slave_Orders_Start_Caring_For_Children--></T>
+    <T>1516394558516589196<!--SimSnatcher_Slavery_Slave_Orders_Start_Cleaning--></T>
+    <T>598928775950645146<!--SimSnatcher_Slavery_Slave_Orders_Start_Gardening--></T>
+    <T>9086016025178134286<!--SimSnatcher_Slavery_Slave_Orders_Start_Repairing--></T>
+    <T>15853793775531811583<!--SimSnatcher_Slavery_Slave_Orders_Stop_Caring_For_Children--></T>
+    <T>7194327029324175532<!--SimSnatcher_Slavery_Slave_Orders_Stop_Cleaning--></T>
+    <T>1119627245447903802<!--SimSnatcher_Slavery_Slave_Orders_Stop_Gardening--></T>
+    <T>15595939028004082350<!--SimSnatcher_Slavery_Slave_Orders_Stop_Repairing--></T>
+    <T>10003926226888068799<!--SimSnatcher_Slavery_Slave_Order_Cook_Meal--></T>
+    <T>709464137346600392<!--SimSnatcher_Slavery_Slave_Order_Cook_Family_Meal--></T>
+    <T>3835091909259152048<!--SimSnatcher_Slavery_Slave_Order_Cook_Party_Meal--></T>
+    <T>6058377846136831855<!--SimSnatcher_Slavery_Slave_Order_Check_On_Children--></T>
+    <T>566995684078172579<!--SimSnatcher_Slavery_Slave_Order_Clean_Dirty_Object--></T>
+    <T>8969683024393685239<!--SimSnatcher_Slavery_Slave_Order_Prepare_Drink--></T>
+    <T>8878359119351761121<!--SimSnatcher_Slavery_Slave_Order_Water_Plants--></T>
+    <T>6423661042652388641<!--SimSnatcher_Slavery_Slave_Order_Skill_Burn_Up_The_Dance_Floor--></T>
+    <T>2966617056122033931<!--SimSnatcher_Slavery_Slave_Order_Skill_Perform_Comedy_Routine--></T>
+    <T>9854817841251727844<!--SimSnatcher_Slavery_Slave_Order_Skill_Play_Guitar--></T>
+    <T>13729101435057045649<!--SimSnatcher_Slavery_Slave_Order_Skill_Play_Piano--></T>
+    <T>7739579499662072953<!--SimSnatcher_Slavery_Slave_Order_Skill_Play_Violin--></T>
+    <T>2039930973667309838<!--SimSnatcher_Slavery_Slave_Order_Skill_Use_DJ_Booth--></T>
+    <T>11747212392367613416<!--SimSnatcher_Slavery_Slave_Praise--></T>
+    <T>370167429842020454<!--SimSnatcher_Slavery_Slave_Reprimand--></T>
+  </L>
+  <L n="tags">
+    <E>Role_VIPRope_Allowed</E>
+  </L>
+</I>

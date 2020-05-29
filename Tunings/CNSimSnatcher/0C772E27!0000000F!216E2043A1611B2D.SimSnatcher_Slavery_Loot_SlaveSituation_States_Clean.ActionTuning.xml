@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_States_Clean" s="2408898325532187437">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">153782733911597269<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Clean--></T>
+        </U>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>11089799339559174258<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontClean--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+    <V t="butler_state_change">
+      <U n="butler_state_change">
+        <T n="butler_situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+        <E n="situation_state">CLEANING</E>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>11089799339559174258<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontClean--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+  </L>
+</I>

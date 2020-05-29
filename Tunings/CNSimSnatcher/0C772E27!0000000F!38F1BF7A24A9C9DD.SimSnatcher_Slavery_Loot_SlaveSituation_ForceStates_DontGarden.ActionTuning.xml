@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_ForceStates_DontGarden" s="4103271266833254877">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">2957439612683074916<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontGarden--></T>
+        </U>
+        <E n="subject">TargetSim</E>
+      </U>
+    </V>
+    <V t="buff_removal">
+      <U n="buff_removal">
+        <L n="buffs_to_remove">
+          <T>11800245162308533165<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Garden--></T>
+        </L>
+        <E n="subject">TargetSim</E>
+      </U>
+    </V>
+  </L>
+</I>

@@ -3,7 +3,105 @@
     <T n="situation_job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
     <T n="staying_role_state">13426034656131085789<!--RoleState: SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Idle--></T>
   </U>
-  <U n="when_to_refresh_situation">
-    <T n="hours">6</T>
+  <T n="_implies_greeted_status">True</T>
+  <T n="_maintain_sims_consistency">True</T>
+  <T n="_survives_active_household_change">True</T>
+  <U n="slave_job_states">
+    <U n="childcare_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">1488839829299880649<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Nanny--></T>
+        </U>
+      </L>
+      <V n="time_out" t="enabled">
+        <T n="enabled">15</T>
+      </V>
+    </U>
+    <U n="cleaning_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">15797370075757714486<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Maid--></T>
+        </U>
+      </L>
+      <V n="time_out" t="enabled">
+        <T n="enabled">15</T>
+      </V>
+    </U>
+    <U n="default_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">13426034656131085789<!--RoleState: SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Idle--></T>
+        </U>
+      </L>
+      <V n="time_out" t="enabled">
+        <T n="enabled">1</T>
+      </V>
+    </U>
+    <U n="gardening_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">4775521788387184189<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Gardener--></T>
+        </U>
+      </L>
+      <V n="time_out" t="enabled">
+        <T n="enabled">15</T>
+      </V>
+    </U>
+    <U n="repair_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">13446768923265958837<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Repair_Man--></T>
+        </U>
+      </L>
+      <V n="time_out" t="enabled">
+        <T n="enabled">15</T>
+      </V>
+    </U>
   </U>
+  <T n="duration">0</T>
+  <E n="exclusivity">VISIT</E>
+  <L n="finish_job_states">
+    <U>
+      <E n="key">DISMISSED</E>
+      <U n="value">
+        <U n="enter_state_test">
+          <L n="affordances">
+            <T>17836848419504865891<!--SimSnatcher_Slavery_End--></T>
+          </L>
+        </U>
+        <V n="notification" t="enabled">
+          <V n="enabled" t="literal">
+            <U n="literal">
+              <L n="dialog_options">
+                <E>DISABLE_CLOSE_BUTTON</E>
+              </L>
+              <V n="icon" t="enabled">
+                <V n="enabled" t="participant">
+                  <U n="participant">
+                    <L n="participant_type">
+                      <E>Actor</E>
+                    </L>
+                  </U>
+                </V>
+              </V>
+              <V n="text" t="single">
+                <T n="single">0xCEF8C5B8<!--You are really freeing me? I'm Free!--></T>
+              </V>
+              <E n="visual_type">SPEECH</E>
+            </U>
+          </V>
+        </V>
+      </U>
+    </U>
+  </L>
+  <L n="tags">
+    <E>Situation_Butler</E>
+    <E>Situation_Slave</E>
+  </L>
+  <V n="time_jump" t="allow" />
 </I>

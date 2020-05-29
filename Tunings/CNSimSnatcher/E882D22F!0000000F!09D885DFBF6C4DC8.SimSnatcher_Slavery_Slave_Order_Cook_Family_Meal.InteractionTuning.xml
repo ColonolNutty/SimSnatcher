@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="SuperInteraction" i="interaction" m="interactions.base.super_interaction" n="SimSnatcher_Slavery_Slave_Order_Cook_Family_Meal" s="709464137346600392">
+  <V n="_icon" t="participant">
+    <U n="participant">
+      <L n="participant_type">
+        <E>TargetSim</E>
+      </L>
+    </U>
+  </V>
+  <V n="_saveable" t="enabled" />
+  <T n="allow_autonomous">False</T>
+  <T n="attention_cost">0.5</T>
+  <V n="basic_content" t="one_shot">
+    <U n="one_shot">
+      <U n="animation_ref">
+        <T n="factory">145389<!--sim_Butler_OrderButler--></T>
+        <U n="overrides">
+          <V n="balloons" t="enabled">
+            <L n="enabled">
+              <U>
+                <L n="balloon_choices">
+                  <U>
+                    <V n="item" t="balloon_icon">
+                      <U n="balloon_icon">
+                        <V n="icon" t="resource_key">
+                          <U n="resource_key">
+                            <T n="key" p="InGame\UI\Icons\Headlines\Final\headline_cookbook.png">2f7d0004:00000000:a5cd90d6a1f0a0fb</T>
+                          </U>
+                        </V>
+                      </U>
+                    </V>
+                  </U>
+                </L>
+                <L n="balloon_target">
+                  <E>TargetSim</E>
+                </L>
+              </U>
+            </L>
+          </V>
+        </U>
+      </U>
+    </U>
+  </V>
+  <L n="basic_extras">
+    <V t="payment">
+      <U n="payment">
+        <T n="display_only">True</T>
+        <V n="payment" t="literal">
+          <U n="literal">
+            <V n="payment_cost" t="amount">
+              <U n="amount">
+                <T n="amount">20</T>
+              </U>
+            </V>
+          </U>
+        </V>
+      </U>
+    </V>
+  </L>
+  <V n="basic_reserve_object" t="disabled" />
+  <T n="category">17603188036402248751<!--SimSnatcher_Pie_Slave_Orders--></T>
+  <V n="content_score" t="disabled" />
+  <T n="display_name">0x2794C6A5<!--Cook Family Meal--></T>
+  <U n="display_name_text_tokens">
+    <L n="tokens">
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Actor</E>
+            </U>
+          </V>
+        </U>
+      </V>
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Object</E>
+            </U>
+          </V>
+        </U>
+      </V>
+    </L>
+  </U>
+  <L n="interaction_category_tags">
+    <E>Interaction_Super</E>
+    <E>Interaction_All</E>
+  </L>
+  <V n="outcome" t="single">
+    <U n="single">
+      <U n="actions">
+        <L n="basic_extras">
+          <V t="payment">
+            <U n="payment">
+              <V n="payment" t="literal">
+                <U n="literal">
+                  <V n="payment_cost" t="amount">
+                    <U n="amount">
+                      <T n="amount">20</T>
+                    </U>
+                  </V>
+                </U>
+              </V>
+            </U>
+          </V>
+        </L>
+        <L n="loot_list">
+          <T>152370<!--loot_ButlerSituation_GivenOrder--></T>
+          <T>151549<!--loot_ButlerSituation_DontCook--></T>
+        </L>
+        <L n="parameterized_autonomy">
+          <U>
+            <E n="key">TargetSim</E>
+            <U n="value">
+              <V n="fallback_notification" t="enabled">
+                <V n="enabled" t="literal">
+                  <U n="literal">
+                    <V n="text" t="single">
+                      <T n="single">0x5DB6ED6A<!--The residence's slave could not carry out the requested order. Please allow time for {M0.him}{F0.her} to complete {M0.his}{F0.her} current order, or provide sufficient facilities for completing the order.--></T>
+                    </V>
+                  </U>
+                </V>
+              </V>
+              <L n="requests">
+                <U>
+                  <L n="static_commodities">
+                    <T>145864<!--staticCommodity_Butler_CookFamilyMeal--></T>
+                  </L>
+                </U>
+              </L>
+            </U>
+          </U>
+        </L>
+        <V n="response" t="enabled">
+          <V n="enabled" t="individual">
+            <U n="individual">
+              <L n="animations">
+                <U>
+                  <E n="target">TargetSim</E>
+                  <U n="animation">
+                    <T n="factory">145386<!--sim_Butler_OrderReact--></T>
+                  </U>
+                </U>
+              </L>
+            </U>
+          </V>
+        </V>
+      </U>
+    </U>
+  </V>
+  <E n="scoring_priority">NORMAL</E>
+  <T n="subaction_selection_weight">1</T>
+  <E n="target_type">OBJECT</E>
+  <L n="test_globals">
+    <V t="sim_info">
+      <U n="sim_info">
+        <V n="ages" t="specified">
+          <L n="specified">
+            <E>CHILD</E>
+            <E>TEEN</E>
+            <E>YOUNGADULT</E>
+            <E>ADULT</E>
+            <E>ELDER</E>
+          </L>
+        </V>
+        <V n="species" t="specified">
+          <U n="specified">
+            <L n="species">
+              <E />
+            </L>
+          </U>
+        </V>
+        <E n="who">Actor</E>
+      </U>
+    </V>
+    <V t="buff">
+      <U n="buff">
+        <E n="subject">TargetSim</E>
+        <V n="whitelist" t="enabled">
+          <L n="enabled">
+            <T>7754882754190007674<!--SimSnatcher_Slavery_Buff_Role_Slave_NPC--></T>
+          </L>
+        </V>
+      </U>
+    </V>
+    <V t="object_criteria">
+      <U n="object_criteria">
+        <V n="identity_test" t="tags">
+          <U n="tags">
+            <L n="tag_set">
+              <E>Func_Refrigerator</E>
+            </L>
+          </U>
+        </V>
+      </U>
+    </V>
+    <V t="object_criteria">
+      <U n="object_criteria">
+        <V n="identity_test" t="tags">
+          <U n="tags">
+            <L n="tag_set">
+              <E>Func_Counter</E>
+            </L>
+          </U>
+        </V>
+      </U>
+    </V>
+    <V t="object_criteria">
+      <U n="object_criteria">
+        <V n="identity_test" t="tags">
+          <U n="tags">
+            <L n="tag_set">
+              <E>Func_Oven</E>
+            </L>
+          </U>
+        </V>
+      </U>
+    </V>
+  </L>
+  <T n="time_overhead">30</T>
+</I>

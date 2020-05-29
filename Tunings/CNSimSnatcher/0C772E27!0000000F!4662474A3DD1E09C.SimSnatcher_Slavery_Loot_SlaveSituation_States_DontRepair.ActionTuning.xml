@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_States_DontRepair" s="5071694514562916508">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">2308422584070489348<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontRepair--></T>
+        </U>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>1686755631471680901<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Repair--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+    <V t="butler_state_change">
+      <U n="butler_state_change">
+        <T n="butler_situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+        <V n="operation" t="disable" />
+        <E n="situation_state">REPAIR</E>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>1686755631471680901<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Repair--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+  </L>
+</I>

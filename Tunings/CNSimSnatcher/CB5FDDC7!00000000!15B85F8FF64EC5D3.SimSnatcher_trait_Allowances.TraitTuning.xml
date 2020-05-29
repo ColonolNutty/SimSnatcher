@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="SimSnatcher_trait_Allowances" s="1565105942428566995">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <L n="buffs">
+    <U>
+      <T n="buff_type">14606159824511998137<!--SimSnatcher_Buff_Allowed_Nothing_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">13221969958789686906<!--SimSnatcher_Buff_Allowed_Bartending_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">308864153663263335<!--SimSnatcher_Buff_Allowed_Bathing_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">6323753974502691335<!--SimSnatcher_Buff_Allowed_Cleaning_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">4842518285657914197<!--SimSnatcher_Buff_Allowed_Computer_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">10521754905438834254<!--SimSnatcher_Buff_Allowed_Cooking_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">11158120954621631722<!--SimSnatcher_Buff_Allowed_Dancing_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">11388152938923528948<!--SimSnatcher_Buff_Allowed_Eating_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">2925386487758475651<!--SimSnatcher_Buff_Allowed_Grab_Snack_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">8370673835260241570<!--SimSnatcher_Buff_Allowed_Guest_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">3374806314796764961<!--SimSnatcher_Buff_Allowed_Hired_Worker_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">9574870353222860192<!--SimSnatcher_Buff_Allowed_Host_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">11471277301025207782<!--SimSnatcher_Buff_Allowed_Phone_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">5288446919769505528<!--SimSnatcher_Buff_Allowed_Playing_Instrument_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">9623480736791959070<!--SimSnatcher_Buff_Allowed_Read_Book_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">16879387032919188625<!--SimSnatcher_Buff_Allowed_Sleeping_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">5239114493354941743<!--SimSnatcher_Buff_Allowed_Social_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">16786951855258837909<!--SimSnatcher_Buff_Allowed_Work_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">2633193183689142481<!--SimSnatcher_Buff_Allowed_Singing_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">14047773167649514854<!--SimSnatcher_Buff_Allowed_Stereo_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">937277114335831848<!--SimSnatcher_Buff_Allowed_TV_Watching_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">12361659796571713329<!--SimSnatcher_Buff_Allowed_Tip_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">12746378072892469105<!--SimSnatcher_Buff_Allowed_View_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">13906505039263087647<!--SimSnatcher_Buff_Allowed_Workout_Invisible--></T>
+    </U>
+    <U>
+      <T n="buff_type">1889249818573707888<!--SimSnatcher_Buff_Allowed_Playing_Invisible--></T>
+    </U>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0x6E2A39C1<!--Allowance--></T>
+  <T n="display_name_gender_neutral">0x6E2A39C1<!--Allowance--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:A1E5C3E91B378951</T>
+  <T n="trait_description">0x891EA31A<!--Can only do what they are allowed to do.--></T>
+  <T n="trait_origin_description">0xDD2E2C4A<!--From Being Controlled--></T>
+  <E n="trait_type">HIDDEN</E>
+</I>

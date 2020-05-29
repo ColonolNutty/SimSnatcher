@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Slavery_Buff_Role_Slave_NPC" s="7754882754190007674">
+  <L n="_loot_on_addition">
+    <T>15744247254542243903<!--SimSnatcher_Slavery_Loot_SlaveSituation_Start--></T>
+  </L>
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="icon" p="InGame\UI\Icons\Debug\missing_image.png">2f7d0004:00000000:30f0846c783606f9</T>
+  <L n="static_commodity_to_add">
+    <T>5858439379387599568<!--SS_Slavery_staticCommodity_Slave_Orders--></T>
+    <T>13912383966227499704<!--SS_Slavery_staticCommodity_Slave_Autonomy_CommonActions--></T>
+    <T>420838607315826745<!--SS_Slavery_staticCommodity_Slave_Autonomy_RareActions--></T>
+    <T>8471773813870779043<!--SS_Slavery_staticCommodity_Slave_Autonomy_UncommonActions--></T>
+  </L>
+  <T n="visible">False</T>
+  <V n="walkstyle" t="enabled">
+    <U n="enabled">
+      <E n="priority">EMOTION</E>
+      <T n="walkstyle" p="InSP09\Locomotion\WalkButler.walkstyle">27c01d95:00000000:00000000b1eeb37c</T>
+    </U>
+  </V>
+</I>

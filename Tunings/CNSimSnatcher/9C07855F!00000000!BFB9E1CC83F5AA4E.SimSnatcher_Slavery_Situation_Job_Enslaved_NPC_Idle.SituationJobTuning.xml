@@ -6,6 +6,7 @@
       <T n="single_sim_loot_actions">8281991620631746869<!--WeightedSingleSimLootActions: SimSnatcher_Abduction_Loot_Action_Abducted_NPC--></T>
     </U>
   </L>
+  <T n="elevated_importance">True</T>
   <T n="filter">15940<!--BlankFilter: sim_filter_blank_do_not_touch--></T>
   <T n="goal_scoring">10</T>
   <V n="goodbye_notification" t="notification">
@@ -23,12 +24,21 @@
   </L>
   <E n="no_show_action">DO_NOTHING</E>
   <T n="participating_npcs_should_ignore_work">True</T>
+  <U n="sim_auto_invite">
+    <T n="lower_bound">1</T>
+    <T n="upper_bound">1</T>
+  </U>
+  <L n="tags">
+    <E>Role_Slave</E>
+  </L>
   <L n="sim_spawner_tags">
     <E>Spawn_VisitorArrival</E>
   </L>
+  <T n="tooltip_name">0xF9D01A72<!--Slave--></T>
   <U n="tooltip_name_text_tokens">
     <L n="tokens">
       <V t="participant_type" />
     </L>
   </U>
+  <T n="user_facing_sim_headline_display_override">True</T>
 </I>

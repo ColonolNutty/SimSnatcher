@@ -1,0 +1,16 @@
+<I c="SSAbductionForceAbductInteraction" i="interaction" m="cnsimsnatcher.abduction.interactions.debug.force_abduct" n="SimSnatcher_Abduction_Debug_Force_Abduct" s="13584859602748465572">
+  <V n="_saveable" t="disabled" />
+  <T n="debug">True</T>
+  <T n="cheat">True</T>
+  <V n="content_score" t="disabled" />
+  <T n="category">14301318989422970065 <!--Abduction Parent--></T>
+  <T n="display_name">0x0077615F<!--Force Abduct--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="pie_menu_priority">0</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_States_Garden" s="15049755360821344517">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">11800245162308533165<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Garden--></T>
+        </U>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>152304<!--buff_Role_Butler_States_DontGarden--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+    <V t="butler_state_change">
+      <U n="butler_state_change">
+        <T n="butler_situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+        <E n="situation_state">GARDENING</E>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>152304<!--buff_Role_Butler_States_DontGarden--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+  </L>
+</I>

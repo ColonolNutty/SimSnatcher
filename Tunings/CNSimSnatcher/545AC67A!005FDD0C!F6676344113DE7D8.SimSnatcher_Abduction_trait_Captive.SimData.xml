@@ -15,13 +15,13 @@
       <T name="cas_selected_icon">00000000-00000000-0000000000000000</T>
       <T name="cas_trait_asm_param">None</T>
       <L name="conflicting_traits" />
-      <T name="display_name">0x08624668</T>
+      <T name="display_name">0x4EAF91E5</T>
       <L name="genders" />
       <T name="icon">2F7D0004-00000000-F838AC7741A8AFC6</T>
       <L name="tags" />
       <T name="trait_description">0x15C5E2AE</T>
       <T name="trait_origin_description">0xCD3AC35F</T>
-      <T name="trait_type">1</T>
+      <T name="trait_type">4</T>
     </I>
   </Instances>
   <Schemas>

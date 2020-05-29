@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="SimSnatcher_trait_Prevent_Leave" s="4342592222107139124">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <L n="buffs">
+    <U>
+      <T n="buff_type">17783615372645687397<!--SimSnatcher_Buff_Prevent_Leave_Invisible--></T>
+    </U>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0x8E8864DE<!--Allowance--></T>
+  <T n="display_name_gender_neutral">0x8E8864DE<!--Allowance--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:A1E5C3E91B378951</T>
+  <T n="trait_description">0x8790D3DE<!--Can only do what they are allowed to do.--></T>
+  <T n="trait_origin_description">0xDD2E2C4A<!--From Being Controlled--></T>
+  <E n="trait_type">HIDDEN</E>
+</I>

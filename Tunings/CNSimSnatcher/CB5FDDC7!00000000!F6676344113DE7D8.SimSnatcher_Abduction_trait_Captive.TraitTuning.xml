@@ -13,20 +13,14 @@
   </L>
   <L n="buffs">
     <U>
-      <T n="buff_type">17783615372645687397<!--SimSnatcher_Buff_Prevent_Leave_Invisible--></T>
-    </U>
-    <U>
-      <T n="buff_type">14606159824511998137<!--SimSnatcher_Buff_Allowed_Nothing_Invisible--></T>
-    </U>
-    <U>
       <T n="buff_type">4145718180400226536<!--SimSnatcher_Buff_Trait_Captive--></T>
     </U>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x4EAF91E5<!--Captive--></T>
   <T n="display_name_gender_neutral">0x4EAF91E5<!--Captive--></T>
-  <T p="SlaveIcon" n="icon">2f7d0004:00000000:F838AC7741A8AFC6</T>
-  <T n="trait_description">0x15C5E2AE<!--Was Captured--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:F838AC7741A8AFC6</T>
+  <T n="trait_description">0x15C5E2AE<!--Captured--></T>
   <T n="trait_origin_description">0xCD3AC35F<!--From Being Abducted--></T>
-  <E n="trait_type">GAMEPLAY</E>
+  <E n="trait_type">HIDDEN</E>
 </I>

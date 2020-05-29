@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Slavery_Buff_Role_Slave_Default" s="3509202248109909160">
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <U n="game_effect_modifier">
+    <L n="_game_effect_modifiers">
+      <V t="autonomy_modifier">
+        <U n="autonomy_modifier">
+          <V n="only_scored_static_commodities" t="enabled">
+            <L n="enabled">
+              <T>13912383966227499704<!--SS_Slavery_staticCommodity_Slave_Autonomy_CommonActions--></T>
+              <T>5858439379387599568<!--SS_Slavery_staticCommodity_Slave_Orders--></T>
+              <T>420838607315826745<!--SS_Slavery_staticCommodity_Slave_Autonomy_RareActions--></T>
+              <T>8471773813870779043<!--SS_Slavery_staticCommodity_Slave_Autonomy_UncommonActions--></T>
+            </L>
+          </V>
+        </U>
+      </V>
+    </L>
+  </U>
+  <T n="icon" p="InGame\UI\Icons\Debug\missing_image.png">2f7d0004:00000000:30f0846c783606f9</T>
+  <T n="visible">False</T>
+</I>

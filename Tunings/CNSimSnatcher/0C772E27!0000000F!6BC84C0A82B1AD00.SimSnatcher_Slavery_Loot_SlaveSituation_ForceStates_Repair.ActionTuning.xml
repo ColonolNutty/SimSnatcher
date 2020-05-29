@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_ForceStates_Repair" s="7766541165426486528">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">1686755631471680901<!--SimSnatcher_Slavery_Buff_Role_Slave_States_Repair--></T>
+        </U>
+        <E n="subject">TargetSim</E>
+      </U>
+    </V>
+    <V t="buff_removal">
+      <U n="buff_removal">
+        <L n="buffs_to_remove">
+          <T>2308422584070489348<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontRepair--></T>
+        </L>
+        <E n="subject">TargetSim</E>
+      </U>
+    </V>
+  </L>
+</I>

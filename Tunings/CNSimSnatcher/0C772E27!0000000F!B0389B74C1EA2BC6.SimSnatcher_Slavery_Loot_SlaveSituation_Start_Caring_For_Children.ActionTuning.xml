@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_Start_Caring_For_Children" s="12698070075142974406">
+  <L n="loot_actions">
+    <V t="butler_state_change">
+      <U n="butler_state_change">
+        <T n="butler_situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+        <E n="situation_state">CHILDCARE</E>
+      </U>
+    </V>
+    <V t="actions">
+      <T n="actions">6902344753338657344<!--SimSnatcher_Slavery_Loot_SlaveSituation_ForceStates_CareForChildren--></T>
+    </V>
+  </L>
+</I>

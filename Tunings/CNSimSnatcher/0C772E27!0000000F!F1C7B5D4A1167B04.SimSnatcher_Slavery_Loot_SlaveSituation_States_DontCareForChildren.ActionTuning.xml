@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_States_DontCareForChildren" s="17422093608346352388">
+  <L n="loot_actions">
+    <V t="buff">
+      <U n="buff">
+        <U n="buff">
+          <T n="buff_type">484653021656931484<!--SimSnatcher_Slavery_Buff_Role_Slave_States_DontCareForChildren--></T>
+        </U>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>17940943213861584387<!--SimSnatcher_Slavery_Buff_Role_Slave_States_CareForChildren--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+    <V t="butler_state_change">
+      <U n="butler_state_change">
+        <T n="butler_situation">2766641556744098929<!--SimSnatcher_Slavery_Situation_NPC_Enslaved_By_Player--></T>
+        <V n="operation" t="disable" />
+        <E n="situation_state">CHILDCARE</E>
+        <L n="tests">
+          <L>
+            <V t="buff">
+              <U n="buff">
+                <L n="blacklist">
+                  <T>17940943213861584387<!--SimSnatcher_Slavery_Buff_Role_Slave_States_CareForChildren--></T>
+                </L>
+              </U>
+            </V>
+          </L>
+        </L>
+      </U>
+    </V>
+  </L>
+</I>

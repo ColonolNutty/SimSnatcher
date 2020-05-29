@@ -1,0 +1,10 @@
+<I c="Buff" i="buff" m="buffs.buff" n="SimSnatcher_Buff_Allowed_Singing_Invisible" s="2633193183689142481">
+  <L n="_appropriateness_tags">
+	<E>Appropriateness_Singing</E>
+  </L>
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="icon" p="InGame\UI\Icons\Debug\missing_image.png">2f7d0004:00000000:30f0846c783606f9</T>
+  <T n="show_timeout">False</T>
+  <T n="visible">False</T>
+</I>

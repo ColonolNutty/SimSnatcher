@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Slavery_Loot_SlaveSituation_Start" s="15744247254542243903">
+  <L n="loot_actions">
+    <V t="relationship_bits_loot">
+      <U n="relationship_bits_loot">
+        <L n="bit_operations">
+          <U>
+            <T n="bit">15803<!--has_met--></T>
+            <E n="operation">ADD</E>
+            <E n="recipients">Actor</E>
+            <E n="targets">ActiveHousehold</E>
+          </U>
+        </L>
+      </U>
+    </V>
+    <V t="relationship_bits_loot">
+      <U n="relationship_bits_loot">
+        <L n="bit_operations">
+          <U>
+            <T n="bit">15803<!--has_met--></T>
+            <E n="operation">ADD</E>
+            <E n="recipients">ActiveHousehold</E>
+            <E n="targets">Actor</E>
+          </U>
+        </L>
+      </U>
+    </V>
+  </L>
+  <T n="run_test_first">False</T>
+</I>

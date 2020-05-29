@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="SimSnatcher_trait_Allowed_Computer" s="1691977515437808886">
+  <L n="ages">
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <L n="buffs">
+    <U>
+      <T n="buff_type">4842518285657914197<!--SimSnatcher_Buff_Allowed_Computer_Invisible--></T>
+    </U>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0xE502E19D<!--Allowance--></T>
+  <T n="display_name_gender_neutral">0xE502E19D<!--Allowance--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:A1E5C3E91B378951</T>
+  <T n="trait_description">0x891EA31A<!--Sim can only do what they are allowed to do.--></T>
+  <T n="trait_origin_description">0xDD2E2C4A<!--From Being Controlled--></T>
+  <E n="trait_type">HIDDEN</E>
+</I>
