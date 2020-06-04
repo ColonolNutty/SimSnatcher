@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ASM name="Butler_CheckCleanliness" dcc="sage">
+  <Actor name="x" type="Sim" master="true" virtual="false" />
+  <Parameter name="x:carryState" type="enum" labels="none,left,right,both" default="right" />
+  <IkConfiguration name="a2o_butler_checkCleanliness.ma">
+    <SourceFile name="a2o_butler_checkCleanliness.ma">
+      <MapNamespace namespace="x" actor="x" />
+    </SourceFile>
+  </IkConfiguration>
+  <PostureManifest actors="">
+    <Support family="stand" compatibility="FullBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="stand" compatibility="FullBody" carry_left="-" carry_right="*" surface="*" />
+    <Support family="stand" compatibility="UpperBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="stand" compatibility="UpperBody" carry_left="-" carry_right="*" surface="*" />
+  </PostureManifest>
+  <State type="public" skippable="false" interrupt_this="false" name="Check_Cleanliness" focus="none" facialoverlays="false" tailoverlays="true" />
+  <State type="public" skippable="false" interrupt_this="false" name="Check_Cleanliness_High" focus="none" facialoverlays="false" tailoverlays="true" />
+  <State type="private" skippable="false" interrupt_this="false" name="Mirror" focus="none" facialoverlays="false" tailoverlays="true" />
+  <Connection from="Check_Cleanliness" to="exit" />
+  <Connection from="Check_Cleanliness_High" to="exit" />
+  <Connection from="Mirror" to="Check_Cleanliness" />
+  <Connection from="Mirror" to="Check_Cleanliness_High" />
+  <Connection from="entry" to="Mirror" />
+  <State name="Check_Cleanliness" type="public" skippable="false" interrupt_this="false" focus="none" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="2">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a2o_butler_checkCleanliness_low_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a2o_butler_checkCleanliness.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="1">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="1" />
+      </Choice>
+    </PostureSelector>
+  </State>
+  <State name="Check_Cleanliness_High" type="public" skippable="false" interrupt_this="false" focus="none" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="4">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a2o_butler_checkCleanliness_high_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a2o_butler_checkCleanliness.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="3" />
+      </Choice>
+    </PostureSelector>
+  </State>
+  <State name="Mirror" type="private" skippable="false" interrupt_this="false" focus="none" facialoverlays="false" tailoverlays="true">
+    <description />
+    <ParameterSelector parameter="x:carryState" unique_id="6">
+      <Choice value="none" />
+      <Choice value="left" />
+      <Choice value="right">
+        <SetMirror target="x" mirror="true" unique_id="5" />
+      </Choice>
+      <Choice value="both" />
+    </ParameterSelector>
+  </State>
+</ASM>

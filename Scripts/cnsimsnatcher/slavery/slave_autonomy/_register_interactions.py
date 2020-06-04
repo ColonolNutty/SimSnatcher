@@ -38,4 +38,59 @@ class _SSSlaveryFridgeAutonomyInteractionHandler(CommonScriptObjectInteractionHa
         if not CommonTypeUtils.is_game_object(script_object):
             return False
         script_object: GameObject = script_object
-        return CommonObjectTagUtils.has_game_tags(script_object, (CommonGameTag.FUNC_FRIDGE, ))
+        # noinspection PyTypeChecker
+        return CommonObjectTagUtils.has_game_tags(script_object, (CommonGameTag.FUNC_FRIDGE, CommonGameTag.FUNC_REFRIGERATOR))
+
+
+@CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
+class _SSSlaveryDanceFloorAutonomyInteractionHandler(CommonScriptObjectInteractionHandler):
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def interactions_to_add(self) -> Tuple[int]:
+        result: Tuple[int] = (
+            SSSlaveryInteractionId.SLAVE_DANCE_FLOOR_DANCE,
+        )
+        return result
+
+    # noinspection PyMissingOrEmptyDocstring
+    def should_add(self, script_object: ScriptObject, *args, **kwargs) -> bool:
+        if not CommonTypeUtils.is_game_object(script_object):
+            return False
+        script_object: GameObject = script_object
+        return CommonObjectTagUtils.has_game_tags(script_object, (CommonGameTag.FUNC_DANCEFLOOR, ))
+
+
+@CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
+class _SSSlaveryGlobeBarAutonomyInteractionHandler(CommonScriptObjectInteractionHandler):
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def interactions_to_add(self) -> Tuple[int]:
+        result: Tuple[int] = (
+            SSSlaveryInteractionId.BAR_GLOBE_MAKE_DRINKS_AUTONOMOUSLY,
+        )
+        return result
+
+    # noinspection PyMissingOrEmptyDocstring
+    def should_add(self, script_object: ScriptObject, *args, **kwargs) -> bool:
+        if not CommonTypeUtils.is_game_object(script_object):
+            return False
+        script_object: GameObject = script_object
+        return CommonObjectTagUtils.has_game_tags(script_object, (CommonGameTag.FUNC_BAR_GLOBE, ))
+
+
+@CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
+class _SSSlaveryGlobeBarAutonomyInteractionHandler(CommonScriptObjectInteractionHandler):
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def interactions_to_add(self) -> Tuple[int]:
+        result: Tuple[int] = (
+            SSSlaveryInteractionId.BAR_MAKE_DRINKS_AUTONOMOUSLY,
+        )
+        return result
+
+    # noinspection PyMissingOrEmptyDocstring
+    def should_add(self, script_object: ScriptObject, *args, **kwargs) -> bool:
+        if not CommonTypeUtils.is_game_object(script_object):
+            return False
+        script_object: GameObject = script_object
+        return CommonObjectTagUtils.has_game_tags(script_object, (CommonGameTag.FUNC_BAR, ))

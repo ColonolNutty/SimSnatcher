@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ASM name="Butler_RingButler" dcc="sage">
+  <Actor name="x" type="Sim" master="true" virtual="false" />
+  <Actor name="sitTemplate" type="Object" virtual="true" />
+  <Actor name="bell" type="Prop" virtual="false" object_def_resource_key="c0db5ae7:00000000:00000000000224df#toolHandBell_SP09GEN_set1" />
+  <Parameter name="x:carryState" type="enum" labels="none,left,right,both" default="right" />
+  <Parameter name="x:age" type="enum" labels="baby,toddler,child,teen,youngadult,adult,elder" default="adult" />
+  <IkConfiguration name="a_butler_ringForButler_seated.ma">
+    <SourceFile name="a_butler_ringForButler_seated.ma">
+      <MapNamespace namespace="x" actor="x" />
+      <MapNamespace namespace="bell" actor="bell" />
+      <MapNamespace namespace="sitTemplate" actor="sitTemplate" />
+    </SourceFile>
+  </IkConfiguration>
+  <IkConfiguration name="a_butler_ringForButler.ma">
+    <SourceFile name="a_butler_ringForButler.ma">
+      <MapNamespace namespace="x" actor="x" />
+      <MapNamespace namespace="bell" actor="bell" />
+    </SourceFile>
+  </IkConfiguration>
+  <PostureManifest actors="">
+    <Support family="stand" compatibility="FullBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="stand" compatibility="FullBody" carry_left="-" carry_right="*" surface="*" />
+    <Support family="stand" compatibility="UpperBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="stand" compatibility="UpperBody" carry_left="-" carry_right="*" surface="*" />
+    <Support family="sit" compatibility="FullBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="sit" compatibility="FullBody" carry_left="-" carry_right="*" surface="*" />
+    <Support family="sit" compatibility="UpperBody" carry_left="*" carry_right="-" surface="*" />
+    <Support family="sit" compatibility="UpperBody" carry_left="-" carry_right="*" surface="*" />
+  </PostureManifest>
+  <State type="private" skippable="false" interrupt_this="false" name="Mirror" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="public" skippable="false" interrupt_this="false" name="Ring_Butler" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <Connection from="Mirror" to="Ring_Butler" />
+  <Connection from="Ring_Butler" to="exit" />
+  <Connection from="entry" to="Mirror" />
+  <State name="Mirror" type="private" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <ParameterSelector parameter="x:carryState" unique_id="2">
+      <Choice value="none" />
+      <Choice value="left" />
+      <Choice value="right">
+        <SetMirror target="x" mirror="true" unique_id="1" />
+      </Choice>
+      <Choice value="both" />
+    </ParameterSelector>
+  </State>
+  <State name="Ring_Butler" type="public" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="5">
+      <Choice value="-sit-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_ringForButler_seated_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_ringForButler_seated.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-sit-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="3" />
+      </Choice>
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_ringForButler_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_ringForButler.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="4">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="4" />
+      </Choice>
+    </PostureSelector>
+  </State>
+</ASM>

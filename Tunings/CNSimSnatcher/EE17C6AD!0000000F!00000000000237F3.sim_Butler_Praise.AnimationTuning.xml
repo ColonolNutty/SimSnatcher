@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="AnimationElement" i="animation" m="animation.animation_element" n="sim_Butler_Praise" s="145395">
+  <T n="asm_key" p="InSP09\Sage\Soc_Butler_Praise.interactionasm">02d5df13:00000000:855b3b82905bd8da</T>
+  <L n="begin_states">
+    <T>Praise</T>
+  </L>
+  <T n="target_name">y</T>
+</I>

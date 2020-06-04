@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ASM name="Butler_Idles" dcc="sage">
+  <Actor name="x" type="Sim" master="true" virtual="false" />
+  <IkConfiguration name="a_butler_idle.ma">
+    <SourceFile name="a_butler_idle.ma">
+      <MapNamespace namespace="x" actor="x" />
+    </SourceFile>
+  </IkConfiguration>
+  <PostureManifest actors="">
+    <Support family="stand" compatibility="FullBody" carry_left="-" carry_right="-" surface="*" />
+    <Support family="stand" compatibility="UpperBody" carry_left="-" carry_right="-" surface="*" />
+  </PostureManifest>
+  <State type="public" skippable="false" interrupt_this="false" name="AdjustCuffs" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="public" skippable="false" interrupt_this="false" name="DustOffCoat" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="private" skippable="false" interrupt_this="false" name="Hub" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="public" countlooptime="false" disableautostop="false" skippable="false" interrupt_this="true" name="Idle" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="private" skippable="false" interrupt_this="false" name="Start" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <State type="private" skippable="false" interrupt_this="false" name="Stop" focus="full body" facialoverlays="false" tailoverlays="true" />
+  <Connection from="AdjustCuffs" to="Hub" />
+  <Connection from="DustOffCoat" to="Hub" />
+  <Connection from="Hub" to="AdjustCuffs" />
+  <Connection from="Hub" to="DustOffCoat" />
+  <Connection from="Hub" to="Idle" />
+  <Connection from="Hub" to="Stop" />
+  <Connection from="Idle" to="Hub" />
+  <Connection from="Start" to="Hub" />
+  <Connection from="Stop" to="exit" />
+  <Connection from="entry" to="Start" />
+  <State name="AdjustCuffs" type="public" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="4">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_idle_adjustCuffs_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+          <TransitionClassList />
+        </Controller>
+        <MakeController unique_id="2">
+          <Controller target="x" controller="@ClipController(clip=a_butler_idle_softPosture_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="1">
+            <TransitionClassList />
+          </Controller>
+        </MakeController>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="3" />
+        <Reference target="2" />
+      </Choice>
+    </PostureSelector>
+  </State>
+  <State name="DustOffCoat" type="public" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="8">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_idle_dustOffCoat_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="7">
+          <TransitionClassList />
+        </Controller>
+        <MakeController unique_id="6">
+          <Controller target="x" controller="@ClipController(clip=a_butler_idle_softPosture_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="5">
+            <TransitionClassList />
+          </Controller>
+        </MakeController>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="7" />
+        <Reference target="6" />
+      </Choice>
+    </PostureSelector>
+  </State>
+  <State name="Hub" type="private" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="9">
+      <Choice value="-stand-FullBody" track="normal" mask="" />
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody" />
+    </PostureSelector>
+  </State>
+  <State name="Idle" type="public" countlooptime="false" disableautostop="false" skippable="false" interrupt_this="true" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <MakeController>
+      <PostureSelector parameter="x:posture" unique_id="14">
+        <Choice value="-stand-FullBody" track="normal" mask="">
+          <RandomSelector repeatweight="1" allow_empty_choices="False" unique_id="13">
+            <Choice weight="53" avoidRepeat="False">
+              <Controller target="x" controller="@ClipController(clip=a_butler_idle_breathe_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="10">
+                <TransitionClassList />
+              </Controller>
+            </Choice>
+            <Choice weight="53" avoidRepeat="False">
+              <Controller target="x" controller="@ClipController(clip=a_butler_idle_lookAround_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="11">
+                <TransitionClassList />
+              </Controller>
+            </Choice>
+            <Choice weight="31" avoidRepeat="True">
+              <Controller target="x" controller="@ClipController(clip=a_butler_idle_sigh_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="12">
+                <TransitionClassList />
+              </Controller>
+            </Choice>
+          </RandomSelector>
+        </Choice>
+        <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+          <Reference target="13" />
+        </Choice>
+      </PostureSelector>
+    </MakeController>
+  </State>
+  <State name="Start" type="private" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="16">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_idle_start_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="15">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="15" />
+      </Choice>
+    </PostureSelector>
+  </State>
+  <State name="Stop" type="private" skippable="false" interrupt_this="false" focus="full body" facialoverlays="false" tailoverlays="true">
+    <description />
+    <PostureSelector parameter="x:posture" unique_id="18">
+      <Choice value="-stand-FullBody" track="normal" mask="">
+        <Controller target="x" controller="@ClipController(clip=a_butler_idle_stop_x, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Default" transition_class_out="Default" ik_configuration="a_butler_idle.ma" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="17">
+          <TransitionClassList />
+        </Controller>
+      </Choice>
+      <Choice value="-stand-UpperBody" track="normal" mask="Trackmask_UpperBody">
+        <Reference target="17" />
+      </Choice>
+    </PostureSelector>
+  </State>
+</ASM>

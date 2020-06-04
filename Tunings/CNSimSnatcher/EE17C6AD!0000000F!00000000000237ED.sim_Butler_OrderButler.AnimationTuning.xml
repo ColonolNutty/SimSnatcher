@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="AnimationElement" i="animation" m="animation.animation_element" n="sim_Butler_OrderButler" s="145389">
+  <T n="asm_key" p="InSP09\Sage\Butler_RingButler.interactionasm">02d5df13:00000000:e3afb97de19c0e06</T>
+  <L n="begin_states">
+    <T>Ring_Butler</T>
+  </L>
+</I>

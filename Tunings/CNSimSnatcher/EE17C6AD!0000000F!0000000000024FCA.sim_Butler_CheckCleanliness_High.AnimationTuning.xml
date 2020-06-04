@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="AnimationElement" i="animation" m="animation.animation_element" n="sim_Butler_CheckCleanliness_High" s="151498">
+  <T n="asm_key" p="InSP09\Sage\Butler_CheckCleanliness.interactionasm">02d5df13:00000000:416be3b21ce6b749</T>
+  <L n="begin_states">
+    <T>Check_Cleanliness_High</T>
+  </L>
+  <T n="target_name" o="true" />
+</I>
