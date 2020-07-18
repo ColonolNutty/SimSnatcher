@@ -48,7 +48,7 @@ class _SSSlaverySummonSlaves(HasLog):
         for master_sim_info in master_sim_info_list:
             master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
             self.log.debug('Attempting to summon slave Sims enslaved by \'{}\''.format(master_sim_name))
-            if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_lot_id(master_sim_info):
+            if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_home_zone_id(CommonHouseholdUtils.get_household(master_sim_info)):
                 self.log.format_with_message('Failed, \'{}\' does not own the currently loaded household.'.format(master_sim_name), household_id=household_id, master_household_id=CommonHouseholdUtils.get_household_id(master_sim_info))
                 continue
             self.log.debug('Attempting to locate slaves for \'{}\'.'.format(master_sim_name))

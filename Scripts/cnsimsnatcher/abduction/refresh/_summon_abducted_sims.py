@@ -48,7 +48,7 @@ class _SSAbductionSummonCaptives(HasLog):
         for captor_sim_info in captor_sim_info_list:
             captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
             self.log.debug('Attempting to summon captive Sims captured by \'{}\''.format(captor_sim_name))
-            if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_lot_id(captor_sim_info):
+            if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_home_zone_id(CommonHouseholdUtils.get_household(captor_sim_info)):
                 self.log.format_with_message('Failed, \'{}\' does not own the currently loaded household.'.format(captor_sim_name), household_id=household_id, captor_household_id=CommonHouseholdUtils.get_household_id(captor_sim_info))
                 continue
             self.log.debug('Attempting to locate captives for \'{}\'.'.format(captor_sim_name))

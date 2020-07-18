@@ -15,6 +15,7 @@ from protocolbuffers import InteractionOps_pb2, Consts_pb2
 from sims.sim import Sim
 from sims.sim_info import SimInfo
 from sims.sim_info_types import Age
+from sims4communitylib.utils.location.common_location_utils import CommonLocationUtils
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_species_utils import CommonSpeciesUtils
@@ -28,8 +29,8 @@ class SSOrderToOperations:
     @staticmethod
     def demand_sim_go_to_home_lot(sim_info: SimInfo, target_sim_info: SimInfo) -> bool:
         """ Demand a Sim to go to the home lot of a sim. """
-        to_zone_id = CommonHouseholdUtils.get_household_lot_id(sim_info)
-        if to_zone_id == services.current_zone_id():
+        to_zone_id = CommonHouseholdUtils.get_household_home_zone_id(CommonHouseholdUtils.get_household(sim_info))
+        if to_zone_id == CommonLocationUtils.get_current_zone_id():
             return False
 
         additional_sims = SSOrderToOperations._collect_always_travel_companions(sim_info)
