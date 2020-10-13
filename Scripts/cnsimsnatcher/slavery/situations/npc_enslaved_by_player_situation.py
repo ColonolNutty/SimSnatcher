@@ -245,7 +245,10 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
 
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
         sim_info = CommonSimUtils.get_sim_info(sim)
-        master_sim_info = next(iter(SSSlaveryStateUtils().get_masters(sim_info)))
+        master_sim_info_list = SSSlaveryStateUtils().get_masters(sim_info)
+        if not master_sim_info_list:
+            return
+        master_sim_info = next(iter(master_sim_info_list))
         if master_sim_info is None:
             self._owning_household = CommonHouseholdUtils.get_active_household()
         else:
