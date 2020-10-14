@@ -49,7 +49,7 @@ class SSSettingsDialog(HasLog):
 
     @CommonExceptionHandler.catch_exceptions(ModInfo.get_identity())
     def open(self, target_sim_info: SimInfo) -> None:
-        """ Open SS Settings. """
+        """ Open Settings. """
         self.log.debug('Opening SS Settings.')
         self._settings(target_sim_info).show(sim_info=target_sim_info)
 

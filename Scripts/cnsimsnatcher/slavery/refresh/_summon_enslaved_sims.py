@@ -9,10 +9,10 @@ from typing import Tuple
 
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
-from protocolbuffers.Math_pb2 import Vector3
-from routing import Location
 from sims.sim_info import SimInfo
 from sims.sim_spawner import SimSpawner
+from sims4communitylib.classes.math.common_location import CommonLocation
+from sims4communitylib.classes.math.common_vector3 import CommonVector3
 from sims4communitylib.events.event_handling.common_event_registry import CommonEventRegistry
 from sims4communitylib.events.zone_spin.events.zone_late_load import S4CLZoneLateLoadEvent
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
@@ -75,10 +75,10 @@ class _SSSlaverySummonSlaves(HasLog):
         self.log.debug('Done summoning slaves.')
         return True
 
-    def _summon_slave(self, slave_sim_info: SimInfo, position: Vector3, location: Location) -> bool:
+    def _summon_slave(self, slave_sim_info: SimInfo, position: CommonVector3, location: CommonLocation) -> bool:
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
         try:
-            self.log.debug('Summoning \'{}\' to the current lot.'.format(slave_sim_name))
+            self.log.format_with_message('Summoning Sim to the current lot.', sim=slave_sim_name)
             SimSpawner.spawn_sim(slave_sim_info, sim_position=position, sim_location=location)
             return True
         except Exception as ex:
@@ -94,6 +94,4 @@ class _SSSlaverySummonSlaves(HasLog):
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())
     def _listen_for_summon_slaves_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
-        if not event_data.game_loaded:
-            return False
         return _SSSlaverySummonSlaves()._summon_slaves(event_data.zone, event_data.household_id)

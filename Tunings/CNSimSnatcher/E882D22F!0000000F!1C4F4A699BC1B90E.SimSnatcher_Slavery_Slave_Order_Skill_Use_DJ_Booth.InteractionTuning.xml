@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<I c="SuperInteraction" i="interaction" m="interactions.base.super_interaction" n="SimSnatcher_Slavery_Slave_Order_Skill_Use_DJ_Booth" s="2039930973667309838">
+<I c="SSOrderToByTagAndCommodityInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.orders.order_to_by_tag_and_commodity" n="SimSnatcher_Slavery_Slave_Order_Skill_Use_DJ_Booth" s="2039930973667309838">
   <V n="_icon" t="participant">
     <U n="participant">
       <L n="participant_type">
@@ -7,6 +7,22 @@
       </L>
     </U>
   </V>
+  <L n="target_static_commodities">
+    <U>
+      <T n="static_commodity">122814<!--staticCommodity_SituationRole_ClubGoDancing_DJ--></T>
+    </U>
+    <U>
+      <T n="static_commodity">161954<!--staticCommodity_DJ_PracticeDJing--></T>
+    </U>
+  </L>
+  <L n="exclude_target_static_commodities">
+    <U>
+      <T n="static_commodity">123556<!--StaticCommodity_NightClub_Dance--></T>
+    </U>
+  </L>
+  <L n="target_object_tags">
+    <E>Func_DJBooth</E>
+  </L>
   <V n="_saveable" t="enabled" />
   <T n="allow_autonomous">False</T>
   <T n="attention_cost">0.5</T>
@@ -71,52 +87,6 @@
     <E>Interaction_Super</E>
     <E>Interaction_All</E>
   </L>
-  <V n="outcome" t="single">
-    <U n="single">
-      <U n="actions">
-        <L n="loot_list">
-          <T>152370<!--loot_ButlerSituation_GivenOrder--></T>
-        </L>
-        <L n="parameterized_autonomy">
-          <U>
-            <E n="key">TargetSim</E>
-            <U n="value">
-              <V n="fallback_notification" t="enabled">
-                <V n="enabled" t="literal">
-                  <U n="literal">
-                    <V n="text" t="single">
-                      <T n="single">0x5DB6ED6A<!--The residence's slave could not carry out the requested order. Please allow time for {M0.him}{F0.her} to complete {M0.his}{F0.her} current order, or provide sufficient facilities for completing the order.--></T>
-                    </V>
-                  </U>
-                </V>
-              </V>
-              <L n="requests">
-                <U>
-                  <L n="static_commodities">
-                    <T>146030<!--staticCommodity_Butler_UseDJBooth--></T>
-                  </L>
-                </U>
-              </L>
-            </U>
-          </U>
-        </L>
-        <V n="response" t="enabled">
-          <V n="enabled" t="individual">
-            <U n="individual">
-              <L n="animations">
-                <U>
-                  <E n="target">TargetSim</E>
-                  <U n="animation">
-                    <T n="factory">145386<!--sim_Butler_OrderReact--></T>
-                  </U>
-                </U>
-              </L>
-            </U>
-          </V>
-        </V>
-      </U>
-    </U>
-  </V>
   <E n="scoring_priority">NORMAL</E>
   <T n="subaction_selection_weight">1</T>
   <E n="target_type">OBJECT</E>
