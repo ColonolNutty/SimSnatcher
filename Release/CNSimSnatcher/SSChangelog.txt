@@ -5,6 +5,8 @@ v2.4:
 - Added better fail messages when a Slave is unable to complete an order.
 - Add a check to prevent an error when attempting to Summon Sims and no Masters exist.
 - Slave Sims should cook less
+- Added a Cancel Current Task interaction to Slave Sims.
+- Sim Snatcher now requires at least version 1.38 of S4CL.
 
 v2.3:
 - Fixed the Go To Sleep order for slaves.
