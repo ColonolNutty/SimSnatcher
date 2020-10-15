@@ -4,6 +4,8 @@ from typing import Any, Tuple, List
 import services
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.order_to.enums.string_ids import SSOrderToStringId
+from cnsimsnatcher.settings.setting_utils import SSSettingUtils
+from cnsimsnatcher.slavery.enums.string_ids import SSSlaveryStringId
 from distributor.shared_messages import IconInfoData
 from event_testing.results import TestResult
 from interactions.base.interaction import Interaction
@@ -23,6 +25,8 @@ from sims4communitylib.utils.objects.common_object_tag_utils import CommonObject
 from sims4communitylib.utils.objects.common_object_utils import CommonObjectUtils
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
+from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
+from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from tag import Tag
 
 
@@ -45,7 +49,7 @@ class SSOrderToByTagAndCommodityInteraction(CommonSuperInteraction):
             tuning_group=GroupNames.AUTONOMY
         ),
         'exclude_target_static_commodities': TunableList(
-            description='\n            The list of static commodities to which this affordance will\n            advertise.\n            ',
+            description='\n            The list of static commodities to which this affordance will\n            ignore.\n            ',
             tunable=TunableTuple(
                 description='\n                A single chunk of static commodity scoring data.\n                ',
                 static_commodity=TunableReference(
@@ -79,6 +83,17 @@ class SSOrderToByTagAndCommodityInteraction(CommonSuperInteraction):
         if interaction_target is None or not CommonTypeUtils.is_sim_or_sim_info(interaction_target):
             cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
+        sim_info = CommonSimUtils.get_sim_info(interaction_sim)
+        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
+        if not SSSettingUtils().is_enabled_for_interactions(sim_info):
+            cls.get_log().debug('Failed, Active Sim or Target Sim is not available for interactions.')
+            return TestResult.NONE
+        if CommonSimStateUtils.is_dying(sim_info):
+            cls.get_log().debug('Failed, Active Sim is dying.')
+            return cls.create_test_result(False, reason='Active Sim is dying.')
+        if CommonSimStateUtils.is_dying(target_sim_info):
+            cls.get_log().debug('Failed, Target Sim is dying.')
+            return cls.create_test_result(False, reason='Target Sim is dying.')
         cls.get_log().debug('Success, can order.')
         return TestResult.TRUE
 
@@ -107,15 +122,17 @@ class SSOrderToByTagAndCommodityInteraction(CommonSuperInteraction):
                 break
             self.log.format(enqueue_result=enqueue_result, interaction_short_name=CommonInteractionUtils.get_interaction_short_name(target_interaction))
         if success:
+            self.log.debug('Successfully located and queued an interaction.')
             CommonBasicNotification(
                 SSOrderToStringId.ORDER_ACCEPTED,
                 SSOrderToStringId.SIM_WILL_CARRY_OUT_ORDER,
                 description_tokens=(target_sim_info, )
             ).show(icon=IconInfoData(obj_instance=target_sim_info))
         else:
+            self.log.debug('Failed to locate an interaction.')
             CommonBasicNotification(
-                SSOrderToStringId.ORDER_REFUSED,
-                SSOrderToStringId.SIM_REFUSED_TO_CARRY_OUT_ORDER,
+                SSSlaveryStringId.FAILED_TO_PERFORM,
+                SSSlaveryStringId.SIM_FAILED_TO_LOCATE_APPROPRIATE_OBJECT_PLEASE_ENSURE,
                 description_tokens=(target_sim_info, )
             ).show(icon=IconInfoData(obj_instance=target_sim_info))
         self.log.debug('Done doing on_run')

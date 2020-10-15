@@ -45,7 +45,7 @@ class SSSlaveryStartSlaveryInteraction(CommonImmediateSuperInteraction):
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
         cls.get_log().debug('Testing to see if sim can be abducted')
         if not SSSlaverySettingUtils().interactions_are_enabled():
-            cls.get_log().debug('Failed, Abduction interactions are disabled.')
+            cls.get_log().debug('Failed, Slavery interactions are disabled.')
             return TestResult.NONE
         if not CommonTypeUtils.is_sim_instance(interaction_target):
             cls.get_log().debug('Failed, Target is not a Sim.')

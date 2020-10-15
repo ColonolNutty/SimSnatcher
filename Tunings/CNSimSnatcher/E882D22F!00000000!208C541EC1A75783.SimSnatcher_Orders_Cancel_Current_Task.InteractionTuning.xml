@@ -1,0 +1,16 @@
+<I c="SSStopCurrentTaskInteraction" i="interaction" m="cnsimsnatcher.slavery.interactions.orders.stop_current_task" n="SimSnatcher_Orders_Cancel_Current_Task" s="2345341997027907459">
+  <V n="_saveable" t="disabled" />
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_immediateInteraction.png">2f7d0004:00000000:25eea5cdba6a6fd6</T>
+      </U>
+    </V>
+  </V>
+  <T n="category">17603188036402248751<!--SimSnatcher_Pie_Slave_Orders--></T>
+  <T n="display_name">0x90F8B4C3<!--Cancel Current Task--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

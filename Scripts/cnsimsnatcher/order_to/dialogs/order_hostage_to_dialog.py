@@ -51,6 +51,57 @@ class SSOrderToDialog(HasLog):
     def log_identifier(self) -> str:
         return 'ss_order_to_dialog'
 
+    def open_pick_slave_dialog(self, requester_sim_info: SimInfo, on_sim_chosen: Callable[[SimInfo], Any]):
+        """ Choose slave Sims to carry out an order. """
+
+        def _on_close(*_, **__) -> None:
+            self.log.debug('Dialog closed.')
+            if self._on_close is not None:
+                self._on_close()
+
+        @CommonExceptionHandler.catch_exceptions(self.mod_identity)
+        def _on_chosen(chosen_sim_info: SimInfo) -> bool:
+            if chosen_sim_info is None:
+                self.log.format_with_message('None chosen.', chosen_sim_info=chosen_sim_info)
+                _on_close()
+                return False
+            self.log.debug('Sim chosen, carrying out the order.')
+            on_sim_chosen(chosen_sim_info)
+            return True
+
+        sim_info_list = tuple(SSSlaveryStateUtils().get_slaves(requester_sim_info))
+
+        option_dialog = CommonChooseSimOptionDialog(
+            SSOrderToStringId.CHOOSE_A_SIM_FOR_ORDER,
+            0,
+            on_close=_on_close
+        )
+        for sim_id in sim_info_list:
+            sim_info = CommonSimUtils.get_sim_info(sim_id)
+            option_dialog.add_option(
+                CommonDialogSimOption(
+                    sim_info,
+                    CommonDialogSimOptionContext(
+                        is_selected=False,
+                        is_enabled=True
+                    ),
+                    on_chosen=_on_chosen
+                )
+            )
+
+        if not option_dialog.has_options():
+            self.log.debug('No slaves found.')
+            CommonOkDialog(
+                SSOrderToStringId.NO_SLAVES,
+                SSOrderToStringId.NO_SLAVES_FOUND_ON_ACTIVE_LOT,
+                description_tokens=('', requester_sim_info)
+            ).show()
+            _on_close()
+            return
+        self.log.debug('Sims found.')
+        self.log.format(hostage_sims=CommonSimNameUtils.get_full_names(sim_info_list))
+        option_dialog.show(sim_info=requester_sim_info)
+
     def open_pick_captive_or_slave_dialog(self, requester_sim_info: SimInfo, on_sim_chosen: Callable[[SimInfo], Any]):
         """ Choose captive or slave Sims to carry out an order. """
 

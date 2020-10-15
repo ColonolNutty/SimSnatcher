@@ -39,9 +39,6 @@
     <T>7194327029324175532<!--SimSnatcher_Slavery_Slave_Orders_Stop_Cleaning--></T>
     <T>1119627245447903802<!--SimSnatcher_Slavery_Slave_Orders_Stop_Gardening--></T>
     <T>15595939028004082350<!--SimSnatcher_Slavery_Slave_Orders_Stop_Repairing--></T>
-    <T>10003926226888068799<!--SimSnatcher_Slavery_Slave_Order_Cook_Meal--></T>
-    <T>709464137346600392<!--SimSnatcher_Slavery_Slave_Order_Cook_Family_Meal--></T>
-    <T>3835091909259152048<!--SimSnatcher_Slavery_Slave_Order_Cook_Party_Meal--></T>
     <T>6058377846136831855<!--SimSnatcher_Slavery_Slave_Order_Check_On_Children--></T>
     <T>566995684078172579<!--SimSnatcher_Slavery_Slave_Order_Clean_Dirty_Object--></T>
     <T>8969683024393685239<!--SimSnatcher_Slavery_Slave_Order_Prepare_Drink--></T>
@@ -54,6 +51,7 @@
     <T>2039930973667309838<!--SimSnatcher_Slavery_Slave_Order_Skill_Use_DJ_Booth--></T>
     <T>11747212392367613416<!--SimSnatcher_Slavery_Slave_Praise--></T>
     <T>370167429842020454<!--SimSnatcher_Slavery_Slave_Reprimand--></T>
+    <T>2345341997027907459<!--SimSnatcher_Orders_Cancel_Current_Task--></T>
   </L>
   <L n="tags">
     <E>Role_VIPRope_Allowed</E>
