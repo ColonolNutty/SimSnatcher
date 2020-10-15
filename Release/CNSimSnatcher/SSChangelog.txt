@@ -1,8 +1,35 @@
-v1.4:
+v2.4:
 - Moved the Order To Cook interaction to the Fridge
 - Removed the Cook Meal, Cook Family Meal, and Cook Party Meal slave orders
 - Fixed the rest of the Order To interactions. (Play Piano/Violin/Guitar, Perform Stand up, Burn up the Dance floor, Use DJ Booth)
 - Added better fail messages when a Slave is unable to complete an order.
+
+v2.3:
+- Fixed the Go To Sleep order for slaves.
+- Fix an issue when summoning Slaves and Captives because the code was comparing a zone id with a lot id when it should have been between two zone ids.
+- Updated the dance floor dance interaction, the Slaves still won't dance, but they'll at least go to the dance floor.
+
+v2.2:
+- Fixed missing text for people without DLC 9. (This does not fix broken interactions for those without the DLC)
+  - Some order interactions do not function, such as playing instruments, dancing on the dance floor, ordering to sleep, and make bar drinks. These will be functional in future updates.
+
+v2.1:
+- Fixed missing string tables.
+
+v2.0:
+- Changed how abduction buffs and situations are handled. They are now handled via traits rather than direct buffs.
+- Hostage has been changed to Captive in many places (I've probably missed a few)
+- Updated the Sim Snatcher Settings to split Abduction, Slavery, and Global settings.
+- Abduction Attempt interactions are no longer considered Mean interactions.
+- In order for the new changes to properly take effect, Sims must either be Released and Reabducted or you must use the debug "Force Abduct" interaction using the Sim that has Captured them.
+- Sims may now be enslaved.
+- Sims that are enslaved now show "Slave" above their names when you hover over them.
+- Slave Sims are basically butlers, they can do most everything butlers can.
+- All Slave interactions can be found under the Slave pie menu when clicking on them.
+- They can be allowed or disallowed from Cleaning, Repairing, Gardening, and Child Care.
+- You can order Slaves to cook different sized meals, Single, Medium (Family), and Large (Party).
+- To enslave a Sim, they must first be Abducted.
+- New debug interactions for Forcing Abduction and Forcing Enslave
 
 v1.0.3:
 - Update the SS interaction icon.
