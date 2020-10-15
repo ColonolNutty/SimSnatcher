@@ -10,12 +10,14 @@ from typing import Any, Tuple, Union
 import routing
 import services.terrain_service
 import terrain
+from objects.game_object import GameObject
 from protocolbuffers.Math_pb2 import Vector3
 from routing import SurfaceIdentifier
 from interactions.context import InteractionContext
 from objects.script_object import ScriptObject
 from server.pick_info import PickType
 from sims.sim_info import SimInfo
+from sims4communitylib.classes.math.common_vector3 import CommonVector3
 from sims4communitylib.utils.objects.common_object_location_utils import CommonObjectLocationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
@@ -79,12 +81,13 @@ class CommonTerrainUtils:
         return wading_interval.lower_bound, wading_interval.upper_bound
 
     @staticmethod
-    def get_route_surface_position(script_object: ScriptObject) -> Vector3:
+    def get_route_surface_position(script_object: ScriptObject) -> CommonVector3:
         """ Retrieve a safe surface position for an object. """
+        script_object: GameObject = script_object
         return CommonObjectLocationUtils.get_position(script_object)
 
     @staticmethod
-    def get_route_surface_position_from_interaction_context(interaction_context: InteractionContext) -> Union[Vector3, None]:
+    def get_route_surface_position_from_interaction_context(interaction_context: InteractionContext) -> Union[CommonVector3, None]:
         """ Retrieve a surface position from an interaction context. """
         if interaction_context is None or interaction_context.pick is None:
             return None

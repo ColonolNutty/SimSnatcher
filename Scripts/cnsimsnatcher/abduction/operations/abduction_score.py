@@ -60,7 +60,9 @@ class SSAbductionSuccessChanceOperation:
 
     @staticmethod
     def _calculate_fitness_chance(sim_info: SimInfo, target_sim_info: SimInfo) -> Tuple[int, int]:
+        # noinspection PyTypeChecker
         sim_fitness_level = CommonSimStatisticUtils.get_statistic_level(sim_info, CommonSkillId.FITNESS)
+        # noinspection PyTypeChecker
         target_fitness_level = CommonSimStatisticUtils.get_statistic_level(target_sim_info, CommonSkillId.FITNESS)
         min_chance = 0
         max_chance = 0

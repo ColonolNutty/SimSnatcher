@@ -9,10 +9,10 @@ from typing import Tuple
 
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
-from protocolbuffers.Math_pb2 import Vector3
-from routing import Location
 from sims.sim_info import SimInfo
 from sims.sim_spawner import SimSpawner
+from sims4communitylib.classes.math.common_location import CommonLocation
+from sims4communitylib.classes.math.common_vector3 import CommonVector3
 from sims4communitylib.events.event_handling.common_event_registry import CommonEventRegistry
 from sims4communitylib.events.zone_spin.events.zone_late_load import S4CLZoneLateLoadEvent
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
@@ -75,7 +75,7 @@ class _SSAbductionSummonCaptives(HasLog):
         self.log.debug('Done summoning captives.')
         return True
 
-    def _summon_captive(self, captive_sim_info: SimInfo, position: Vector3, location: Location) -> bool:
+    def _summon_captive(self, captive_sim_info: SimInfo, position: CommonVector3, location: CommonLocation) -> bool:
         captive_sim_name = CommonSimNameUtils.get_full_name(captive_sim_info)
         try:
             self.log.debug('Summoning \'{}\' to the current lot.'.format(captive_sim_name))
