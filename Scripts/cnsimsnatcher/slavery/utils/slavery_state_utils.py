@@ -285,8 +285,8 @@ class SSSlaveryStateUtils(HasLog):
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(slave_sim_info, SSSlaveryInteractionId.ATTEMPT_TO_ENSLAVE_HUMAN_SUCCESS_OUTCOME)
 
 
-@sims4.commands.Command('simsnatcher.show_slaves', command_type=sims4.commands.CommandType.Live)
-def _ss_slavery_show_slaves_names(_connection: int=None):
+@sims4.commands.Command('ss.show_slaves', command_type=sims4.commands.CommandType.Live)
+def _ss_slavery_show_slaves(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
     output('Showing slaves of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
@@ -296,8 +296,8 @@ def _ss_slavery_show_slaves_names(_connection: int=None):
     output('Done displaying slaves.')
 
 
-@sims4.commands.Command('simsnatcher.show_masters', command_type=sims4.commands.CommandType.Live)
-def _ss_slavery_show_master_names(_connection: int=None):
+@sims4.commands.Command('ss.show_masters', command_type=sims4.commands.CommandType.Live)
+def _ss_slavery_show_master(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
     output('Showing masters of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()

@@ -51,28 +51,33 @@ class _SSAbductionSummonCaptives(HasLog):
             if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_home_zone_id(CommonHouseholdUtils.get_household(captor_sim_info)):
                 self.log.format_with_message('Failed, \'{}\' does not own the currently loaded household.'.format(captor_sim_name), household_id=household_id, captor_household_id=CommonHouseholdUtils.get_household_id(captor_sim_info))
                 continue
-            self.log.debug('Attempting to locate captives for \'{}\'.'.format(captor_sim_name))
-            captor_position = CommonSimLocationUtils.get_position(captor_sim_info)
-            captor_location = CommonSimLocationUtils.get_location(captor_sim_info)
-            captive_sim_info_list = self._get_captives(captor_sim_info)
-            self.log.format_with_message('Found captives.', captives=CommonSimNameUtils.get_full_names(captive_sim_info_list))
-            for captive_sim_info in captive_sim_info_list:
-                captive_sim_name = CommonSimNameUtils.get_full_name(captive_sim_info)
-                self.log.debug('Checking if \'{}\' needs to be summoned.'.format(captive_sim_name))
-                # If Sim has been summoned and they are on the current lot, ignore summoning them again.
-                if CommonSimUtils.get_sim_instance(captive_sim_info) is not None:
-                    self.log.debug('\'{}\' has already been summoned, skipping the summoning of them.'.format(captive_sim_name))
-                    continue
-                if CommonSimLocationUtils.is_on_current_lot(captive_sim_info):
-                    self.log.debug('\'{}\' is already on the current lot, skipping the summoning of them.'.format(captive_sim_name))
-                    continue
-                if self._summon_captive(captive_sim_info, captor_position, captor_location):
-                    self.log.debug('Successfully summoned \'{}\' to the current lot.'.format(captive_sim_name))
-                else:
-                    self.log.debug('Failed to summon \'{}\' to the current lot.'.format(captive_sim_name))
-
-            self.log.debug('Done summoning captives captured by \'{}\''.format(captor_sim_name))
+            self._summon_captives_for(captor_sim_info)
         self.log.debug('Done summoning captives.')
+        return True
+
+    def _summon_captives_for(self, captor_sim_info: SimInfo) -> bool:
+        captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
+        self.log.debug('Attempting to locate captives for \'{}\'.'.format(captor_sim_name))
+        captor_position = CommonSimLocationUtils.get_position(captor_sim_info)
+        captor_location = CommonSimLocationUtils.get_location(captor_sim_info)
+        captive_sim_info_list = self._get_captives(captor_sim_info)
+        self.log.format_with_message('Found captives.', captives=CommonSimNameUtils.get_full_names(captive_sim_info_list))
+        for captive_sim_info in captive_sim_info_list:
+            captive_sim_name = CommonSimNameUtils.get_full_name(captive_sim_info)
+            self.log.debug('Checking if \'{}\' needs to be summoned.'.format(captive_sim_name))
+            # If Sim has been summoned and they are on the current lot, ignore summoning them again.
+            if CommonSimUtils.get_sim_instance(captive_sim_info) is not None:
+                self.log.debug('\'{}\' has already been summoned, skipping the summoning of them.'.format(captive_sim_name))
+                continue
+            if CommonSimLocationUtils.is_on_current_lot(captive_sim_info):
+                self.log.debug('\'{}\' is already on the current lot, skipping the summoning of them.'.format(captive_sim_name))
+                continue
+            if self._summon_captive(captive_sim_info, captor_position, captor_location):
+                self.log.debug('Successfully summoned \'{}\' to the current lot.'.format(captive_sim_name))
+            else:
+                self.log.debug('Failed to summon \'{}\' to the current lot.'.format(captive_sim_name))
+
+        self.log.debug('Done summoning captives captured by \'{}\''.format(captor_sim_name))
         return True
 
     def _summon_captive(self, captive_sim_info: SimInfo, position: CommonVector3, location: CommonLocation) -> bool:
@@ -94,6 +99,4 @@ class _SSAbductionSummonCaptives(HasLog):
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())
     def _summon_captives_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
-        if not event_data.game_loaded:
-            return False
         return _SSAbductionSummonCaptives()._summon_captives(event_data.zone, event_data.household_id)

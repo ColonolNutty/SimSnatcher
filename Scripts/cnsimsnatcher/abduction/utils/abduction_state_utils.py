@@ -276,10 +276,10 @@ class SSAbductionStateUtils(HasLog):
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(sim_info, SSAbductionInteractionId.ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME)
 
 
-@sims4.commands.Command('simsnatcher.show_hostages', command_type=sims4.commands.CommandType.Live)
-def _ss_abduction_show_hostage_names(_connection: int=None):
+@sims4.commands.Command('ss.show_captives', command_type=sims4.commands.CommandType.Live)
+def _ss_abduction_show_captives(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
-    output('Showing hostages of active Sim')
+    output('Showing captives of active Sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
     sim_info_list = SSAbductionStateUtils().get_captives(active_sim_info)
     if not sim_info_list:
@@ -289,8 +289,8 @@ def _ss_abduction_show_hostage_names(_connection: int=None):
     output('Done displaying hostages.')
 
 
-@sims4.commands.Command('simsnatcher.show_captors', command_type=sims4.commands.CommandType.Live)
-def _ss_abduction__show_master_names(_connection: int=None):
+@sims4.commands.Command('ss.show_captors', command_type=sims4.commands.CommandType.Live)
+def _ss_abduction_show_captors(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
     output('Showing captors of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()

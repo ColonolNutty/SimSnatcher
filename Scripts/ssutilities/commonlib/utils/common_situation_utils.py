@@ -71,10 +71,10 @@ class CommonSituationUtils:
         situations = CommonSituationUtils.get_situations(sim_info)
         for tag in tags:
             for situation in situations:
-                if tag in getattr(situation, 'tags', ()):
+                if tag in getattr(situation, 'tags', tuple()):
                     return True
                 for situation_job in situation.all_jobs_gen():
-                    if tag in getattr(situation_job, 'tags', ()):
+                    if tag in getattr(situation_job, 'tags', tuple()):
                         return True
         return False
 
@@ -96,7 +96,7 @@ class CommonSituationUtils:
     @staticmethod
     def get_situation_goals(sim_info: SimInfo) -> Tuple[Union[SituationGoal, SituationGoalTargetedSim]]:
         """ Retrieve the goals of all situations a Sim is currently in. """
-        goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim]] = []
+        goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim]] = list()
         for situation in CommonSituationUtils.get_situations(sim_info):
             goal_tracker = situation._get_goal_tracker()
             if goal_tracker is None:
@@ -114,7 +114,7 @@ class CommonSituationUtils:
     def complete_situation_goal(sim_info: SimInfo, situation_goal_id: int, target_sim_info: SimInfo=None):
         """ Complete a situation goal for the specified Sim."""
         from sims4communitylib.utils.sims.common_whim_utils import CommonWhimUtils
-        goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim, WhimSetBaseMixin]] = []
+        goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim, WhimSetBaseMixin]] = list()
         goal_instances.extend(CommonSituationUtils.get_situation_goals(sim_info))
         goal_instances.extend(CommonWhimUtils.get_current_whims(sim_info))
         for goal_instance in goal_instances:

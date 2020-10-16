@@ -10,7 +10,7 @@ from sims4.commands import Command, CommandType, CheatOutput
 from ssutilities.commonlib.data_management.common_persisted_data_manager import CommonPersistedDataManager
 
 
-@Command('simsnatcher.clear_data', command_type=CommandType.Live)
+@Command('ss.clear_data', command_type=CommandType.Live)
 def _ss_command_clear_data(*args, _connection: int=None):
     output = CheatOutput(_connection)
     from ssutilities.commonlib.data_management.data_manager_registry import CommonDataManagerRegistry
@@ -22,14 +22,14 @@ def _ss_command_clear_data(*args, _connection: int=None):
         data_manager_names.append(data_manager.name)
     if len(args) <= 0:
         output('Missing arguments, valid arguments:')
-        output('simsnatcher.clear_data <{}>'.format('/'.join(data_manager_names)))
+        output('ss.clear_data <{}>'.format('/'.join(data_manager_names)))
         return
     data_manager_name = args[0].lower()
     data_manager = CommonDataManagerRegistry.get().locate_data_manager(ModInfo.get_identity(), data_manager_name)
     if data_manager is None or not hasattr(data_manager, 'remove'):
         output('Data with name \'{}\' does not exist.'.format(data_manager_name))
         output('Valid names:')
-        output('simsnatcher.clear_data <{}>'.format('/'.join(data_manager_names)))
+        output('ss.clear_data <{}>'.format('/'.join(data_manager_names)))
         return
     data_manager: CommonPersistedDataManager = data_manager
     data_manager.remove()

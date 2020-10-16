@@ -47,32 +47,37 @@ class _SSSlaverySummonSlaves(HasLog):
         self.log.format_with_message('Found master Sims.', master_sims=CommonSimNameUtils.get_full_names(master_sim_info_list))
         for master_sim_info in master_sim_info_list:
             master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
-            self.log.debug('Attempting to summon slave Sims enslaved by \'{}\''.format(master_sim_name))
+            self.log.debug('Attempting to auto summon slave Sims enslaved by \'{}\''.format(master_sim_name))
             if CommonLocationUtils.get_zone_id(zone) != CommonHouseholdUtils.get_household_home_zone_id(CommonHouseholdUtils.get_household(master_sim_info)):
                 self.log.format_with_message('Failed, \'{}\' does not own the currently loaded household.'.format(master_sim_name), household_id=household_id, master_household_id=CommonHouseholdUtils.get_household_id(master_sim_info))
                 continue
-            self.log.debug('Attempting to locate slaves for \'{}\'.'.format(master_sim_name))
-            master_position = CommonSimLocationUtils.get_position(master_sim_info)
-            master_location = CommonSimLocationUtils.get_location(master_sim_info)
-            slave_sim_info_list = self._get_slaves(master_sim_info)
-            self.log.format_with_message('Found slaves.', slaves=CommonSimNameUtils.get_full_names(slave_sim_info_list))
-            for slave_sim_info in slave_sim_info_list:
-                slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
-                self.log.debug('Checking if \'{}\' needs to be summoned.'.format(slave_sim_name))
-                # If Sim has been summoned and they are on the current lot, ignore summoning them again.
-                if CommonSimUtils.get_sim_instance(slave_sim_info) is not None:
-                    self.log.debug('\'{}\' has already been summoned, skipping the summoning of them.'.format(slave_sim_name))
-                    continue
-                if CommonSimLocationUtils.is_on_current_lot(slave_sim_info):
-                    self.log.debug('\'{}\' is already on the current lot, skipping the summoning of them.'.format(slave_sim_name))
-                    continue
-                if self._summon_slave(slave_sim_info, master_position, master_location):
-                    self.log.debug('Successfully summoned \'{}\' to the current lot.'.format(slave_sim_name))
-                else:
-                    self.log.debug('Failed to summon \'{}\' to the current lot.'.format(slave_sim_name))
-
-            self.log.debug('Done summoning slaves captured by \'{}\''.format(master_sim_name))
+            self._summon_slaves_for(master_sim_info)
         self.log.debug('Done summoning slaves.')
+        return True
+
+    def _summon_slaves_for(self, master_sim_info: SimInfo) -> bool:
+        master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
+        self.log.debug('Attempting to summon slaves for \'{}\'.'.format(master_sim_name))
+        master_position = CommonSimLocationUtils.get_position(master_sim_info)
+        master_location = CommonSimLocationUtils.get_location(master_sim_info)
+        slave_sim_info_list = self._get_slaves(master_sim_info)
+        self.log.format_with_message('Found slaves.', slaves=CommonSimNameUtils.get_full_names(slave_sim_info_list))
+        for slave_sim_info in slave_sim_info_list:
+            slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
+            self.log.debug('Checking if \'{}\' needs to be summoned.'.format(slave_sim_name))
+            # If Sim has been summoned and they are on the current lot, ignore summoning them again.
+            if CommonSimUtils.get_sim_instance(slave_sim_info) is not None:
+                self.log.debug('\'{}\' has already been summoned, skipping the summoning of them.'.format(slave_sim_name))
+                continue
+            if CommonSimLocationUtils.is_on_current_lot(slave_sim_info):
+                self.log.debug('\'{}\' is already on the current lot, skipping the summoning of them.'.format(slave_sim_name))
+                continue
+            if self._summon_slave(slave_sim_info, master_position, master_location):
+                self.log.debug('Successfully summoned \'{}\' to the current lot.'.format(slave_sim_name))
+            else:
+                self.log.debug('Failed to summon \'{}\' to the current lot.'.format(slave_sim_name))
+
+        self.log.debug('Done summoning slaves captured by \'{}\''.format(master_sim_name))
         return True
 
     def _summon_slave(self, slave_sim_info: SimInfo, position: CommonVector3, location: CommonLocation) -> bool:
@@ -93,5 +98,5 @@ class _SSSlaverySummonSlaves(HasLog):
 
     @staticmethod
     @CommonEventRegistry.handle_events(ModInfo.get_identity())
-    def _listen_for_summon_slaves_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
+    def _summon_slaves_on_zone_load(event_data: S4CLZoneLateLoadEvent) -> bool:
         return _SSSlaverySummonSlaves()._summon_slaves(event_data.zone, event_data.household_id)
