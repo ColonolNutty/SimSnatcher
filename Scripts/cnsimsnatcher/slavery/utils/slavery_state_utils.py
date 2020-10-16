@@ -8,10 +8,10 @@ Copyright (c) COLONOLNUTTY
 import sims4.commands
 from typing import Tuple, Callable
 
-from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
 from cnsimsnatcher.slavery.enums.relationship_bit_ids import SSSlaveryRelationshipBitId
 from cnsimsnatcher.slavery.enums.situation_ids import SSSlaverySituationId
@@ -19,7 +19,6 @@ from cnsimsnatcher.slavery.enums.trait_ids import SSSlaveryTraitId
 from cnsimsnatcher.utils.buff_utils import SSBuffUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
@@ -150,8 +149,6 @@ class SSSlaveryStateUtils(HasLog):
         :return: True, if the Sim was turned into a Slave successfully. False, if not.
         :rtype: bool
         """
-        CommonTraitUtils.remove_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
-        CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
         CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
         CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
         CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
@@ -189,14 +186,14 @@ class SSSlaveryStateUtils(HasLog):
             if not CommonRelationshipUtils.add_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT):
                 self.log.error('Failed to add Slave Relationship Bit.')
             self._buff_utils.remove_appropriateness_related_buffs(slave_sim_info)
-            CommonTraitUtils.add_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
-            SSAllowanceUtils().set_allowed_everything(slave_sim_info, allowed=True)
-            SSAllowanceUtils().add_all_allowance_traits(slave_sim_info)
-            SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
+            data_store = SSSimDataStore(slave_sim_info)
+            data_store.is_slave = True
+            SSAllowanceUtils().set_allow_all(slave_sim_info)
+            CommonSimInteractionUtils.cancel_all_queued_or_running_interactions(slave_sim_info, cancel_reason='Became a Slave')
         except Exception as ex:
-            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
+            self.log.error('Problem occurred while creating Slave \'{}\' with Master \'{}\'.'.format(slave_sim_name, master_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(slave_sim_info))
 
@@ -238,9 +235,8 @@ class SSSlaveryStateUtils(HasLog):
             self.log.debug('Attempting to remove traits.')
             CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
             self.log.debug('Attempting to remove buffs.')
-            CommonTraitUtils.remove_trait(slave_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
-            SSAllowanceUtils().remove_all_allowance_traits(slave_sim_info)
+            SSAllowanceUtils().set_disallow_all(slave_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             SSCommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
@@ -250,10 +246,10 @@ class SSSlaveryStateUtils(HasLog):
                 SSCommonSituationUtils.make_sim_leave(slave_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
-            SSAllowanceUtils().set_allowed_everything(slave_sim_info, allowed=False)
-            SSAllowanceUtils().update_appropriateness_tags(slave_sim_info)
+            data_store = SSSimDataStore(slave_sim_info)
+            data_store.is_slave = False
         except Exception as ex:
-            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)
+            self.log.error('Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)
             return False
         return True
 

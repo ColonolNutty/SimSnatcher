@@ -68,7 +68,8 @@ class SSSettingsDialog(HasLog):
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.SIM_SNATCHER_SETTINGS_NAME,
             SSStringId.SIM_SNATCHER_SETTINGS_DESCRIPTION,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
 
         option_dialog.add_option(
@@ -103,8 +104,7 @@ class SSSettingsDialog(HasLog):
 
         from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
         from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
-        allowances_enabled = False
-        if allowances_enabled and (SSSlaveryStateUtils().has_masters(target_sim_info) or SSAbductionStateUtils().has_captors(target_sim_info)):
+        if SSSlaveryStateUtils().has_masters(target_sim_info) or SSAbductionStateUtils().has_captors(target_sim_info):
             option_dialog.add_option(
                 CommonDialogActionOption(
                     CommonDialogOptionContext(

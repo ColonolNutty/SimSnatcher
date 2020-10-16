@@ -57,7 +57,8 @@ class SSSlaverySettingsDialog(HasLog):
         option_dialog = CommonChooseObjectOptionDialog(
             SSSlaveryStringId.SLAVERY_SETTINGS_NAME,
             SSSlaveryStringId.SLAVERY_SETTINGS_DESCRIPTION,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
 
         def _on_setting_changed(setting_name: str, setting_value: bool):

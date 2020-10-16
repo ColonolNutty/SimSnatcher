@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Tuple, Set, FrozenSet
+from typing import Tuple
 from cnsimsnatcher.configuration.allowance.allowances.allowed_bartending import SSAllowedBartending
 from cnsimsnatcher.configuration.allowance.allowances.allowed_bathing import SSAllowedBathing
 from cnsimsnatcher.configuration.allowance.allowances.allowed_cake import SSAllowedCake
@@ -42,63 +42,27 @@ from cnsimsnatcher.configuration.allowance.allowances.allowed_visitor import SSA
 from cnsimsnatcher.configuration.allowance.allowances.allowed_work import SSAllowedWork
 from cnsimsnatcher.configuration.allowance.allowances.allowed_workout import SSAllowedWorkout
 from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowanceData
-from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from sims.sim_info import SimInfo
-from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
-from tag import Tag
 
 
 class SSAllowanceUtils:
     """ Utilities for allowances. """
 
-    def add_all_allowance_traits(self, sim_info: SimInfo) -> bool:
-        """ Remove all allowance traits from a Sim. """
-        for allowance in self.get_allowance_data():
-            allowance.add_allowance(sim_info)
-        return True
-
-    def remove_all_allowance_traits(self, sim_info: SimInfo) -> bool:
-        """ Remove all allowance traits from a Sim. """
-        for allowance in self.get_allowance_data():
-            allowance.remove_allowance(sim_info)
-        return True
-
-    def update_appropriateness_tags(self, sim_info: SimInfo):
-        """ Update the appropriateness tags for a Sim. """
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        sim_data = SSSimDataStore(sim_info)
-        sim_data.allowances = self.get_appropriateness_tags(sim_info)
-
-    def get_appropriateness_tags(self, sim_info: SimInfo) -> FrozenSet[Tag]:
-        """ Retrieve appropriateness tags applicable to the specified Sim. """
-        appropriateness: Set[Tag] = set()
-        for allowance in self.get_allowance_data():
-            if allowance.has_allowance(sim_info):
-                appropriateness = appropriateness | allowance.appropriateness_tags
-        return frozenset(appropriateness)
+    def is_allowed_everything(self, sim_info: SimInfo) -> bool:
+        """ Determine if the Sim is allowed to perform everything. """
+        data_store = SSSimDataStore(sim_info)
+        return len(data_store.allowances) == len(self.get_allowance_data())
 
     def set_allow_all(self, sim_info: SimInfo):
         """ Allow a Sim to perform all tasks. Typically done when they are not being controlled. """
-        appropriateness: Set[Tag] = set()
         for allowance in self.get_allowance_data():
-            if allowance.has_allowance(sim_info):
-                appropriateness = appropriateness | allowance.appropriateness_tags
+            allowance.add_allowance(sim_info)
 
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        sim_data = SSSimDataStore(sim_info)
-        sim_data.allowances = appropriateness
-
-    def set_allow_none(self, sim_info: SimInfo):
-        """ Allow a Sim to perform all tasks. Typically done when they are not being controlled. """
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        sim_data = SSSimDataStore(sim_info)
-        sim_data.allowances = set()
-
-    def set_allowed_everything(self, sim_info: SimInfo, allowed: bool=True) -> bool:
-        """ Toggle the allowed everything trait on a Sim. This trait will make everything appropriate. """
-        if allowed:
-            return CommonTraitUtils.add_trait(sim_info, SSAllowanceTraitId.ALLOWED_EVERYTHING)
-        return CommonTraitUtils.remove_trait(sim_info, SSAllowanceTraitId.ALLOWED_EVERYTHING)
+    def set_disallow_all(self, sim_info: SimInfo):
+        """ Disallow a Sim to perform all tasks. """
+        data_store = SSSimDataStore(sim_info)
+        data_store.allowances = set()
 
     def get_allowance_data(self) -> Tuple[SSAllowanceData]:
         """ Retrieve a collection of allowance data. """

@@ -9,7 +9,6 @@ from typing import Set
 
 from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowanceData
 from cnsimsnatcher.configuration.allowance.enums.string_ids import SSAllowanceStringId
-from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from sims4communitylib.enums.tags_enum import CommonGameTag
 
 
@@ -20,11 +19,6 @@ class SSAllowedVisitor(SSAllowanceData):
     @property
     def title(self) -> int:
         return SSAllowanceStringId.ALLOWED_VISITOR
-
-    # noinspection PyMissingOrEmptyDocstring
-    @property
-    def trait_id(self) -> int:
-        return SSAllowanceTraitId.ALLOWED_VISITOR
 
     # noinspection PyMissingOrEmptyDocstring
     @property

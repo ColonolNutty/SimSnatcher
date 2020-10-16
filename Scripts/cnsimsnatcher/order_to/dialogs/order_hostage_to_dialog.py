@@ -75,7 +75,8 @@ class SSOrderToDialog(HasLog):
         option_dialog = CommonChooseSimOptionDialog(
             SSOrderToStringId.CHOOSE_A_SIM_FOR_ORDER,
             0,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
         for sim_id in sim_info_list:
             sim_info = CommonSimUtils.get_sim_info(sim_id)
@@ -127,7 +128,8 @@ class SSOrderToDialog(HasLog):
         option_dialog = CommonChooseSimOptionDialog(
             SSOrderToStringId.CHOOSE_A_SIM_FOR_ORDER,
             0,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
         for sim_id in sim_info_list:
             sim_info = CommonSimUtils.get_sim_info(sim_id)

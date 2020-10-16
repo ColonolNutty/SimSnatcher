@@ -30,6 +30,15 @@ class SSSimDataStore(CommonPersistedSimDataStorage):
         return 'ss_sim_data'
 
     @property
+    def owning_household_id(self) -> bool:
+        """ The identifier of the household that owns or has captured this Sim """
+        return self.get_data(default=-1)
+
+    @owning_household_id.setter
+    def owning_household_id(self, value: bool):
+        self.set_data(value)
+
+    @property
     def is_slave(self) -> bool:
         """ Whether this Sim is a slave or not. """
         return self.get_data(default=False)
@@ -48,10 +57,18 @@ class SSSimDataStore(CommonPersistedSimDataStorage):
         self.set_data(value)
 
     @property
+    def is_allowed_to_perform_everything(self) -> bool:
+        """ Whether this Sim is allowed to perform all actions or not."""
+        return self.get_data(default=False)
+
+    @is_allowed_to_perform_everything.setter
+    def is_allowed_to_perform_everything(self, value: bool):
+        self.set_data(value)
+
+    @property
     def allowances(self) -> Set[CommonGameTag]:
         """ Retrieve the allowances for the Sim. """
-        from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
-        return self.get_data(default=SSAllowanceUtils().get_appropriateness_tags(self.sim_info))
+        return self.get_data(default=set())
 
     @allowances.setter
     def allowances(self, value: Set[CommonGameTag]):

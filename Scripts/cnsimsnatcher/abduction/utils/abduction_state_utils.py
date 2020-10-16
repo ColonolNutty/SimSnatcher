@@ -11,10 +11,10 @@ from cnsimsnatcher.abduction.enums.interaction_ids import SSAbductionInteraction
 from cnsimsnatcher.abduction.enums.relationship_bit_ids import SSAbductionRelationshipBitId
 from cnsimsnatcher.abduction.enums.situation_ids import SSAbductionSituationId
 from cnsimsnatcher.abduction.enums.trait_ids import SSAbductionTraitId
-from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from cnsimsnatcher.utils.buff_utils import SSBuffUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_log import HasLog
@@ -24,7 +24,6 @@ from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimI
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.enums.situations_enum import CommonSituationId
-from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.sims.common_sim_situation_utils import CommonSimSituationUtils
 from sims4communitylib.utils.sims.common_sim_type_utils import CommonSimTypeUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
@@ -162,14 +161,14 @@ class SSAbductionStateUtils(HasLog):
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
-            CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
+            data_store = SSSimDataStore(captive_sim_info)
+            data_store.is_captive = True
             CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
-            SSAllowanceUtils().set_allowed_everything(captive_sim_info, allowed=True)
-            SSAllowanceUtils().add_all_allowance_traits(captive_sim_info)
-            SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
+            SSAllowanceUtils().set_allow_all(captive_sim_info)
+            CommonSimInteractionUtils.cancel_all_queued_or_running_interactions(captive_sim_info, cancel_reason='Became a Captive')
         except Exception as ex:
-            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while creating Captive \'{}\' with Captor \'{}\'.'.format(captive_sim_name, captor_sim_name), exception=ex)
+            self.log.error('Problem occurred while creating Captive \'{}\' with Captor \'{}\'.'.format(captive_sim_name, captor_sim_name), exception=ex)
             return False, 'Failed, Exception Occurred.'
         return True, 'Success, \'{}\' is now a Slave.'.format(CommonSimNameUtils.get_full_name(captive_sim_info))
 
@@ -183,8 +182,6 @@ class SSAbductionStateUtils(HasLog):
         :return: True, if the Sim was refreshed successfully. False, if not.
         :rtype: bool
         """
-        CommonTraitUtils.remove_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
-        CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
         CommonTraitUtils.remove_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
         CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
         CommonTraitUtils.remove_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
@@ -229,9 +226,8 @@ class SSAbductionStateUtils(HasLog):
             self.log.debug('Attempting to remove traits.')
             CommonTraitUtils.remove_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
             self.log.debug('Attempting to remove buffs.')
-            CommonTraitUtils.remove_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.remove_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
-            SSAllowanceUtils().remove_all_allowance_traits(captive_sim_info)
+            SSAllowanceUtils().set_disallow_all(captive_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
@@ -241,10 +237,10 @@ class SSAbductionStateUtils(HasLog):
                 SSCommonSituationUtils.make_sim_leave(captive_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
-            SSAllowanceUtils().set_allowed_everything(captive_sim_info, allowed=False)
-            SSAllowanceUtils().update_appropriateness_tags(captive_sim_info)
+            data_store = SSSimDataStore(captive_sim_info)
+            data_store.is_captive = False
         except Exception as ex:
-            CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)
+            self.log.error('Problem occurred while releasing Captive \'{}\'.'.format(captive_sim_name), exception=ex)
             return False
         return True
 

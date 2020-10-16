@@ -61,7 +61,8 @@ class SSAbductionSettingsDialog(HasLog):
         option_dialog = CommonChooseObjectOptionDialog(
             SSAbductionStringId.ABDUCTION_SETTINGS_NAME,
             SSAbductionStringId.ABDUCTION_SETTINGS_DESCRIPTION,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
 
         def _on_setting_changed(setting_name: str, setting_value: bool):
@@ -86,7 +87,7 @@ class SSAbductionSettingsDialog(HasLog):
 
         option_dialog.add_option(
             CommonDialogOpenDialogOption(
-                self._cheat_settings,
+                lambda *_, **__: self._cheat_settings(on_close=_reopen),
                 CommonDialogOptionContext(
                     SSStringId.CHEAT_SETTINGS_NAME,
                     SSStringId.CHEAT_SETTINGS_DESCRIPTION
@@ -109,7 +110,8 @@ class SSAbductionSettingsDialog(HasLog):
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.CHEAT_SETTINGS_NAME,
             SSStringId.CHEAT_SETTINGS_DESCRIPTION,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
 
         def _on_setting_changed(setting_name: str, setting_value: bool):

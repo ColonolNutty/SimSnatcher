@@ -10,7 +10,10 @@ from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowan
 from cnsimsnatcher.configuration.allowance.enums.string_ids import SSAllowanceStringId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from sims.sim_info import SimInfo
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
+    CommonDialogActionOption
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_select_option import \
     CommonDialogSelectOption
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
@@ -63,7 +66,8 @@ class SSAllowanceConfigDialog(HasLog):
         option_dialog = CommonChooseObjectOptionDialog(
             SSAllowanceStringId.CHANGE_ALLOWANCE_NAME,
             SSAllowanceStringId.CHANGE_ALLOWANCE_DESCRIPTION,
-            on_close=_on_close
+            on_close=_on_close,
+            mod_identity=self.mod_identity
         )
 
         def _on_allowance_chosen(_: str, chosen_allowance: SSAllowanceData):
@@ -75,6 +79,36 @@ class SSAllowanceConfigDialog(HasLog):
             return result
 
         allowances = SSAllowanceUtils().get_allowance_data()
+
+        def _on_allow_everything() -> None:
+            SSAllowanceUtils().set_allow_all(target_sim_info)
+            _reopen()
+
+        option_dialog.add_option(
+            CommonDialogActionOption(
+                CommonDialogOptionContext(
+                    SSAllowanceStringId.ALLOW_EVERYTHING,
+                    0,
+                    icon=CommonIconUtils.load_arrow_right_icon()
+                ),
+                on_chosen=_on_allow_everything
+            )
+        )
+
+        def _on_allow_nothing() -> None:
+            SSAllowanceUtils().set_disallow_all(target_sim_info)
+            _reopen()
+
+        option_dialog.add_option(
+            CommonDialogActionOption(
+                CommonDialogOptionContext(
+                    SSAllowanceStringId.ALLOW_NOTHING,
+                    0,
+                    icon=CommonIconUtils.load_arrow_right_icon()
+                ),
+                on_chosen=_on_allow_nothing
+            )
+        )
 
         for allowance in allowances:
             icon = CommonIconUtils.load_checked_square_icon() if allowance.has_allowance(target_sim_info) else CommonIconUtils.load_unchecked_square_icon()

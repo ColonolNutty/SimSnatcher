@@ -31,5 +31,5 @@ class SSSlaverySettingsDataStore(CommonDataStore):
             SSSlaverySetting.VERSION: self._version,
 
             # General
-            SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH: False
+            SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH: True
         }.copy()
