@@ -27,8 +27,8 @@ class SSAbductionSettingsDialog(HasLog):
     def __init__(self, on_close: Callable[..., Any]=CommonFunctionUtils.noop):
         super().__init__()
         self._on_close = on_close
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils().get_abduction_mod_settings_manager()
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_abduction_mod_settings_data_store()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -51,7 +51,6 @@ class SSAbductionSettingsDialog(HasLog):
 
         def _on_close() -> None:
             self.log.debug('Saving SS Abduction Settings.')
-            self._settings_manager.save()
             if self._on_close is not None:
                 self._on_close()
 
@@ -68,15 +67,14 @@ class SSAbductionSettingsDialog(HasLog):
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
                 self.log.debug('Updating Abduction setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
-                self._settings_manager.set_setting(setting_name, setting_value)
+                self._data_store.set_value_by_key(setting_name, setting_value)
             _reopen()
 
         option_dialog.add_option(
             CommonDialogToggleOption(
                 SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH,
-                self._settings_manager.get_setting(
-                    SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH,
-                    variable_type=bool
+                self._data_store.get_value_by_key(
+                    SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH
                 ),
                 CommonDialogOptionContext(
                     SSAbductionStringId.ABDUCTION_INTERACTIONS_SWITCH_NAME,
@@ -97,12 +95,16 @@ class SSAbductionSettingsDialog(HasLog):
         )
         return option_dialog
 
-    def _cheat_settings(self) -> CommonChooseObjectOptionDialog:
+    def _cheat_settings(self, on_close: Callable[[], Any]=None) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building SS Abduction Cheat Settings.')
+
+        def _reopen() -> None:
+            self._cheat_settings(on_close=on_close).show()
 
         def _on_close() -> None:
             self.log.debug('SS Abduction Cheat Settings closed.')
-            self.open()
+            if on_close is not None:
+                on_close()
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.CHEAT_SETTINGS_NAME,
@@ -113,15 +115,14 @@ class SSAbductionSettingsDialog(HasLog):
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
                 self.log.debug('Updating Abduction Cheat setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
-                self._settings_manager.set_setting(setting_name, setting_value)
-            self._cheat_settings().show()
+                self._data_store.set_value_by_key(setting_name, setting_value)
+            _reopen()
 
         option_dialog.add_option(
             CommonDialogToggleOption(
                 SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH,
-                self._settings_manager.get_setting(
-                    SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH,
-                    variable_type=bool
+                self._data_store.get_value_by_key(
+                    SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH
                 ),
                 CommonDialogOptionContext(
                     SSAbductionStringId.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH_NAME,

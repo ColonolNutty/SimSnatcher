@@ -9,8 +9,8 @@ from pprint import pformat
 from typing import Any, Set
 
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
-from cnsimsnatcher.data_management.ss_sim_data_storage import SSSimDataStorage
 from cnsimsnatcher.modinfo import ModInfo
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from objects.components.buff_component import BuffComponent
 from sims4communitylib.utils.common_injection_utils import CommonInjectionUtils
@@ -30,7 +30,7 @@ class _SSVanillaBuffComponent:
         if not SSAbductionStateUtils().has_captors(owning_sim_info, instanced_only=False) and not SSSlaveryStateUtils().has_masters(owning_sim_info, instanced_only=False):
             return True
         log.debug('Checking if \'{}\' is allowed.'.format(CommonSimNameUtils.get_full_name(owning_sim_info)))
-        sim_data = SSSimDataStorage(owning_sim_info)
+        sim_data = SSSimDataStore(owning_sim_info)
         if not sim_data.allowances & tags:
             log.debug('Not allowed. Allowance Tags: \'{}\' Tags: \'{}\''.format(pformat(sim_data.allowances), pformat(tags)))
             return False

@@ -35,7 +35,7 @@ from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimI
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
+from ssutilities.commonlib.utils.commonterrainutils import SSCommonTerrainUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 
@@ -133,7 +133,7 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
             return cls.create_test_result(False, reason='Dying Sims cannot order Sims around. The Active Sim is currently dying.')
         if CommonTypeUtils.is_terrain(interaction_target) or CommonTypeUtils.is_ocean(interaction_target) or CommonTypeUtils.is_swimming_pool(interaction_target):
             cls.get_log().debug('Target is terrain, ocean, or a swimming pool.')
-            if not CommonTerrainUtils.is_safe_route_surface_position(interaction_target, interaction_context):
+            if not SSCommonTerrainUtils.is_safe_route_surface_position(interaction_target, interaction_context):
                 cls.get_log().debug('Failed, target is not a safe route surface.')
                 return TestResult.NONE
         elif CommonTypeUtils.is_game_object(interaction_target):

@@ -26,8 +26,8 @@ class SSOrderToSettingsDialog(HasLog):
     def __init__(self, on_close: Callable[..., Any]=CommonFunctionUtils.noop):
         super().__init__()
         self._on_close = on_close
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils().get_order_to_mod_settings_manager()
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_order_to_mod_settings_data_store()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -48,9 +48,11 @@ class SSOrderToSettingsDialog(HasLog):
     def _settings(self) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building SS Order To Settings.')
 
+        def _reopen() -> None:
+            option_dialog.show()
+
         def _on_close() -> None:
-            self.log.debug('Saving SS Order To Settings.')
-            self._settings_manager.save()
+            self.log.debug('Closing SS Order To Settings.')
             if self._on_close is not None:
                 self._on_close()
 
@@ -62,7 +64,7 @@ class SSOrderToSettingsDialog(HasLog):
 
         option_dialog.add_option(
             CommonDialogOpenDialogOption(
-                self._cheat_settings,
+                lambda *_, **__: self._cheat_settings(on_close=_reopen),
                 CommonDialogOptionContext(
                     SSStringId.CHEAT_SETTINGS_NAME,
                     SSStringId.CHEAT_SETTINGS_DESCRIPTION
@@ -71,16 +73,17 @@ class SSOrderToSettingsDialog(HasLog):
         )
         return option_dialog
 
-    def _cheat_settings(self) -> CommonChooseObjectOptionDialog:
+    def _cheat_settings(self, on_close: Callable[[], Any]=None) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building SS Order To Cheat Settings.')
 
         def _on_close() -> None:
             self.log.debug('SS Order To Cheat Settings closed.')
-            self.open()
+            if on_close is not None:
+                on_close()
 
         def _reopen(*_, **__) -> None:
             self.log.debug('Reopening SS Order To Cheat Settings.')
-            self._cheat_settings().show()
+            self._cheat_settings(on_close=on_close).show()
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.CHEAT_SETTINGS_NAME,
@@ -91,15 +94,14 @@ class SSOrderToSettingsDialog(HasLog):
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
                 self.log.debug('Updating Order To Cheat setting \'{}\' with value {}'.format(setting_name, str(setting_value)))
-                self._settings_manager.set_setting(setting_name, setting_value)
+                self._data_store.set_value_by_key(setting_name, setting_value)
             _reopen()
 
         option_dialog.add_option(
             CommonDialogToggleOption(
                 SSOrderToSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER,
-                self._settings_manager.get_setting(
-                    SSOrderToSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER,
-                    variable_type=bool
+                self._data_store.get_value_by_key(
+                    SSOrderToSetting.SHOW_DEBUG_INTERACTIONS_FOR_PERFORM_INTERACTION_ORDER
                 ),
                 CommonDialogOptionContext(
                     SSOrderToStringId.SHOW_DEBUG_INTERACTIONS_IN_PERFORM_INTERACTION_DIALOG_NAME,

@@ -65,8 +65,8 @@ class SSAllowanceUtils:
 
     def update_appropriateness_tags(self, sim_info: SimInfo):
         """ Update the appropriateness tags for a Sim. """
-        from cnsimsnatcher.data_management.ss_sim_data_storage import SSSimDataStorage
-        sim_data = SSSimDataStorage(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+        sim_data = SSSimDataStore(sim_info)
         sim_data.allowances = self.get_appropriateness_tags(sim_info)
 
     def get_appropriateness_tags(self, sim_info: SimInfo) -> FrozenSet[Tag]:
@@ -84,14 +84,14 @@ class SSAllowanceUtils:
             if allowance.has_allowance(sim_info):
                 appropriateness = appropriateness | allowance.appropriateness_tags
 
-        from cnsimsnatcher.data_management.ss_sim_data_storage import SSSimDataStorage
-        sim_data = SSSimDataStorage(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+        sim_data = SSSimDataStore(sim_info)
         sim_data.allowances = appropriateness
 
     def set_allow_none(self, sim_info: SimInfo):
         """ Allow a Sim to perform all tasks. Typically done when they are not being controlled. """
-        from cnsimsnatcher.data_management.ss_sim_data_storage import SSSimDataStorage
-        sim_data = SSSimDataStorage(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+        sim_data = SSSimDataStore(sim_info)
         sim_data.allowances = set()
 
     def set_allowed_everything(self, sim_info: SimInfo, allowed: bool=True) -> bool:

@@ -9,54 +9,52 @@ from typing import List, Tuple, Union
 
 import services
 from sims.sim_info import SimInfo
+from sims4communitylib.enums.tags_enum import CommonGameTag
+from sims4communitylib.utils.sims.common_sim_situation_utils import CommonSimSituationUtils
 from situations.dynamic_situation_goal_tracker import DynamicSituationGoalTracker
-from situations.situation import Situation
 from situations.situation_goal import SituationGoal
 from situations.situation_goal_targeted_sim import SituationGoalTargetedSim
 from situations.situation_goal_tracker import SituationGoalTracker
-from tag import Tag
 from whims.whim_set import WhimSetBaseMixin
 from sims4communitylib.enums.situations_enum import CommonSituationId
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
 
-class CommonSituationUtils:
+class SSCommonSituationUtils:
     """ Utilities for situations. """
     @staticmethod
     def has_leave_situation(sim_info: SimInfo) -> bool:
         """ Determine if a sim is currently involved in a leaving situation. """
-        # noinspection PyUnresolvedReferences
-        return CommonSituationUtils.has_situation(sim_info, CommonSituationId.LEAVE) or CommonSituationUtils.is_in_situations_with_any_tags(sim_info, (Tag.Role_Leave,))
+        if sim_info is None:
+            return False
+        return CommonSimSituationUtils.has_situations(sim_info, (CommonSituationId.LEAVE, ))\
+               or SSCommonSituationUtils.is_in_situations_with_any_tags(sim_info, (CommonGameTag.ROLE_LEAVE,))
 
     @staticmethod
     def make_sim_leave(sim_info: SimInfo):
         """ Make a sim leave the current lot. """
+        if sim_info is None:
+            return
         sim = CommonSimUtils.get_sim_instance(sim_info)
+        if sim is None:
+            return
         services.get_zone_situation_manager().make_sim_leave(sim)
 
     @staticmethod
-    def remove_sim_from_situation(sim_info: SimInfo, situation_id: int) -> bool:
+    def remove_sim_from_situation(sim_info: SimInfo, situation_id: Union[CommonSituationId, int]) -> bool:
         """ Remove a sim from the specified situation. """
-        situation_manager = services.get_zone_situation_manager()
         if sim_info is None or situation_id is None:
             return False
+        situation_manager = services.get_zone_situation_manager()
         situation_manager.remove_sim_from_situation(sim_info, situation_id)
         return True
 
     @staticmethod
-    def has_situation(sim_info: SimInfo, *situation_ids: int) -> bool:
-        """ Determine if a sim is currently involved in a situation. """
-        sim_situations = CommonSituationUtils.get_situations(sim_info)
-        for situation in sim_situations:
-            situation_id = getattr(situation, 'guid64', None)
-            if situation_id in situation_ids:
-                return True
-        return False
-
-    @staticmethod
     def has_situation_job(sim_info: SimInfo, situation_job_ids: Tuple[int]) -> bool:
         """ Determine if a sim is currently assigned any of the specified situation job. """
-        sim_situations = CommonSituationUtils.get_situations(sim_info)
+        if sim_info is None:
+            return False
+        sim_situations = CommonSimSituationUtils.get_situations(sim_info)
         for situation in sim_situations:
             for situation_job in situation.all_jobs_gen():
                 situation_job_id = getattr(situation_job, 'guid64', None)
@@ -65,10 +63,12 @@ class CommonSituationUtils:
         return False
 
     @staticmethod
-    def is_in_situations_with_any_tags(sim_info: SimInfo, tags: Tuple[Tag]) -> bool:
+    def is_in_situations_with_any_tags(sim_info: SimInfo, tags: Tuple[CommonGameTag]) -> bool:
         """ Determine if a Sim is currently in a situation with any of the specified tags. """
+        if sim_info is None:
+            return False
         tags = set(tags)
-        situations = CommonSituationUtils.get_situations(sim_info)
+        situations = CommonSimSituationUtils.get_situations(sim_info)
         for tag in tags:
             for situation in situations:
                 if tag in getattr(situation, 'tags', tuple()):
@@ -79,25 +79,22 @@ class CommonSituationUtils:
         return False
 
     @staticmethod
-    def get_situations(sim_info: SimInfo) -> List[Situation]:
-        """ Retrieve the current situations a sim is involved in. """
-        from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-        sim_instance = CommonSimUtils.get_sim_instance(sim_info)
-        if sim_instance is None:
-            return list()
-        return services.get_zone_situation_manager().get_situations_sim_is_in(sim_instance)
-
-    @staticmethod
     def create_visit_situation(sim_info: SimInfo):
         """ Create a visit situation for a Non-Player Sim."""
+        if sim_info is None:
+            return
         sim = CommonSimUtils.get_sim_instance(sim_info)
+        if sim is None:
+            return
         services.get_zone_situation_manager().create_visit_situation(sim)
 
     @staticmethod
     def get_situation_goals(sim_info: SimInfo) -> Tuple[Union[SituationGoal, SituationGoalTargetedSim]]:
         """ Retrieve the goals of all situations a Sim is currently in. """
+        if sim_info is None:
+            return tuple()
         goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim]] = list()
-        for situation in CommonSituationUtils.get_situations(sim_info):
+        for situation in CommonSimSituationUtils.get_situations(sim_info):
             goal_tracker = situation._get_goal_tracker()
             if goal_tracker is None:
                 continue
@@ -113,9 +110,11 @@ class CommonSituationUtils:
     @staticmethod
     def complete_situation_goal(sim_info: SimInfo, situation_goal_id: int, target_sim_info: SimInfo=None):
         """ Complete a situation goal for the specified Sim."""
+        if sim_info is None:
+            return
         from sims4communitylib.utils.sims.common_whim_utils import CommonWhimUtils
         goal_instances: List[Union[SituationGoal, SituationGoalTargetedSim, WhimSetBaseMixin]] = list()
-        goal_instances.extend(CommonSituationUtils.get_situation_goals(sim_info))
+        goal_instances.extend(SSCommonSituationUtils.get_situation_goals(sim_info))
         goal_instances.extend(CommonWhimUtils.get_current_whims(sim_info))
         for goal_instance in goal_instances:
             if goal_instance.guid64 != situation_goal_id:

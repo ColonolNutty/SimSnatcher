@@ -22,10 +22,11 @@ from sims4communitylib.classes.interactions.common_immediate_super_interaction i
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
+from sims4communitylib.utils.objects.common_object_location_utils import CommonObjectLocationUtils
 from sims4communitylib.utils.sims.common_sim_location_utils import CommonSimLocationUtils
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
+from ssutilities.commonlib.utils.commonterrainutils import SSCommonTerrainUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 
@@ -60,7 +61,7 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
             return cls.create_test_result(False, reason='Dying Sims cannot order Sims around. The Active Sim is currently dying.')
         if CommonTypeUtils.is_terrain(interaction_target) or CommonTypeUtils.is_ocean(interaction_target) or CommonTypeUtils.is_swimming_pool(interaction_target):
             cls.get_log().debug('Target is terrain, ocean, or a swimming pool.')
-            if not CommonTerrainUtils.is_safe_route_surface_position(interaction_target, interaction_context):
+            if not SSCommonTerrainUtils.is_safe_route_surface_position(interaction_target, interaction_context):
                 cls.get_log().debug('Failed, target is not a safe route surface.')
                 return TestResult.NONE
         else:
@@ -77,8 +78,8 @@ class SSOrderToGoHereInteraction(CommonImmediateSuperInteraction):
         self.log.format_with_message('Running \'{}\' on_started.'.format(self), interaction_sim=interaction_sim, interaction_target=interaction_target)
         self.log.debug('Running go to residence interaction')
         source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        location_position = CommonTerrainUtils.get_route_surface_position_from_interaction_context(self.context) or CommonTerrainUtils.get_route_surface_position(interaction_target)
-        location_level = CommonTerrainUtils.get_route_surface_level_from_interaction_context(self.context) or CommonTerrainUtils.get_route_surface_level(interaction_target)
+        location_position = SSCommonTerrainUtils.get_route_surface_position_from_interaction_context(self.context) or CommonObjectLocationUtils.get_position(interaction_target)
+        location_level = SSCommonTerrainUtils.get_route_surface_level_from_interaction_context(self.context) or CommonObjectLocationUtils.get_surface_level(interaction_target)
 
         def _on_hostage_chosen(hostage_sim_info: SimInfo):
             self.log.debug('Sending hostage sim to go there.')

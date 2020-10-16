@@ -24,6 +24,7 @@ from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 from sims4communitylib.utils.location.common_location_utils import CommonLocationUtils
+from sims4communitylib.utils.objects.common_object_location_utils import CommonObjectLocationUtils
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
@@ -32,7 +33,7 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_sim_option_dialog im
 from sims4communitylib.dialogs.option_dialogs.options.sims.common_dialog_sim_option import CommonDialogSimOption
 from sims4communitylib.dialogs.option_dialogs.options.sims.common_dialog_sim_option_context import CommonDialogSimOptionContext
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from ssutilities.commonlib.utils.commonterrainutils import CommonTerrainUtils
+from ssutilities.commonlib.utils.commonterrainutils import SSCommonTerrainUtils
 
 
 class SSOrderToDialog(HasLog):
@@ -166,8 +167,8 @@ class SSOrderToDialog(HasLog):
         try:
             if interaction_target is not None and (CommonTypeUtils.is_terrain(interaction_target) or CommonTypeUtils.is_ocean(interaction_target) or CommonTypeUtils.is_swimming_pool(interaction_target)):
                 from server_commands.sim_commands import _build_terrain_interaction_target_and_context
-                location_position = CommonTerrainUtils.get_route_surface_position_from_interaction_context(interaction_context) or CommonTerrainUtils.get_route_surface_position(interaction_target)
-                location_level = CommonTerrainUtils.get_route_surface_level_from_interaction_context(interaction_context) or CommonTerrainUtils.get_route_surface_level(interaction_target)
+                location_position = SSCommonTerrainUtils.get_route_surface_position_from_interaction_context(interaction_context) or CommonObjectLocationUtils.get_position(interaction_target)
+                location_level = SSCommonTerrainUtils.get_route_surface_level_from_interaction_context(interaction_context) or CommonObjectLocationUtils.get_surface_level(interaction_target)
                 # noinspection PyUnresolvedReferences
                 pos = sims4.math.Vector3(location_position.x, location_position.y, location_position.z)
                 routing_surface = routing.SurfaceIdentifier(CommonLocationUtils.get_current_zone_id(), location_level, routing.SurfaceType.SURFACETYPE_WORLD)

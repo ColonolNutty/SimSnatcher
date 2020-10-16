@@ -26,10 +26,11 @@ from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
+from sims4communitylib.utils.sims.common_sim_situation_utils import CommonSimSituationUtils
 from sims4communitylib.utils.sims.common_sim_type_utils import CommonSimTypeUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
-from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
+from ssutilities.commonlib.utils.common_situation_utils import SSCommonSituationUtils
 
 
 class SSSlaveryStateUtils(HasLog):
@@ -242,11 +243,11 @@ class SSSlaveryStateUtils(HasLog):
             SSAllowanceUtils().remove_all_allowance_traits(slave_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
-            CommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
+            SSCommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
             self.log.debug('Done removing sim from situations.')
             if not CommonSimTypeUtils.is_player_sim(slave_sim_info):
                 self.log.debug('Attempting to make Sim leave.')
-                CommonSituationUtils.make_sim_leave(slave_sim_info)
+                SSCommonSituationUtils.make_sim_leave(slave_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
             SSAllowanceUtils().set_allowed_everything(slave_sim_info, allowed=False)
@@ -280,7 +281,7 @@ class SSSlaveryStateUtils(HasLog):
     def has_invalid_enslaved_state(self, slave_sim_info: SimInfo) -> bool:
         """ Determine if a Sim has an invalid enslaved state. """
         return self.has_masters(slave_sim_info)\
-               and (not CommonSituationUtils.has_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
+               and (not CommonSimSituationUtils.has_situations(slave_sim_info, (SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER, ))
                     or not CommonTraitUtils.has_trait(slave_sim_info, SSSlaveryTraitId.SLAVE))\
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(slave_sim_info, SSSlaveryInteractionId.ATTEMPT_TO_ENSLAVE_HUMAN_SUCCESS_OUTCOME)
 

@@ -9,8 +9,8 @@ from typing import Set
 
 from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from sims.sim_info import SimInfo
+from sims4communitylib.enums.tags_enum import CommonGameTag
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
-from tag import Tag
 
 
 class SSAllowanceData:
@@ -32,7 +32,7 @@ class SSAllowanceData:
         raise NotImplementedError()
 
     @property
-    def appropriateness_tags(self) -> Set[Tag]:
+    def appropriateness_tags(self) -> Set[CommonGameTag]:
         """ The appropriateness tags associated with the allowance. """
         raise NotImplementedError()
 

@@ -34,8 +34,8 @@ class SSSettingsDialog(HasLog):
     def __init__(self, on_close: Callable[..., Any]=CommonFunctionUtils.noop):
         super().__init__()
         self._on_close = on_close
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils().get_global_mod_settings_manager()
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_global_mod_settings_data_store()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -56,15 +56,14 @@ class SSSettingsDialog(HasLog):
     def _settings(self, target_sim_info: SimInfo) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building SS Settings.')
 
-        def _on_close() -> None:
-            self.log.debug('Saving SS Settings.')
-            self._settings_manager.save()
-            if self._on_close is not None:
-                self._on_close()
-
         def _reopen(*_, **__) -> None:
             self.log.debug('Reopening SS Settings.')
             self.open(target_sim_info)
+
+        def _on_close() -> None:
+            self.log.debug('Saving SS Settings.')
+            if self._on_close is not None:
+                self._on_close()
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSStringId.SIM_SNATCHER_SETTINGS_NAME,

@@ -14,13 +14,13 @@ class SSSettingUtils(CommonService):
     """ Utilities to get SS settings. """
     def __init__(self) -> None:
         super().__init__()
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils().get_global_mod_settings_manager()
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_global_mod_settings_data_store()
 
     def is_enabled_for_interactions(self, sim_info: SimInfo) -> bool:
         """is_enabled_for_interactions(sim_info)
 
-        Determine if a Sim is enabled to use the Sim Snatcher interactions.
+        Determine if a Sim is enabled for Sim Snatcher interactions.
 
         :param sim_info: An instance of a Sim.
         :type sim_info: SimInfo

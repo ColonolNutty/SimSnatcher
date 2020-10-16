@@ -5,31 +5,29 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
+from cnsimsnatcher.abduction.settings.data.data_store import SSAbductionSettingsDataStore
 from sims4communitylib.services.common_service import CommonService
-from ssutilities.commonlib.data_management.common_settings_manager import CommonSettingsManager
 
 
 class SSAbductionSettingUtils(CommonService):
     """ Utilities to get SS Abduction settings. """
     def __init__(self) -> None:
         super().__init__()
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        from cnsimsnatcher.abduction.settings.data.manager import SSAbductionSettingsManager
-        self._settings_manager: SSAbductionSettingsManager = SSDataManagerUtils().get_abduction_mod_settings_manager()
-        self.cheats = SSAbductionSettingUtils.Cheats(self._settings_manager)
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_abduction_mod_settings_data_store()
+        self.cheats = SSAbductionSettingUtils.Cheats(self._data_store)
 
     def interactions_are_enabled(self) -> bool:
         """ Determine if the Abduction interactions are enabled. """
-        from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
-        return self._settings_manager.get_setting(SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH, variable_type=bool)
+        return self._data_store.get_value_by_key(SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH)
 
     class Cheats(CommonService):
         """ Cheat settings. """
-        def __init__(self, settings_manager: CommonSettingsManager) -> None:
+        def __init__(self, data_store: SSAbductionSettingsDataStore) -> None:
             super().__init__()
-            self._settings_manager = settings_manager
+            self._data_store = data_store
 
         def always_successful(self) -> bool:
             """ Determine if Abduction attempts will always succeed. """
-            from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
-            return self._settings_manager.get_setting(SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH, variable_type=bool)
+            return self._data_store.get_value_by_key(SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH)

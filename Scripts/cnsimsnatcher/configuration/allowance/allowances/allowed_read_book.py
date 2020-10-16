@@ -11,7 +11,6 @@ from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowan
 from cnsimsnatcher.configuration.allowance.enums.string_ids import SSAllowanceStringId
 from cnsimsnatcher.configuration.allowance.enums.trait_ids import SSAllowanceTraitId
 from sims4communitylib.enums.tags_enum import CommonGameTag
-from tag import Tag
 
 
 class SSAllowedReadBook(SSAllowanceData):
@@ -29,7 +28,7 @@ class SSAllowedReadBook(SSAllowanceData):
 
     # noinspection PyMissingOrEmptyDocstring
     @property
-    def appropriateness_tags(self) -> Set[Tag]:
+    def appropriateness_tags(self) -> Set[CommonGameTag]:
         return {
             CommonGameTag.APPROPRIATENESS_READ_BOOKS
         }

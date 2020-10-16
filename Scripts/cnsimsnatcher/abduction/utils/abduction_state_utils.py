@@ -25,9 +25,10 @@ from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtil
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.enums.situations_enum import CommonSituationId
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
+from sims4communitylib.utils.sims.common_sim_situation_utils import CommonSimSituationUtils
 from sims4communitylib.utils.sims.common_sim_type_utils import CommonSimTypeUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
-from ssutilities.commonlib.utils.common_situation_utils import CommonSituationUtils
+from ssutilities.commonlib.utils.common_situation_utils import SSCommonSituationUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
@@ -158,9 +159,9 @@ class SSAbductionStateUtils(HasLog):
                 self.log.error('Failed to add Captive Relationship Bit.')
             self._buff_utils.remove_appropriateness_related_buffs(captive_sim_info)
 
-            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
-            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
-            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
+            SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
+            SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
+            SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAllowanceTraitId.ALLOWED_NOTHING)
             CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
@@ -233,11 +234,11 @@ class SSAbductionStateUtils(HasLog):
             SSAllowanceUtils().remove_all_allowance_traits(captive_sim_info)
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
-            CommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
+            SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
             self.log.debug('Done removing Sim from situations.')
             if not CommonSimTypeUtils.is_player_sim(captive_sim_info):
                 self.log.debug('Attempting to make Sim leave.')
-                CommonSituationUtils.make_sim_leave(captive_sim_info)
+                SSCommonSituationUtils.make_sim_leave(captive_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Captive \'{}\'.'.format(captive_sim_name))
             SSAllowanceUtils().set_allowed_everything(captive_sim_info, allowed=False)
@@ -271,7 +272,7 @@ class SSAbductionStateUtils(HasLog):
     def has_invalid_abduction_state(self, sim_info: SimInfo) -> bool:
         """ Determine if a Sim has an invalid abduction state. """
         return self.has_captors(sim_info)\
-               and (not CommonSituationUtils.has_situation(sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)
+               and (not CommonSimSituationUtils.has_situations(sim_info, (SSAbductionSituationId.PLAYER_ABDUCTED_NPC, ))
                     or not CommonTraitUtils.has_trait(sim_info, SSAbductionTraitId.CAPTIVE))\
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(sim_info, SSAbductionInteractionId.ATTEMPT_TO_ABDUCT_HUMAN_SUCCESS_OUTCOME)
 

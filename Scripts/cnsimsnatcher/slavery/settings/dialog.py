@@ -25,8 +25,8 @@ class SSSlaverySettingsDialog(HasLog):
     def __init__(self, on_close: Callable[..., Any]=CommonFunctionUtils.noop):
         super().__init__()
         self._on_close = on_close
-        from cnsimsnatcher.data_management.data_manager_utils import SSDataManagerUtils
-        self._settings_manager = SSDataManagerUtils().get_slavery_mod_settings_manager()
+        from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
+        self._data_store = SSDataManagerUtils().get_slavery_mod_settings_data_store()
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -47,8 +47,10 @@ class SSSlaverySettingsDialog(HasLog):
     def _settings(self) -> CommonChooseObjectOptionDialog:
         self.log.debug('Building Slavery Settings.')
 
+        def _reopen() -> None:
+            self.open()
+
         def _on_close() -> None:
-            self._settings_manager.save()
             if self._on_close is not None:
                 self._on_close()
 
@@ -60,15 +62,14 @@ class SSSlaverySettingsDialog(HasLog):
 
         def _on_setting_changed(setting_name: str, setting_value: bool):
             if setting_value is not None:
-                self._settings_manager.set_setting(setting_name, setting_value)
-            self.open()
+                self._data_store.set_value_by_key(setting_name, setting_value)
+            _reopen()
 
         option_dialog.add_option(
             CommonDialogToggleOption(
                 SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH,
-                self._settings_manager.get_setting(
-                    SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH,
-                    variable_type=bool
+                self._data_store.get_value_by_key(
+                    SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH
                 ),
                 CommonDialogOptionContext(
                     SSSlaveryStringId.ENABLE_SLAVERY_INTERACTIONS_NAME,
