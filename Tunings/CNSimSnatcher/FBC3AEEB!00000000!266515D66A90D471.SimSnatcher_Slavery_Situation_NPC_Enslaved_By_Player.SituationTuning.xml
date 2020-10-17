@@ -5,7 +5,7 @@
   </U>
   <T n="_implies_greeted_status">True</T>
   <T n="_maintain_sims_consistency">True</T>
-  <T n="_survives_active_household_change">True</T>
+  <T n="_survives_active_household_change">False</T>
   <U n="slave_job_states">
     <U n="childcare_state">
       <L n="job_and_role_changes">
@@ -14,6 +14,12 @@
           <T n="Role State">1488839829299880649<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Nanny--></T>
         </U>
       </L>
+	  <T n="tooltip_name">0xC3667E0F<!--Slave (Nanny)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
       <V n="time_out" t="enabled">
         <T n="enabled">15</T>
       </V>
@@ -25,6 +31,12 @@
           <T n="Role State">15797370075757714486<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Maid--></T>
         </U>
       </L>
+	  <T n="tooltip_name">0xB426D864<!--Slave (Cleaning)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
       <V n="time_out" t="enabled">
         <T n="enabled">15</T>
       </V>
@@ -36,6 +48,12 @@
           <T n="Role State">13426034656131085789<!--RoleState: SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Idle--></T>
         </U>
       </L>
+	  <T n="tooltip_name">0x417137A1<!--Slave (Idle)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
       <V n="time_out" t="enabled">
         <T n="enabled">1</T>
       </V>
@@ -47,6 +65,12 @@
           <T n="Role State">4775521788387184189<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Gardener--></T>
         </U>
       </L>
+	  <T n="tooltip_name">0xEBB8CE59<!--Slave (Gardener)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
       <V n="time_out" t="enabled">
         <T n="enabled">15</T>
       </V>
@@ -58,6 +82,29 @@
           <T n="Role State">13446768923265958837<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Repair_Man--></T>
         </U>
       </L>
+	  <T n="tooltip_name">0x879D0F5A<!--Slave (Repair)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
+      <V n="time_out" t="enabled">
+        <T n="enabled">15</T>
+      </V>
+    </U>
+    <U n="off_master_lot_state">
+      <L n="job_and_role_changes">
+        <U>
+          <T n="Situation Job">13815321600439200334<!--SituationJob: SimSnatcher_Slavery_Situation_Job_Enslaved_NPC_Idle--></T>
+          <T n="Role State">5264469960617669578<!--SimSnatcher_Slavery_Situation_Role_Enslaved_NPC_Off_Lot--></T>
+        </U>
+      </L>
+	  <T n="tooltip_name">0xE95EEADD<!--Slave (Off Lot)--></T>
+	  <U n="tooltip_name_text_tokens">
+	    <L n="tokens">
+	      <V t="participant_type" />
+	    </L>
+	  </U>
       <V n="time_out" t="enabled">
         <T n="enabled">15</T>
       </V>
@@ -100,7 +147,6 @@
     </U>
   </L>
   <L n="tags">
-    <E>Situation_Butler</E>
     <E>Situation_Slave</E>
   </L>
   <V n="time_jump" t="allow" />

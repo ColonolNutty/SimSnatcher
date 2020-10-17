@@ -5,21 +5,29 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from pprint import pformat
+
+from cnsimsnatcher.enums.captured_situation_state import SSSituationState
+from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from event_testing.resolver import SingleSimResolver
 from event_testing.test_events import TestEvent
+from interactions.utils.localization_tokens import LocalizationTokens
 from sims.household import Household
 from sims.sim import Sim
 from sims.sim_info import SimInfo
+from sims4.localization import TunableLocalizedStringFactory
 from sims4.tuning.instances import lock_instance_tunables
 from sims4.tuning.tunable import TunableTuple
 from sims4.tuning.tunable_base import GroupNames
+from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from situations.service_npcs.butler.butler_loot_ops import ButlerSituationStates
 from situations.situation import Situation
 from situations.situation_complex import CommonSituationState
 import services
-from typing import Tuple, Any
+from typing import Tuple, Any, Union
 
 from role.role_state import RoleState
 from situations.situation_complex import SituationStateData
@@ -30,9 +38,27 @@ import tunable_time
 from situations.situation_types import SituationCreationUIOption
 from situations.bouncer.bouncer_types import BouncerExclusivityCategory
 
+log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'ss_slave_situation')
+log.enable()
+
 
 class SSSlaveSituationStateMixin(CommonSituationState):
     """ A base class for slave situation states. """
+    FACTORY_TUNABLES = {
+        'tooltip_name': TunableLocalizedStringFactory(
+            description='\n                Localized name of this job that is displayed when the player hovers\n                on the sim while the situation is in progress. If this field is absent, \n                there will be no tooltip on the sim.\n                \n                This helps distinguish the cases where we want to display "Bride or Groom" \n                in the situation creation UI but only "Bride" or "Groom" on the \n                sim\'s tooltip when the player is playing with the situation.\n                ',
+            allow_none=True, tuning_group=GroupNames.UI
+        ),
+        'tooltip_name_text_tokens': LocalizationTokens.TunableFactory(
+            description="\n                Localization tokens to be passed into 'tooltip_name'.\n                For example, you could use a participant or you could also pass\n                in statistic and commodity values\n                ",
+            tuning_group=GroupNames.UI
+        ),
+    }
+
+    def __init__(self, job_and_role_changes, allow_join_situation, time_out, tooltip_name, tooltip_name_text_tokens) -> None:
+        super().__init__(job_and_role_changes, allow_join_situation, time_out)
+        self.tooltip_name = tooltip_name
+        self.tooltip_name_text_tokens = tooltip_name_text_tokens
 
     def on_activate(self, reader=None) -> Any:
         """ What happens when the state is activated. """
@@ -51,15 +77,41 @@ class SSSlaveSituationStateMixin(CommonSituationState):
         """ What happens when the timer expires. """
         self.owner.try_set_next_state(self.next_state())
 
+    def _update_headline(self, sim: Sim):
+        resolver = SingleSimResolver(sim.sim_info)
+        tokens = self.tooltip_name_text_tokens.get_tokens(resolver)
+        sim.sim_info.sim_headline = self.tooltip_name(*tokens)
+
     @property
     def next_state(self) -> Any:
         """ The next state to perform. """
         raise NotImplementedError()
 
     @property
-    def situation_state(self) -> ButlerSituationStates:
+    def own_state(self) -> Any:
+        """ The own state. """
+        raise NotImplementedError()
+
+    @property
+    def situation_state(self) -> Union[ButlerSituationStates, SSSituationState]:
         """The situation state identifier. """
         raise NotImplementedError()
+
+    @property
+    def job(self) -> SituationJob:
+        """ The job to set the Sim to. """
+        log.format(next_state=self.own_state)
+        log.format(job_and_role_changes=self.own_state._tuned_values.job_and_role_changes)
+        for (job, role) in self.own_state._tuned_values.job_and_role_changes.items():
+            return job
+        return self.owner.slave_sim_job.situation_job
+
+    @property
+    def role(self) -> RoleState:
+        """ The role to set the Sim to. """
+        for (job, role) in self.own_state._tuned_values.job_and_role_changes.items():
+            return role
+        return self.owner.slave_sim_job.staying_role_state
 
 
 class _SSSlaveCleaningState(SSSlaveSituationStateMixin):
@@ -68,6 +120,11 @@ class _SSSlaveCleaningState(SSSlaveSituationStateMixin):
     @property
     def next_state(self) -> Any:
         return self.owner.slave_job_states.gardening_state
+
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.cleaning_state
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -82,6 +139,11 @@ class _SSSlaveGardeningState(SSSlaveSituationStateMixin):
     def next_state(self) -> Any:
         return self.owner.slave_job_states.childcare_state
 
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.gardening_state
+
     # noinspection PyMissingOrEmptyDocstring
     @property
     def situation_state(self) -> ButlerSituationStates:
@@ -94,6 +156,11 @@ class _SSSlaveChildcareState(SSSlaveSituationStateMixin):
     @property
     def next_state(self) -> Any:
         return self.owner.slave_job_states.repair_state
+
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.childcare_state
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -108,6 +175,11 @@ class _SSSlaveRepairState(SSSlaveSituationStateMixin):
     def next_state(self) -> Any:
         return self.owner.slave_job_states.default_state
 
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.repair_state
+
     # noinspection PyMissingOrEmptyDocstring
     @property
     def situation_state(self) -> ButlerSituationStates:
@@ -121,10 +193,33 @@ class _SSSlaveDefaultState(SSSlaveSituationStateMixin):
     def next_state(self) -> Any:
         return self.owner.slave_job_states.cleaning_state
 
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.default_state
+
     # noinspection PyMissingOrEmptyDocstring
     @property
     def situation_state(self) -> ButlerSituationStates:
         return ButlerSituationStates.DEFAULT
+
+
+class _SSSlaveOffMasterLotState(SSSlaveSituationStateMixin):
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def next_state(self) -> Any:
+        return self.owner.slave_job_states.default_state
+
+    @property
+    def own_state(self) -> Any:
+        """ The own state. """
+        return self.owner.slave_job_states.off_master_lot_state
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def situation_state(self) -> SSSituationState:
+        return SSSituationState.OFF_LOT_STATE
 
 
 class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
@@ -154,6 +249,9 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
             default_state=_SSSlaveDefaultState.TunableFactory(
                 description='\n                Situation State for the slave to run all its default\n                interaction when no other service state is selected.\n                '
             ),
+            off_master_lot_state=_SSSlaveOffMasterLotState.TunableFactory(
+                description='\n                Situation State for the slave to run all off lot\n                interactions.\n                '
+            ),
             tuning_group=GroupNames.SITUATION
         ),
         'when_to_refresh_situation': tunable_time.TunableTimeSpan(
@@ -175,10 +273,11 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
     def _states(cls) -> Tuple[SituationStateData]:
         result: Tuple[SituationStateData] = (
             SituationStateData(1, _SSSlaveDefaultState, factory=cls.slave_job_states.default_state),
-            SituationStateData(2, _SSSlaveCleaningState, factory=cls.slave_job_states.default_state),
-            SituationStateData(3, _SSSlaveGardeningState, factory=cls.slave_job_states.default_state),
-            SituationStateData(4, _SSSlaveChildcareState, factory=cls.slave_job_states.default_state),
-            SituationStateData(5, _SSSlaveRepairState, factory=cls.slave_job_states.default_state)
+            SituationStateData(2, _SSSlaveCleaningState, factory=cls.slave_job_states.cleaning_state),
+            SituationStateData(3, _SSSlaveGardeningState, factory=cls.slave_job_states.gardening_state),
+            SituationStateData(4, _SSSlaveChildcareState, factory=cls.slave_job_states.childcare_state),
+            SituationStateData(5, _SSSlaveRepairState, factory=cls.slave_job_states.repair_state),
+            SituationStateData(6, _SSSlaveOffMasterLotState, factory=cls.slave_job_states.off_master_lot_state)
         )
         return result
 
@@ -205,12 +304,21 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
             return self._seed.duration_override
         return self.when_to_refresh_situation().in_minutes()
 
-    def try_set_next_state(self, new_situation_state) -> Any:
+    def try_set_next_state(self, new_situation_state: SSSlaveSituationStateMixin) -> None:
         """ Try to set the next state. """
+        log.format(own_jobs=pformat(self._jobs), new_situation_state=new_situation_state)
+        sim_data = SSSimData(self.slave_sim_info())
+        if CommonHouseholdUtils.get_household_id_owning_current_lot() != sim_data.owning_household_id:
+            log.debug('Overriding with off lot state.')
+            new_situation_state = self.slave_job_states.off_master_lot_state()
         if new_situation_state.situation_state in self._locked_states:
+            log.format(locked_state=new_situation_state)
             new_situation_state.owner = self
             self.try_set_next_state(new_situation_state.next_state())
             return
+        new_situation_state.owner = self
+        new_situation_state._update_headline(self.slave_sim())
+        log.format('Changing states.')
         self._change_state(new_situation_state)
 
     def slave_sim(self) -> Sim:
@@ -244,6 +352,8 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
         writer.write_uint64('household_id', self._owning_household.id)
 
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
+        log.format_with_message('Setting sim job', sim=sim, job_type=job_type)
+        log.log_stack()
         sim_info = CommonSimUtils.get_sim_info(sim)
         sim_data = SSSimData(sim_info)
         if sim_data.owning_household_id != -1:

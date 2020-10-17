@@ -34,7 +34,7 @@
   <L n="sim_spawner_tags">
     <E>Spawn_VisitorArrival</E>
   </L>
-  <T n="tooltip_name">0xF9D01A72<!--Slave--></T>
+  <T n="tooltip_name">0x417137A1<!--Slave (Idle)--></T>
   <U n="tooltip_name_text_tokens">
     <L n="tokens">
       <V t="participant_type" />
