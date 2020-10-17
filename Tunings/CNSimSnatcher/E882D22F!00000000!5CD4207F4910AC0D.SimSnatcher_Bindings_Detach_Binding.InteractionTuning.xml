@@ -1,0 +1,16 @@
+<I c="SSBindingDetachBindingInteraction" i="interaction" m="cnsimsnatcher.bindings.interactions.detach_binding" n="SimSnatcher_Bindings_Detach_Binding" s="6689007077610793997">
+  <V n="_saveable" t="disabled" />
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_immediateInteraction.png">2f7d0004:00000000:25eea5cdba6a6fd6</T>
+      </U>
+    </V>
+  </V>
+  <T n="category">13395888899209448946<!--SimSnatcher_Pie_Bindings--></T>
+  <T n="display_name">0x027A102B<!--Detach Binding--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

@@ -75,11 +75,11 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         if CommonHouseholdUtils.is_in_same_household(sim_info, target_sim_info):
             cls.get_log().debug('Failed, Target Sim is part of the Active Sims household.')
             return TestResult.NONE
-        if SSAbductionStateUtils().has_captors(target_sim_info):
+        if SSAbductionStateUtils().has_captor(target_sim_info):
             cls.get_log().debug('Failed, Target Sim is already a hostage.')
             return TestResult.NONE
         from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
-        if SSSlaveryStateUtils().has_masters(target_sim_info):
+        if SSSlaveryStateUtils().has_master(target_sim_info):
             cls.get_log().debug('Failed, Target Sim is enslaved.')
             return TestResult.NONE
         cls.get_log().debug('Success! The Sim can abduct the Target Sim.')

@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from event_testing.test_events import TestEvent
 from sims.household import Household
 from sims.sim import Sim
@@ -245,14 +245,11 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
 
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
         sim_info = CommonSimUtils.get_sim_info(sim)
-        master_sim_info_list = SSSlaveryStateUtils().get_masters(sim_info)
-        if not master_sim_info_list:
-            return
-        master_sim_info = next(iter(master_sim_info_list))
-        if master_sim_info is None:
+        slave_data_store = SSSimDataStore(sim_info)
+        if slave_data_store.owning_household_id == -1:
             self._owning_household = CommonHouseholdUtils.get_active_household()
         else:
-            self._owning_household = CommonHouseholdUtils.get_household(master_sim_info)
+            self._owning_household = services.household_manager().get(slave_data_store.owning_household_id)
         # noinspection PyUnresolvedReferences
         self._owning_household.object_preference_tracker.update_preference_if_possible(sim_info)
         services.get_event_manager().process_event(TestEvent.AvailableDaycareSimsChanged, sim_info=self.slave_sim_info())

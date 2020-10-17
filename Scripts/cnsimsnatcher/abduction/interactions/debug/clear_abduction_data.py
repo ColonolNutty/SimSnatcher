@@ -47,7 +47,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
-            cls.get_log().debug("Failed, Active Sim or Target Sim are not enabled for interactions.")
+            cls.get_log().debug('Failed, Active Sim or Target Sim are not enabled for interactions.')
             return TestResult.NONE
         cls.get_log().debug('Success, showing clear abduction data interaction on target.')
         return TestResult.TRUE

@@ -34,7 +34,7 @@ class _SSAbductionRefreshSituation(CommonService, HasLog):
         return 'ssa_refresh_situation'
 
     def _refresh_sim_situations(self, *_, **__) -> bool:
-        sims_needing_refresh = CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=self._state_utils.has_invalid_abduction_state)
+        sims_needing_refresh = CommonSimUtils.get_instanced_sim_info_for_all_sims_generator(include_sim_callback=self._state_utils.has_invalid_captive_state)
         for sim_info in sims_needing_refresh:
             self.log.format_with_message('Attempting to refresh abduction status of sim.', sim=sim_info)
             result = self.refresh_status_of_sim(sim_info)

@@ -104,7 +104,7 @@ class SSSettingsDialog(HasLog):
 
         from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
         from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
-        if SSSlaveryStateUtils().has_masters(target_sim_info) or SSAbductionStateUtils().has_captors(target_sim_info):
+        if SSSlaveryStateUtils().has_master(target_sim_info) or SSAbductionStateUtils().has_captor(target_sim_info):
             option_dialog.add_option(
                 CommonDialogActionOption(
                     CommonDialogOptionContext(

@@ -76,10 +76,10 @@ class SSSlaveryStartSlaveryInteraction(CommonImmediateSuperInteraction):
         if CommonHouseholdUtils.is_in_same_household(sim_info, target_sim_info):
             cls.get_log().debug('Failed, Target Sim is part of the Active Sims household.')
             return TestResult.NONE
-        if SSSlaveryStateUtils().has_masters(target_sim_info):
+        if SSSlaveryStateUtils().has_master(target_sim_info):
             cls.get_log().debug('Failed, Target Sim already has masters.')
             return TestResult.NONE
-        if not SSAbductionStateUtils().has_captors(target_sim_info):
+        if not SSAbductionStateUtils().has_captor(target_sim_info):
             cls.get_log().debug('Failed, Target Sim must already have been abducted to be enslaved.')
             return TestResult.NONE
         cls.get_log().debug('Success! The Sim can enslave the Target Sim.')

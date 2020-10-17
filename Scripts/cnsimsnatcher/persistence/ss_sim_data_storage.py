@@ -30,39 +30,82 @@ class SSSimDataStore(CommonPersistedSimDataStorage):
         return 'ss_sim_data'
 
     @property
-    def owning_household_id(self) -> bool:
-        """ The identifier of the household that owns or has captured this Sim """
-        return self.get_data(default=-1)
+    def owning_household_id(self) -> int:
+        """ The identifier of the household that owns this Sim """
+        return int(self.get_data(default=-1))
 
     @owning_household_id.setter
-    def owning_household_id(self, value: bool):
+    def owning_household_id(self, value: int):
+        self.set_data(value)
+
+    @property
+    def captor_household_id(self) -> int:
+        """ The identifier of the household that has captured this Sim """
+        return int(self.get_data(default=-1))
+
+    @captor_household_id.setter
+    def captor_household_id(self, value: int):
         self.set_data(value)
 
     @property
     def is_slave(self) -> bool:
-        """ Whether this Sim is a slave or not. """
-        return self.get_data(default=False)
-
-    @is_slave.setter
-    def is_slave(self, value: bool):
-        self.set_data(value)
+        """ Determine if this Sim is a slave or not. """
+        return self.master_sim_id != -1
 
     @property
     def is_captive(self) -> bool:
-        """ Whether this Sim is a captive or not. """
-        return self.get_data(default=False)
+        """ Determine if this Sim is a captive or not. """
+        return self.captor_sim_id != -1
 
-    @is_captive.setter
-    def is_captive(self, value: bool):
+    @property
+    def is_slave_or_captive(self) -> bool:
+        """ Determine if this Sim is a Slave or Captive or not. """
+        return self.is_slave or self.is_captive
+
+    @property
+    def is_master(self) -> bool:
+        """ Determine if this Sim is a master of slaves or not. """
+        return len(self.slave_sim_ids) > 0
+
+    @property
+    def is_captor(self) -> bool:
+        """ Determine if this Sim has captives or not. """
+        return len(self.captive_sim_ids) > 0
+
+    @property
+    def master_sim_id(self) -> int:
+        """ Master of this Sim. """
+        return int(self.get_data(default=-1))
+
+    @master_sim_id.setter
+    def master_sim_id(self, value: int):
         self.set_data(value)
 
     @property
-    def is_allowed_to_perform_everything(self) -> bool:
-        """ Whether this Sim is allowed to perform all actions or not."""
-        return self.get_data(default=False)
+    def captor_sim_id(self) -> int:
+        """ Captor of this Sim. """
+        return int(self.get_data(default=-1))
 
-    @is_allowed_to_perform_everything.setter
-    def is_allowed_to_perform_everything(self, value: bool):
+    @captor_sim_id.setter
+    def captor_sim_id(self, value: int):
+        self.set_data(value)
+
+    @property
+    def slave_sim_ids(self) -> Set[int]:
+        """ Slaves this Sim owns """
+        return self.get_data(default=set())
+
+    @slave_sim_ids.setter
+    def slave_sim_ids(self, value: Set[int]):
+        self.set_data(value)
+
+    @property
+    def captive_sim_ids(self) -> Set[int]:
+        """ Captives this Sim has captured. """
+        return self.get_data(default=set())
+
+    @captive_sim_ids.setter
+    def captive_sim_ids(self, value: Set[int]):
         self.set_data(value)
 
     @property

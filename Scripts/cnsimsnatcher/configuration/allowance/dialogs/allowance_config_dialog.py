@@ -10,7 +10,6 @@ from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowan
 from cnsimsnatcher.configuration.allowance.enums.string_ids import SSAllowanceStringId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
     CommonDialogActionOption

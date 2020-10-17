@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 import sims4.commands
-from typing import Tuple, Callable
+from typing import Tuple, Callable, List, Union
 
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
@@ -22,6 +22,7 @@ from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBit
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
+from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
@@ -50,48 +51,39 @@ class SSSlaveryStateUtils(HasLog):
 
     def has_slaves(self, master_sim_info: SimInfo, instanced_only: bool=True) -> bool:
         """ Determine if a Sim has any Slaves. """
-        return CommonRelationshipUtils.has_relationship_bit_with_any_sims(
-            master_sim_info,
-            SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT,
-            instanced_only=instanced_only
-        )
+        master_data_store = SSSimDataStore(master_sim_info)
+        if not master_data_store.slave_sim_ids:
+            return False
+        for slave_sim_id in master_data_store.slave_sim_ids:
+            if instanced_only and CommonSimUtils.get_sim_instance(slave_sim_id) is None:
+                continue
+            return True
+        return False
 
-    def has_masters(self, slave_sim_info: SimInfo, instanced_only: bool=True) -> bool:
+    def has_master(self, slave_sim_info: SimInfo, instanced_only: bool=True) -> bool:
         """ Determine if a Sim has any Masters. """
-        return CommonTraitUtils.has_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)\
-               or CommonRelationshipUtils.has_relationship_bit_with_any_sims(
-            slave_sim_info,
-            SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT,
-            instanced_only=instanced_only
-        )
-
-    def is_slave_of(self, slave_sim_info: SimInfo, master_sim_info: SimInfo) -> bool:
-        """ Determine if a Sim is a Slave of another Sim. """
-        from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-        return CommonRelationshipUtils.has_relationship_bit_with_sim(
-            slave_sim_info,
-            master_sim_info,
-            SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT
-        )\
-               and CommonRelationshipUtils.has_relationship_bit_with_sim(
-            slave_sim_info,
-            master_sim_info,
-            SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT
-        )
+        slave_data_store = SSSimDataStore(slave_sim_info)
+        if slave_data_store.master_sim_id == -1:
+            return False
+        if instanced_only and CommonSimUtils.get_sim_instance(slave_data_store.master_sim_id) is None:
+            return False
+        return True
 
     def is_master_of(self, master_sim_info: SimInfo, slave_sim_info: SimInfo) -> bool:
         """ Determine if a Sim is a Master of another Sim. """
-        from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-        return CommonRelationshipUtils.has_relationship_bit_with_sim(
-            master_sim_info,
-            slave_sim_info,
-            SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT
-        )\
-               and CommonRelationshipUtils.has_relationship_bit_with_sim(
-            master_sim_info,
-            slave_sim_info,
-            SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT
-        )
+        slave_data_store = SSSimDataStore(slave_sim_info)
+        if slave_data_store.master_sim_id == -1:
+            return False
+        master_sim_id = CommonSimUtils.get_sim_id(master_sim_info)
+        return slave_data_store.master_sim_id == master_sim_id
+
+    def is_slave_of(self, slave_sim_info: SimInfo, master_sim_info: SimInfo) -> bool:
+        """ Determine if a Sim is a Slave of another Sim. """
+        master_data_store = SSSimDataStore(master_sim_info)
+        if not master_data_store.slave_sim_ids:
+            return False
+        slave_sim_id = CommonSimUtils.get_sim_id(slave_sim_info)
+        return slave_sim_id in master_data_store.slave_sim_ids
 
     def get_slaves(self, master_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
         """get_slaves(master_sim_info, instanced_only=True)
@@ -105,23 +97,22 @@ class SSSlaveryStateUtils(HasLog):
         :return: A collection of Sims the specified Sim has Enslaved.
         :rtype: Tuple[SimInfo]
         """
-        return tuple(
-            CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
-                master_sim_info,
-                SSSlaveryRelationshipBitId.SIM_IS_MASTER_OF_SIM_REL_BIT,
-                instanced_only=instanced_only
-            )
-        )
+        master_data_store = SSSimDataStore(master_sim_info)
+        slaves: List[SimInfo] = list()
+        for slave_sim_id in master_data_store.slave_sim_ids:
+            slave_sim_info = CommonSimUtils.get_sim_info(slave_sim_id)
+            if instanced_only and CommonSimUtils.get_sim_instance(slave_sim_info) is None:
+                continue
+            slaves.append(slave_sim_info)
+        return tuple(slaves)
 
-    def get_masters(self, slave_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
+    def get_master(self, slave_sim_info: SimInfo, instanced_only: bool=True) -> Union[SimInfo, None]:
         """ Retrieve a collection of Sims that are a Master of the specified Sim. """
-        return tuple(
-            CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(
-                slave_sim_info,
-                SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT,
-                instanced_only=instanced_only
-            )
-        )
+        slave_data_store = SSSimDataStore(slave_sim_info)
+        master_sim_id = slave_data_store.master_sim_id
+        if instanced_only and CommonSimUtils.get_sim_instance(master_sim_id) is None:
+            return None
+        return CommonSimUtils.get_sim_info(master_sim_id)
 
     def get_all_masters(self, include_sim_callback: Callable[[SimInfo], bool]=None, instanced_only: bool=True) -> Tuple[SimInfo]:
         """ Retrieve a collection of Sims that are Masters of Slaves and are part of the active household. """
@@ -170,6 +161,7 @@ class SSSlaveryStateUtils(HasLog):
         if slave_sim_info is None or master_sim_info is None:
             return False, 'Failed, missing Slave or Master data.'
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
+        slave_sim_id = CommonSimUtils.get_sim_id(slave_sim_info)
         master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
         try:
             if slave_sim_info is master_sim_info:
@@ -188,8 +180,13 @@ class SSSlaveryStateUtils(HasLog):
             self._buff_utils.remove_appropriateness_related_buffs(slave_sim_info)
             CommonTraitUtils.add_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
-            data_store = SSSimDataStore(slave_sim_info)
-            data_store.is_slave = True
+            slave_data_store = SSSimDataStore(slave_sim_info)
+            master_sim_id = CommonSimUtils.get_sim_id(master_sim_info)
+            slave_data_store.master_sim_id = master_sim_id
+            master_data_store = SSSimDataStore(master_sim_info)
+            if slave_sim_id not in master_data_store.slave_sim_ids:
+                master_data_store.slave_sim_ids.add(slave_sim_id)
+            slave_data_store.owning_household_id = CommonHouseholdUtils.get_household_id(master_sim_info)
             SSAllowanceUtils().set_allow_all(slave_sim_info)
             CommonSimInteractionUtils.cancel_all_queued_or_running_interactions(slave_sim_info, cancel_reason='Became a Slave')
         except Exception as ex:
@@ -213,15 +210,17 @@ class SSSlaveryStateUtils(HasLog):
             self.log.debug('slave_sim_info was None.')
             return False
         slave_sim_name = CommonSimNameUtils.get_full_name(slave_sim_info)
+        slave_sim_id = CommonSimUtils.get_sim_id(slave_sim_info)
         try:
             self.log.debug('Attempting to release Slave \'{}\'.'.format(slave_sim_name))
-            if releasing_sim_info is not None and self.is_master_of(releasing_sim_info, slave_sim_info):
-                master_sim_info_list = (releasing_sim_info,)
-            else:
-                master_sim_info_list = self.get_masters(slave_sim_info)
-
-            for master_sim_info in master_sim_info_list:
+            slave_data_store = SSSimDataStore(slave_sim_info)
+            master_sim_info = self.get_master(slave_sim_info, instanced_only=False)
+            if master_sim_info is not None:
                 master_sim_name = CommonSimNameUtils.get_full_name(master_sim_info)
+
+                master_data_store = SSSimDataStore(master_sim_info)
+                if slave_sim_id in master_data_store.slave_sim_ids:
+                    master_data_store.slave_sim_ids.remove(slave_sim_id)
                 self.log.debug('Attempting to remove relationship bits between Master \'{}\' and Slave \'{}\'.'.format(master_sim_name, slave_sim_name))
                 CommonRelationshipUtils.remove_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.MASTER_SIM_TO_SLAVE_SIM_REL_BIT)
@@ -230,13 +229,15 @@ class SSSlaveryStateUtils(HasLog):
                 CommonRelationshipUtils.remove_relationship_bit(master_sim_info, slave_sim_info, SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(slave_sim_info, master_sim_info, SSSlaveryRelationshipBitId.SIM_IS_SLAVE_OF_SIM_REL_BIT)
                 self.log.debug('Done removing relationship bits between Master \'{}\' and Slave \'{}\'.'.format(master_sim_name, slave_sim_name))
-            self.log.debug('Done removing Master relationships.')
+                self.log.debug('Done removing Master relationships.')
 
+            slave_data_store.master_sim_id = -1
             self.log.debug('Attempting to remove traits.')
             CommonTraitUtils.remove_trait(slave_sim_info, SSSlaveryTraitId.SLAVE)
             self.log.debug('Attempting to remove buffs.')
             CommonTraitUtils.remove_trait(slave_sim_info, SSTraitId.PREVENT_LEAVE)
             SSAllowanceUtils().set_disallow_all(slave_sim_info)
+            slave_data_store.owning_household_id = -1
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             SSCommonSituationUtils.remove_sim_from_situation(slave_sim_info, SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER)
@@ -246,8 +247,6 @@ class SSSlaveryStateUtils(HasLog):
                 SSCommonSituationUtils.make_sim_leave(slave_sim_info)
                 self.log.debug('Done making Sim leave.')
             self.log.debug('Done releasing Slave \'{}\'.'.format(slave_sim_name))
-            data_store = SSSimDataStore(slave_sim_info)
-            data_store.is_slave = False
         except Exception as ex:
             self.log.error('Problem occurred while releasing Slave \'{}\'.'.format(slave_sim_name), exception=ex)
             return False
@@ -276,7 +275,7 @@ class SSSlaveryStateUtils(HasLog):
 
     def has_invalid_enslaved_state(self, slave_sim_info: SimInfo) -> bool:
         """ Determine if a Sim has an invalid enslaved state. """
-        return self.has_masters(slave_sim_info)\
+        return self.has_master(slave_sim_info)\
                and (not CommonSimSituationUtils.has_situations(slave_sim_info, (SSSlaverySituationId.NPC_ENSLAVED_BY_PLAYER, ))
                     or not CommonTraitUtils.has_trait(slave_sim_info, SSSlaveryTraitId.SLAVE))\
                and not CommonSimInteractionUtils.has_interaction_running_or_queued(slave_sim_info, SSSlaveryInteractionId.ATTEMPT_TO_ENSLAVE_HUMAN_SUCCESS_OUTCOME)
@@ -287,18 +286,23 @@ def _ss_slavery_show_slaves(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
     output('Showing slaves of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
-    sim_info_list = SSSlaveryStateUtils().get_slaves(active_sim_info)
-    for sim_info in sim_info_list:
-        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
+    sim_info_list = SSSlaveryStateUtils().get_slaves(active_sim_info, instanced_only=False)
+    if not sim_info_list:
+        output('No slaves were found for the Active Sim.')
+    else:
+        for sim_info in sim_info_list:
+            output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
     output('Done displaying slaves.')
 
 
-@sims4.commands.Command('ss.show_masters', command_type=sims4.commands.CommandType.Live)
+@sims4.commands.Command('ss.show_master', command_type=sims4.commands.CommandType.Live)
 def _ss_slavery_show_master(_connection: int=None):
     output = sims4.commands.CheatOutput(_connection)
-    output('Showing masters of active sim')
+    output('Showing master of active sim')
     active_sim_info = CommonSimUtils.get_active_sim_info()
-    sim_info_list = SSSlaveryStateUtils().get_masters(active_sim_info)
-    for sim_info in sim_info_list:
-        output('\'{}\''.format(CommonSimNameUtils.get_full_name(sim_info)))
-    output('Done displaying masters.')
+    master_sim_info = SSSlaveryStateUtils().get_master(active_sim_info, instanced_only=False)
+    if not master_sim_info:
+        output('No master was found for the Active Sim.')
+    else:
+        output('\'{}\''.format(CommonSimNameUtils.get_full_name(master_sim_info)))
+    output('Done displaying master.')

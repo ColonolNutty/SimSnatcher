@@ -4,7 +4,7 @@
   <V n="pie_menu_icon" t="enabled">
     <V n="enabled" t="resource_key">
       <U n="resource_key">
-        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_immediateInteraction.png">2f7d0004:00000000:25eea5cdba6a6fd6</T>
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_knife_and_fork.png">2f7d0004:00000000:A789AD55B6DCC3E2</T>
       </U>
     </V>
   </V>

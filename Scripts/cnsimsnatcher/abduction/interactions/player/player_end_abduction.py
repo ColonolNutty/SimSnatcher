@@ -48,7 +48,7 @@ class SSAbductionEndAbductionInteraction(CommonImmediateSuperInteraction):
         if not SSSettingUtils().is_enabled_for_interactions(sim_info) or not SSSettingUtils().is_enabled_for_interactions(target_sim_info):
             cls.get_log().debug('Failed, Active Sim or Target Sim are not enabled for interactions.')
             return TestResult.NONE
-        if not SSAbductionStateUtils().has_captors(target_sim_info, instanced_only=False):
+        if not SSAbductionStateUtils().has_captor(target_sim_info, instanced_only=False):
             cls.get_log().debug('Failed, Target Sim has not been abducted.')
             return TestResult.NONE
         if not SSAbductionStateUtils().is_captor_of(sim_info, target_sim_info):

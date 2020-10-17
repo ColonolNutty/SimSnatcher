@@ -14,10 +14,10 @@
     </U>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
-  <T n="display_name">0x8E8864DE<!--Allowance--></T>
-  <T n="display_name_gender_neutral">0x8E8864DE<!--Allowance--></T>
+  <T n="display_name">0x95691670<!--Prevent Leave--></T>
+  <T n="display_name_gender_neutral">0x95691670<!--Prevent Leave--></T>
   <T p="TraitIcon" n="icon">2f7d0004:00000000:A1E5C3E91B378951</T>
-  <T n="trait_description">0x8790D3DE<!--Can only do what they are allowed to do.--></T>
+  <T n="trait_description">0x77A5B207<!--This Sim is not allowed to leave.--></T>
   <T n="trait_origin_description">0xDD2E2C4A<!--From Being Controlled--></T>
   <E n="trait_type">HIDDEN</E>
 </I>
