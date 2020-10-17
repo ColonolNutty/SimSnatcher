@@ -14,7 +14,7 @@ from cnsimsnatcher.abduction.enums.trait_ids import SSAbductionTraitId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from cnsimsnatcher.utils.buff_utils import SSBuffUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_log import HasLog
@@ -51,10 +51,10 @@ class SSAbductionStateUtils(HasLog):
 
     def has_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> bool:
         """ Determine if a Sim has captives. """
-        captor_data_store = SSSimDataStore(captor_sim_info)
-        if not captor_data_store.captive_sim_ids:
+        captor_sim_data = SSSimData(captor_sim_info)
+        if not captor_sim_data.captive_sim_ids:
             return False
-        for captive_sim_id in captor_data_store.captive_sim_ids:
+        for captive_sim_id in captor_sim_data.captive_sim_ids:
             if instanced_only and CommonSimUtils.get_sim_instance(captive_sim_id) is None:
                 continue
             return True
@@ -62,28 +62,28 @@ class SSAbductionStateUtils(HasLog):
 
     def has_captor(self, captive_sim_info: SimInfo, instanced_only: bool=True) -> bool:
         """ Determine if a Sim has a Captor. """
-        captive_data_store = SSSimDataStore(captive_sim_info)
-        if captive_data_store.captor_sim_id == -1:
+        captive_sim_data = SSSimData(captive_sim_info)
+        if captive_sim_data.captor_sim_id == -1:
             return False
-        if instanced_only and CommonSimUtils.get_sim_instance(captive_data_store.captor_sim_id) is None:
+        if instanced_only and CommonSimUtils.get_sim_instance(captive_sim_data.captor_sim_id) is None:
             return False
         return True
 
     def is_captor_of(self, captor_sim_info: SimInfo, captive_sim_info: SimInfo) -> bool:
         """ Determine if a Sim is the Captor of the specified Sim. """
-        captive_data_store = SSSimDataStore(captive_sim_info)
-        if captive_data_store.captor_sim_id == -1:
+        captive_sim_data = SSSimData(captive_sim_info)
+        if captive_sim_data.captor_sim_id == -1:
             return False
         captor_sim_id = CommonSimUtils.get_sim_id(captor_sim_info)
-        return captive_data_store.captor_sim_id == captor_sim_id
+        return captive_sim_data.captor_sim_id == captor_sim_id
 
     def is_captive_of(self, captive_sim_info: SimInfo, captor_sim_info: SimInfo) -> bool:
         """ Determine if a Sim is a Captive of the specified Sim. """
-        captor_data_store = SSSimDataStore(captor_sim_info)
-        if not captor_data_store.captive_sim_ids:
+        captor_sim_data = SSSimData(captor_sim_info)
+        if not captor_sim_data.captive_sim_ids:
             return False
         captive_sim_id = CommonSimUtils.get_sim_id(captive_sim_info)
-        return captive_sim_id in captor_data_store.captive_sim_ids
+        return captive_sim_id in captor_sim_data.captive_sim_ids
 
     def get_captives(self, captor_sim_info: SimInfo, instanced_only: bool=True) -> Tuple[SimInfo]:
         """get_captives(captor_sim_info, instanced_only=True)
@@ -97,9 +97,9 @@ class SSAbductionStateUtils(HasLog):
         :return: A collection of Sims the specified Sim has Captured.
         :rtype: Tuple[SimInfo]
         """
-        captor_data_store = SSSimDataStore(captor_sim_info)
+        captor_sim_data = SSSimData(captor_sim_info)
         captives: List[SimInfo] = list()
-        for captive_sim_id in captor_data_store.captive_sim_ids:
+        for captive_sim_id in captor_sim_data.captive_sim_ids:
             captive_sim_info = CommonSimUtils.get_sim_info(captive_sim_id)
             if instanced_only and CommonSimUtils.get_sim_instance(captive_sim_info) is None:
                 continue
@@ -108,8 +108,8 @@ class SSAbductionStateUtils(HasLog):
 
     def get_captor(self, captive_sim_info: SimInfo, instanced_only: bool=True) -> Union[SimInfo, None]:
         """ Retrieve a collection of Sims that are a Captor of the specified Sim. """
-        captive_data_store = SSSimDataStore(captive_sim_info)
-        captor_sim_id = captive_data_store.captor_sim_id
+        captive_sim_data = SSSimData(captive_sim_info)
+        captor_sim_id = captive_sim_data.captor_sim_id
         if instanced_only and CommonSimUtils.get_sim_instance(captor_sim_id) is None:
             return None
         return CommonSimUtils.get_sim_info(captor_sim_id)
@@ -161,13 +161,13 @@ class SSAbductionStateUtils(HasLog):
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE)
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.LEAVE_NOW_MUST_RUN)
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, CommonSituationId.SINGLE_SIM_LEAVE)
-            captive_data_store = SSSimDataStore(captive_sim_info)
+            captive_sim_data = SSSimData(captive_sim_info)
             captor_sim_id = CommonSimUtils.get_sim_id(captor_sim_info)
-            captive_data_store.captor_sim_id = captor_sim_id
-            captor_data_store = SSSimDataStore(captor_sim_info)
-            if captive_sim_id not in captor_data_store.captive_sim_ids:
-                captor_data_store.captive_sim_ids.add(captive_sim_id)
-            captive_data_store.captor_household_id = CommonHouseholdUtils.get_household_id(captor_sim_info)
+            captive_sim_data.captor_sim_id = captor_sim_id
+            captor_sim_data = SSSimData(captor_sim_info)
+            if captive_sim_id not in captor_sim_data.captive_sim_ids:
+                captor_sim_data.captive_sim_ids += (captive_sim_id, )
+            captive_sim_data.captor_household_id = CommonHouseholdUtils.get_household_id(captor_sim_info)
             CommonTraitUtils.add_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             CommonTraitUtils.add_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
             SSAllowanceUtils().set_allow_all(captive_sim_info)
@@ -212,13 +212,15 @@ class SSAbductionStateUtils(HasLog):
         captive_sim_id = CommonSimUtils.get_sim_id(captive_sim_info)
         try:
             self.log.debug('Attempting to release Captive \'{}\'.'.format(captive_sim_name))
-            captive_data_store = SSSimDataStore(captive_sim_info)
+            captive_sim_data = SSSimData(captive_sim_info)
             captor_sim_info = self.get_captor(captive_sim_info, instanced_only=False)
             if captor_sim_info is not None:
                 captor_sim_name = CommonSimNameUtils.get_full_name(captor_sim_info)
-                captor_data_store = SSSimDataStore(captor_sim_info)
-                if captive_sim_id in captor_data_store.captive_sim_ids:
-                    captor_data_store.captive_sim_ids.remove(captive_sim_id)
+                captor_sim_data = SSSimData(captor_sim_info)
+                if captive_sim_id in captor_sim_data.captive_sim_ids:
+                    new_captive_list = list(captor_sim_data.captive_sim_ids)
+                    new_captive_list.remove(captive_sim_id)
+                    captor_sim_data.captive_sim_ids = tuple(new_captive_list)
                 self.log.format_with_message('Attempting to remove relationship bits between Sims.', sim=captive_sim_info, target=captor_sim_info)
                 CommonRelationshipUtils.remove_relationship_bit(captive_sim_info, captor_sim_info, SSAbductionRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
                 CommonRelationshipUtils.remove_relationship_bit(captor_sim_info, captive_sim_info, SSAbductionRelationshipBitId.CAPTOR_SIM_TO_CAPTIVE_SIM_REL_BIT)
@@ -229,13 +231,13 @@ class SSAbductionStateUtils(HasLog):
                 self.log.debug('Done removing relationship bits between Captor \'{}\' and Captive \'{}\'.'.format(captor_sim_name, captive_sim_name))
                 self.log.debug('Done removing Captor relationships.')
 
-            captive_data_store.captor_sim_id = -1
+            captive_sim_data.captor_sim_id = -1
             self.log.debug('Attempting to remove traits.')
             CommonTraitUtils.remove_trait(captive_sim_info, SSAbductionTraitId.CAPTIVE)
             self.log.debug('Attempting to remove buffs.')
             CommonTraitUtils.remove_trait(captive_sim_info, SSTraitId.PREVENT_LEAVE)
             SSAllowanceUtils().set_disallow_all(captive_sim_info)
-            captive_data_store.captor_household_id = -1
+            captive_sim_data.captor_household_id = -1
             self.log.debug('Done removing buffs.')
             self.log.debug('Attempting to remove situations.')
             SSCommonSituationUtils.remove_sim_from_situation(captive_sim_info, SSAbductionSituationId.PLAYER_ABDUCTED_NPC)

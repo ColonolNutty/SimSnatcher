@@ -42,7 +42,7 @@ from cnsimsnatcher.configuration.allowance.allowances.allowed_visitor import SSA
 from cnsimsnatcher.configuration.allowance.allowances.allowed_work import SSAllowedWork
 from cnsimsnatcher.configuration.allowance.allowances.allowed_workout import SSAllowedWorkout
 from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowanceData
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from sims.sim_info import SimInfo
 
 
@@ -51,7 +51,7 @@ class SSAllowanceUtils:
 
     def is_allowed_everything(self, sim_info: SimInfo) -> bool:
         """ Determine if the Sim is allowed to perform everything. """
-        data_store = SSSimDataStore(sim_info)
+        data_store = SSSimData(sim_info)
         return len(data_store.allowances) == len(self.get_allowance_data())
 
     def set_allow_all(self, sim_info: SimInfo):
@@ -61,7 +61,7 @@ class SSAllowanceUtils:
 
     def set_disallow_all(self, sim_info: SimInfo):
         """ Disallow a Sim to perform all tasks. """
-        data_store = SSSimDataStore(sim_info)
+        data_store = SSSimData(sim_info)
         data_store.allowances = set()
 
     def get_allowance_data(self) -> Tuple[SSAllowanceData]:

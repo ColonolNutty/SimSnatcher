@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
+from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from distributor.shared_messages import IconInfoData
 from sims4communitylib.events.event_handling.common_event_registry import CommonEventRegistry
 from sims4communitylib.events.interaction.events.interaction_queued import S4CLInteractionQueuedEvent
@@ -29,7 +29,7 @@ def _ss_prevent_non_allowed_interactions(event_data: S4CLInteractionQueuedEvent)
     owning_sim_info = CommonSimUtils.get_sim_info(interaction.sim)
     if owning_sim_info is None:
         return True
-    sim_data = SSSimDataStore(owning_sim_info)
+    sim_data = SSSimData(owning_sim_info)
     if not sim_data.is_captive and not sim_data.is_slave:
         return True
     log.format_with_message('Checking if Sim is allowed to perform interaction.', sim=CommonSimNameUtils.get_full_name(owning_sim_info), interaction=CommonInteractionUtils.get_interaction_short_name(interaction))

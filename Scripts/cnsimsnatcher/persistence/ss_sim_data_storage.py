@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from pprint import pformat
-from typing import Set
+from typing import Tuple
 
 from cnsimsnatcher.modinfo import ModInfo
 from sims4.commands import Command, CommandType, CheatOutput
@@ -17,7 +17,7 @@ from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtil
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
 
-class SSSimDataStore(CommonPersistedSimDataStorage):
+class SSSimData(CommonPersistedSimDataStorage):
     """ Sim data storage """
     # noinspection PyMissingOrEmptyDocstring,PyMethodParameters
     @classmethod
@@ -91,30 +91,30 @@ class SSSimDataStore(CommonPersistedSimDataStorage):
         self.set_data(value)
 
     @property
-    def slave_sim_ids(self) -> Set[int]:
+    def slave_sim_ids(self) -> Tuple[int]:
         """ Slaves this Sim owns """
-        return self.get_data(default=set())
+        return self.get_data(default=tuple())
 
     @slave_sim_ids.setter
-    def slave_sim_ids(self, value: Set[int]):
+    def slave_sim_ids(self, value: Tuple[int]):
         self.set_data(value)
 
     @property
-    def captive_sim_ids(self) -> Set[int]:
+    def captive_sim_ids(self) -> Tuple[int]:
         """ Captives this Sim has captured. """
-        return self.get_data(default=set())
+        return self.get_data(default=tuple())
 
     @captive_sim_ids.setter
-    def captive_sim_ids(self, value: Set[int]):
+    def captive_sim_ids(self, value: Tuple[int]):
         self.set_data(value)
 
     @property
-    def allowances(self) -> Set[CommonGameTag]:
+    def allowances(self) -> Tuple[CommonGameTag]:
         """ Retrieve the allowances for the Sim. """
-        return self.get_data(default=set())
+        return self.get_data(default=tuple())
 
     @allowances.setter
-    def allowances(self, value: Set[CommonGameTag]):
+    def allowances(self, value: Tuple[CommonGameTag]):
         self.set_data(value)
 
 
@@ -123,6 +123,6 @@ def _ss_command_print_sim_data(_connection: int=None):
     output = CheatOutput(_connection)
     sim_info = CommonSimUtils.get_active_sim_info()
     output('Sim Data for Sim: Name: \'{}\' Id: \'{}\''.format(CommonSimNameUtils.get_full_name(sim_info), CommonSimUtils.get_sim_id(sim_info)))
-    sim_storage = SSSimDataStore(sim_info)
+    sim_storage = SSSimData(sim_info)
     for (key, value) in sim_storage._data.items():
         output(' > {}: {}'.format(pformat(key), pformat(value)))

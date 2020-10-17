@@ -37,8 +37,8 @@ class SSAllowanceData:
 
     def has_allowance(self, sim_info: SimInfo) -> bool:
         """ Determine if a Sim is allowed to do this action. """
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        data_store = SSSimDataStore(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+        data_store = SSSimData(sim_info)
         for tag in self.appropriateness_tags:
             if tag not in data_store.allowances:
                 return False
@@ -46,18 +46,22 @@ class SSAllowanceData:
 
     def add_allowance(self, sim_info: SimInfo) -> bool:
         """ Add this allowance to the Sim. """
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        data_store = SSSimDataStore(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+        data_store = SSSimData(sim_info)
+        new_allowances = list(data_store.allowances)
         for tag in self.appropriateness_tags:
-            if tag not in data_store.allowances:
-                data_store.allowances.add(tag)
+            if tag not in new_allowances:
+                new_allowances.append(tag)
+        data_store.allowances = tuple(new_allowances)
         return True
 
     def remove_allowance(self, sim_info: SimInfo) -> bool:
         """ Remove this allowance from the Sim. """
-        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimDataStore
-        data_store = SSSimDataStore(sim_info)
+        from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+        data_store = SSSimData(sim_info)
+        new_allowances = list(data_store.allowances)
         for tag in self.appropriateness_tags:
-            if tag in data_store.allowances:
-                data_store.allowances.remove(tag)
+            if tag in new_allowances:
+                new_allowances.remove(tag)
+        data_store.allowances = tuple(new_allowances)
         return True
