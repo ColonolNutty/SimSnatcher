@@ -24,10 +24,6 @@ from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 
 class SSBindingAttachBindingInteraction(CommonImmediateSuperInteraction):
     """ Handle the interaction. """
-    INSTANCE_TUNABLES = {
-        'binding_type': TunableEnumSet(enum_type=SSBindingType)
-    }
-
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_mod_identity(cls) -> CommonModIdentity:
@@ -66,4 +62,8 @@ class SSBindingAttachBindingInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
+        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
+        from cnsimsnatcher.bindings.utils.binding_utils import SSBindingUtils
+        from cnsimsnatcher.enums.binding_body_location import SSBindingBodyLocation
+        SSBindingUtils().add_binding(target_sim_info, (SSBindingBodyLocation.WRISTS_RIGHT, ))
         return True
