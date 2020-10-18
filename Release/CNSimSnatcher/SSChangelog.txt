@@ -1,3 +1,21 @@
+v2.5:
+- Added debug interactions to Summon Captives and Slaves
+- Changed how SS saves it's settings, old captives and slaves will no longer work with this new system!
+  - SHIFT+CLICK -> Sim Snatcher -> Slavery -> Force Enslave or SHIFT+CLICK -> Sim Snatcher -> Abduction -> Force Abduct to get them on the new system
+- Added allowance flags that'll let you customize what a Slave/Captive can or cannot do.
+  - It isn't foolproof yet! Not all interactions supply the proper appropriateness tags that are checked.
+  - These may be configured via CLICK on Sim -> Sim Snatcher -> Configure Allowances.
+  - They may also be configured within the Sim Snatcher settings if the settings were opened after clicking on a Sim that is either a Captive or Slave.
+- Slaves may now only have a single Master
+- Captives may now only have a single Captor
+- Added Attach/Detach bindings for the Bindings feature later on (They do nothing right now)
+- Slave titles now show the current Role they are performing. (Gardener, Repair, Nanny, etc.)
+  - I want to eliminate Slaves autonomously cooking completely, so if a Slave Sim starts cooking, hover over them and tell me what Role appears in their Title!
+- Added an Off Lot role for Slaves when Slaves are brought to a house that isn't owned by their Master.
+  - It has the same functionality as the Idle role. (Will change in the future to prevent Slaves acting like they own the place.
+- Added Settings for changing the Success Chance of Abduction and Enslavement Attempts
+- Added a Setting for attempt to enslave to always succeed
+
 v2.4:
 - Moved the Order To Cook interaction to the Fridge
 - Removed the Cook Meal, Cook Family Meal, and Cook Party Meal slave orders
