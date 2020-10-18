@@ -7,7 +7,6 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
-from cnsimsnatcher.bindings.enums.binding_type import SSBindingType
 from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
@@ -15,7 +14,6 @@ from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
 from sims.sim import Sim
-from sims4.tuning.tunable import TunableEnumSet
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
