@@ -5,10 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from pprint import pformat
-
 from cnsimsnatcher.enums.captured_situation_state import SSSituationState
-from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from event_testing.resolver import SingleSimResolver
 from event_testing.test_events import TestEvent
@@ -20,7 +17,6 @@ from sims4.localization import TunableLocalizedStringFactory
 from sims4.tuning.instances import lock_instance_tunables
 from sims4.tuning.tunable import TunableTuple
 from sims4.tuning.tunable_base import GroupNames
-from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from situations.service_npcs.butler.butler_loot_ops import ButlerSituationStates
@@ -37,9 +33,6 @@ import sims4.tuning.tunable
 import tunable_time
 from situations.situation_types import SituationCreationUIOption
 from situations.bouncer.bouncer_types import BouncerExclusivityCategory
-
-log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'ss_slave_situation')
-log.enable()
 
 
 class SSSlaveSituationStateMixin(CommonSituationState):
@@ -96,22 +89,6 @@ class SSSlaveSituationStateMixin(CommonSituationState):
     def situation_state(self) -> Union[ButlerSituationStates, SSSituationState]:
         """The situation state identifier. """
         raise NotImplementedError()
-
-    @property
-    def job(self) -> SituationJob:
-        """ The job to set the Sim to. """
-        log.format(next_state=self.own_state)
-        log.format(job_and_role_changes=self.own_state._tuned_values.job_and_role_changes)
-        for (job, role) in self.own_state._tuned_values.job_and_role_changes.items():
-            return job
-        return self.owner.slave_sim_job.situation_job
-
-    @property
-    def role(self) -> RoleState:
-        """ The role to set the Sim to. """
-        for (job, role) in self.own_state._tuned_values.job_and_role_changes.items():
-            return role
-        return self.owner.slave_sim_job.staying_role_state
 
 
 class _SSSlaveCleaningState(SSSlaveSituationStateMixin):
@@ -306,19 +283,15 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
 
     def try_set_next_state(self, new_situation_state: SSSlaveSituationStateMixin) -> None:
         """ Try to set the next state. """
-        log.format(own_jobs=pformat(self._jobs), new_situation_state=new_situation_state)
         sim_data = SSSimData(self.slave_sim_info())
         if CommonHouseholdUtils.get_household_id_owning_current_lot() != sim_data.owning_household_id:
-            log.debug('Overriding with off lot state.')
             new_situation_state = self.slave_job_states.off_master_lot_state()
         if new_situation_state.situation_state in self._locked_states:
-            log.format(locked_state=new_situation_state)
             new_situation_state.owner = self
             self.try_set_next_state(new_situation_state.next_state())
             return
         new_situation_state.owner = self
         new_situation_state._update_headline(self.slave_sim())
-        log.format('Changing states.')
         self._change_state(new_situation_state)
 
     def slave_sim(self) -> Sim:
@@ -352,8 +325,6 @@ class SSSlaveryNPCEnslavedByPlayerSituation(VisitingNPCSituation):
         writer.write_uint64('household_id', self._owning_household.id)
 
     def _on_set_sim_job(self, sim: Sim, job_type) -> None:
-        log.format_with_message('Setting sim job', sim=sim, job_type=job_type)
-        log.log_stack()
         sim_info = CommonSimUtils.get_sim_info(sim)
         sim_data = SSSimData(sim_info)
         if sim_data.owning_household_id != -1:

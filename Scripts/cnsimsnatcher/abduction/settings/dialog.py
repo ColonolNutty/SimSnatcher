@@ -11,6 +11,9 @@ from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from cnsimsnatcher.enums.string_ids import SSStringId
 from cnsimsnatcher.modinfo import ModInfo
 from cnsimsnatcher.abduction.settings.settings import SSAbductionSetting
+from sims4communitylib.dialogs.common_choice_outcome import CommonChoiceOutcome
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_input_option import \
+    CommonDialogInputFloatOption
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_branch_option import CommonDialogOpenDialogOption
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
@@ -85,6 +88,32 @@ class SSAbductionSettingsDialog(HasLog):
             )
         )
 
+        def _on_input_setting_changed(setting_name: str, setting_value: float, outcome: CommonChoiceOutcome):
+            if setting_value is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
+                _reopen()
+                return
+            self._data_store.set_value_by_key(setting_name, setting_value)
+            _reopen()
+
+        option_dialog.add_option(
+            CommonDialogInputFloatOption(
+                SSAbductionSetting.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE,
+                self._data_store.get_value_by_key(
+                    SSAbductionSetting.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE
+                ),
+                CommonDialogOptionContext(
+                    SSAbductionStringId.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE_NAME,
+                    SSAbductionStringId.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE_DESCRIPTION,
+                    description_tokens=(
+                        self._data_store.get_default_value_by_key(SSAbductionSetting.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE),
+                    )
+                ),
+                min_value=0.0,
+                max_value=100.0,
+                on_chosen=_on_input_setting_changed
+            )
+        )
+
         option_dialog.add_option(
             CommonDialogOpenDialogOption(
                 lambda *_, **__: self._cheat_settings(on_close=_reopen),
@@ -122,9 +151,9 @@ class SSAbductionSettingsDialog(HasLog):
 
         option_dialog.add_option(
             CommonDialogToggleOption(
-                SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH,
+                SSAbductionSetting.ATTEMPT_TO_ABDUCT_ALWAYS_SUCCESSFUL,
                 self._data_store.get_value_by_key(
-                    SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH
+                    SSAbductionSetting.ATTEMPT_TO_ABDUCT_ALWAYS_SUCCESSFUL
                 ),
                 CommonDialogOptionContext(
                     SSAbductionStringId.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH_NAME,

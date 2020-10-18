@@ -42,7 +42,7 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
             cls.get_log().debug('Failed, Abduction interactions are disabled.')
             return TestResult.NONE
         if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
-            cls.get_log().debug('Failed, Target is invalid.')
+            cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
@@ -53,11 +53,8 @@ class SSAbductionClearDataInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
+    def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
-        if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
-            self.log.debug('Failed, no Target or they were not a Sim.')
-            return False
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         self.log.format_with_message('Attempting to clear abduction data from Sim.', sim=CommonSimNameUtils.get_full_name(target_sim_info))
         SSAbductionStateUtils().release_captives_of(target_sim_info)

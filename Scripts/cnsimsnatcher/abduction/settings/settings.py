@@ -12,8 +12,9 @@ class SSAbductionSetting:
 
     # MAIN
     ABDUCTION_INTERACTIONS_SWITCH = 'ss_abduction_interactions_switch'
+    ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE = 'ss_abduction_attempt_to_abduct_success_chance'
 
     # CHEATS
-    ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH = 'ss_abduction_always_successful_switch'
+    ATTEMPT_TO_ABDUCT_ALWAYS_SUCCESSFUL = 'ss_abduction_attempt_to_abduct_always_successful'
 
     VERSION = 'version'

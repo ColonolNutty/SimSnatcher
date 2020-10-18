@@ -16,11 +16,22 @@ class SSAbductionSettingUtils(CommonService):
         super().__init__()
         from cnsimsnatcher.persistence.ss_data_manager_utils import SSDataManagerUtils
         self._data_store = SSDataManagerUtils().get_abduction_mod_settings_data_store()
+        self.main = SSAbductionSettingUtils.Main(self._data_store)
         self.cheats = SSAbductionSettingUtils.Cheats(self._data_store)
 
     def interactions_are_enabled(self) -> bool:
-        """ Determine if the Abduction interactions are enabled. """
+        """ Determine if interactions are enabled. """
         return self._data_store.get_value_by_key(SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH)
+
+    class Main(CommonService):
+        """ Main settings. """
+        def __init__(self, data_store: SSAbductionSettingsDataStore) -> None:
+            super().__init__()
+            self._data_store = data_store
+
+        def get_chance_to_succeed(self) -> float:
+            """ Retrieve the chance of an Attempt To Abduct being successful. """
+            return float(self._data_store.get_value_by_key(SSAbductionSetting.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE))
 
     class Cheats(CommonService):
         """ Cheat settings. """
@@ -30,4 +41,4 @@ class SSAbductionSettingUtils(CommonService):
 
         def always_successful(self) -> bool:
             """ Determine if Abduction attempts will always succeed. """
-            return self._data_store.get_value_by_key(SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH)
+            return self._data_store.get_value_by_key(SSAbductionSetting.ATTEMPT_TO_ABDUCT_ALWAYS_SUCCESSFUL)

@@ -62,7 +62,7 @@ class SSAllowanceUtils:
     def set_disallow_all(self, sim_info: SimInfo):
         """ Disallow a Sim to perform all tasks. """
         data_store = SSSimData(sim_info)
-        data_store.allowances = set()
+        data_store.allowances = tuple()
 
     def get_allowance_data(self) -> Tuple[SSAllowanceData]:
         """ Retrieve a collection of allowance data. """

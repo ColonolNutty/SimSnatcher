@@ -17,4 +17,4 @@ except:
 
 class SSSlaveryStatisticId(Int):
     """ Statistic identifiers used by SS Slavery. """
-    ATTEMPT_TO_ENSLAVE_WAS_SUCCESS = 261513265635054082
+    pass

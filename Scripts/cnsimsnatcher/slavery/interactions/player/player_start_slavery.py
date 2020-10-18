@@ -8,7 +8,6 @@ Copyright (c) COLONOLNUTTY
 from typing import Any
 
 from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
-from cnsimsnatcher.slavery.operations.enslave_score import SSEnslaveAttemptSuccessChanceOperation
 from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
 from cnsimsnatcher.slavery.utils.slavery_state_utils import SSSlaveryStateUtils
 from cnsimsnatcher.slavery.utils.slavery_utils import SSSlaveryUtils
@@ -47,7 +46,7 @@ class SSSlaveryStartSlaveryInteraction(CommonImmediateSuperInteraction):
         if not SSSlaverySettingUtils().interactions_are_enabled():
             cls.get_log().debug('Failed, Slavery interactions are disabled.')
             return TestResult.NONE
-        if not CommonTypeUtils.is_sim_instance(interaction_target):
+        if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
             cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
@@ -86,15 +85,8 @@ class SSSlaveryStartSlaveryInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
-        if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
-            self.log.debug('Failed, Target is not a Sim.')
-            return False
-        interaction_target: Sim = interaction_target
+    def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        SSEnslaveAttemptSuccessChanceOperation.remove_attempt_success_statistic(sim_info)
-        SSEnslaveAttemptSuccessChanceOperation.remove_attempt_success_statistic(target_sim_info)
         self.log.debug('Queuing "Attempt To Enslave" interaction.')
         queue_result = CommonSimInteractionUtils.queue_interaction(
             sim_info,

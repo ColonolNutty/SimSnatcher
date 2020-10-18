@@ -13,7 +13,6 @@ from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
 from sims.sim import Sim
 from event_testing.results import TestResult
@@ -46,7 +45,7 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         if not SSAbductionSettingUtils().interactions_are_enabled():
             cls.get_log().debug('Failed, Abduction interactions are disabled.')
             return TestResult.NONE
-        if not CommonTypeUtils.is_sim_instance(interaction_target):
+        if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
             cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
@@ -86,19 +85,13 @@ class SSAbductionStartAbductionInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
-        if interaction_target is None or not CommonTypeUtils.is_sim_instance(interaction_target):
-            self.log.debug('Failed, Target is not a Sim.')
-            return False
+    def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(sim_info)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(target_sim_info)
         self.log.debug('Queuing "Attempt To Abduct" interaction.')
         queue_result = CommonSimInteractionUtils.queue_interaction(
             sim_info,
             SSAbductionInteractionId.TRIGGER_ATTEMPT_TO_ABDUCT_HUMAN_DEFAULT,
-            target=CommonSimUtils.get_sim_instance(interaction_target),
+            target=interaction_target,
             skip_if_running=True
         )
         self.log.format_with_message('Done queuing interaction.', queue_result=queue_result)

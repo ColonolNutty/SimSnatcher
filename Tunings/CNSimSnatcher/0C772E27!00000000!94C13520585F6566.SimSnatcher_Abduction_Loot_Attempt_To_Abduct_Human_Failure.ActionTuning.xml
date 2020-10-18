@@ -1,0 +1,15 @@
+<I c="LootActions" i="action" m="interactions.utils.loot" n="SimSnatcher_Abduction_Loot_Attempt_To_Abduct_Human_Failure" s="10718907001156363622">
+  <L n="loot_actions">
+    <V t="reaction">
+      <U n="reaction">
+        <V n="si_reaction" t="enabled">
+          <U n="enabled">
+            <T n="affordance">8737107597856615939<!--SimSnatcher_Abduction_Attempt_To_Abduct_Human_Failure--></T>
+            <V n="affordance_target">TargetSim</V>
+          </U>
+        </V>
+        <E n="subject">Actor</E>
+      </U>
+    </V>
+  </L>
+</I>

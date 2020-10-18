@@ -143,6 +143,7 @@
               </U>
             </V>
             <L n="loot_list">
+              <T>10718907001156363622<!--SimSnatcher_Abduction_Loot_Attempt_To_Abduct_Human_Failure--></T>
               <T>36610<!--LootActions: Loot_Buff_Social_Threaten_Actor--></T>
               <T>36611<!--LootActions: Loot_Buff_Social_Threaten_Target--></T>
               <T>11044<!--LootActions: Rel_Loss_TankRel--></T>
@@ -193,6 +194,7 @@
                   </U>
                 </V>
                 <L n="loot_list">
+              	  <T>2185818711915210769<!--SimSnatcher_Abduction_Loot_Attempt_To_Abduct_Human_Success--></T>
                   <T>36610<!--LootActions: Loot_Buff_Social_Threaten_Actor--></T>
                   <T>36611<!--LootActions: Loot_Buff_Social_Threaten_Target--></T>
                   <T>11044<!--LootActions: Rel_Loss_TankRel--></T>

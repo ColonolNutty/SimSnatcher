@@ -7,12 +7,14 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.abduction.enums.string_ids import SSAbductionStringId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.abduction.operations.abduction_score import SSAbductionSuccessChanceOperation
 from cnsimsnatcher.abduction.utils.abduction_state_utils import SSAbductionStateUtils
+from distributor.shared_messages import IconInfoData
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
+from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
 
@@ -36,12 +38,21 @@ class SSAbductionAttemptToAbductSuccessInteraction(CommonImmediateSuperInteracti
         captor_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         # The one being abducted.
         captive_sim_info = CommonSimUtils.get_sim_info(interaction_target)
+        self.log.debug('Creating captive.')
         result, reason = SSAbductionStateUtils().create_captive(captive_sim_info, captor_sim_info)
         if not result:
             self.log.debug(reason)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captor_sim_info)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captive_sim_info)
+        self.log.debug('Removing abduction success statistic.')
         self.log.debug('Finished succeeding abduction.')
+
+        CommonBasicNotification(
+            SSAbductionStringId.ABDUCTION,
+            SSAbductionStringId.SIM_HAS_ABDUCTED_SIM,
+            description_tokens=(captor_sim_info, captive_sim_info)
+        ).show(
+            icon=IconInfoData(obj_instance=captor_sim_info),
+            secondary_icon=IconInfoData(obj_instance=captive_sim_info)
+        )
         return True
 
 
@@ -66,7 +77,13 @@ class SSAbductionAttemptToAbductFailureInteraction(CommonImmediateSuperInteracti
         captor_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         # The one being abducted.
         captive_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captor_sim_info)
-        SSAbductionSuccessChanceOperation.remove_abduction_success_statistic(captive_sim_info)
+        CommonBasicNotification(
+            SSAbductionStringId.ABDUCTION,
+            SSAbductionStringId.SIM_FAILED_TO_ABDUCT_SIM,
+            description_tokens=(captor_sim_info, captive_sim_info)
+        ).show(
+            icon=IconInfoData(obj_instance=captor_sim_info),
+            secondary_icon=IconInfoData(obj_instance=captive_sim_info)
+        )
         self.log.debug('Finished failing abduction.')
         return True

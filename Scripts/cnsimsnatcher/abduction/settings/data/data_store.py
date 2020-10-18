@@ -33,6 +33,8 @@ class SSAbductionSettingsDataStore(CommonDataStore):
             # Main
             SSAbductionSetting.ABDUCTION_INTERACTIONS_SWITCH: True,
 
+            SSAbductionSetting.ATTEMPT_TO_ABDUCT_SUCCESS_CHANCE: 50.0,
+
             # Cheats
-            SSAbductionSetting.ABDUCTION_ALWAYS_SUCCESSFUL_SWITCH: False
+            SSAbductionSetting.ATTEMPT_TO_ABDUCT_ALWAYS_SUCCESSFUL: False
         }.copy()

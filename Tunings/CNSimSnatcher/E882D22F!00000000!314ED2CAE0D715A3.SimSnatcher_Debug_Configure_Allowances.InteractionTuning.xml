@@ -1,0 +1,16 @@
+<I c="SSConfigureAllowancesInteraction" i="interaction" m="cnsimsnatcher.configuration.allowance.interactions.configure_allowances" n="SimSnatcher_Debug_Configure_Allowances" s="3553008924839318947">
+  <V n="_saveable" t="disabled" />
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_gears.png">2f7d0004:00000000:2D62D7495B01C1A8</T>
+      </U>
+    </V>
+  </V>
+  <T n="category">2953704054832033008<!--SS Parent--></T>
+  <T n="display_name">0xB61FA80C<!--Configure Allowances--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

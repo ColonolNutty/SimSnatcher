@@ -60,7 +60,7 @@ class SSBindingDetachBindingInteraction(CommonImmediateSuperInteraction):
         if not target_sim_data.is_slave_or_captive:
             cls.get_log().debug('Failed, Target Sim is not captured.')
             return TestResult.NONE
-        cls.get_log().debug('Success, showing force enslave interaction on target.')
+        cls.get_log().debug('Success, showing detach binding interaction on target.')
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring

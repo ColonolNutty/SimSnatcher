@@ -15,6 +15,7 @@ from sims4communitylib.notifications.common_basic_notification import CommonBasi
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
+from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
 log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'ss_allowance_injection')
@@ -30,7 +31,9 @@ def _ss_prevent_non_allowed_interactions(event_data: S4CLInteractionQueuedEvent)
     if owning_sim_info is None:
         return True
     sim_data = SSSimData(owning_sim_info)
-    if not sim_data.is_captive and not sim_data.is_slave:
+    if not sim_data.is_slave_or_captive:
+        return True
+    if CommonSimStateUtils.is_dying(owning_sim_info):
         return True
     log.format_with_message('Checking if Sim is allowed to perform interaction.', sim=CommonSimNameUtils.get_full_name(owning_sim_info), interaction=CommonInteractionUtils.get_interaction_short_name(interaction))
     allowed = True

@@ -6,9 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from cnsimsnatcher.abduction.enums.skill_ids import SSAbductionSkillId
-from cnsimsnatcher.abduction.settings.setting_utils import SSAbductionSettingUtils
-from cnsimsnatcher.slavery.enums.statistic_ids import SSSlaveryStatisticId
 from cnsimsnatcher.slavery.operations.enslave_score import SSEnslaveAttemptSuccessChanceOperation
+from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
 from interactions import ParticipantType
 from cnsimsnatcher.modinfo import ModInfo
 from event_testing.test_based_score import TestBasedScore
@@ -16,7 +15,6 @@ from sims.sim_info import SimInfo
 from sims4.sim_irq_service import yield_to_irq
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.sims.common_sim_skill_utils import CommonSimSkillUtils
-from sims4communitylib.utils.sims.common_sim_statistic_utils import CommonSimStatisticUtils
 from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 
@@ -53,25 +51,21 @@ class SSSlaveryAttemptToEnslaveTestBasedScore(TestBasedScore):
         sim_info = CommonSimUtils.get_sim_info(sim)
         target_sim_info = CommonSimUtils.get_sim_info(target)
         result = cls._get_result(sim_info, target_sim_info)
-        CommonSimStatisticUtils.set_statistic_value(sim_info, SSSlaveryStatisticId.ATTEMPT_TO_ENSLAVE_WAS_SUCCESS, result)
         return result
 
     @classmethod
     def _get_result(cls, sim_info: SimInfo, target_sim_info: SimInfo) -> int:
-        if SSAbductionSettingUtils().cheats.always_successful():
-            log.debug('Guaranteed Enslave Attempt. Always successful setting is enabled.')
+        if SSSlaverySettingUtils().cheats.always_successful():
+            log.debug('Guaranteed Abduction Attempt. Always successful setting is enabled.')
             return 1
         if CommonSimSkillUtils.is_at_max_skill_level(sim_info, SSAbductionSkillId.ABDUCTION):
-            log.debug('Success, Active Sim is max level Domination.')
+            log.debug('Success, Active Sim is max level Abduction.')
             return 1
-        if SSEnslaveAttemptSuccessChanceOperation.attempt_is_success(sim_info):
-            log.debug('Success, Enslave attempt was previously successful.')
-            return 1
-        if SSEnslaveAttemptSuccessChanceOperation.attempt_is_failure(sim_info):
-            log.debug('Failure, Enslave attempt was previously a failure.')
+        if SSSlaverySettingUtils().main.get_chance_to_succeed() == 0.0:
+            log.debug('Failed, Chance to Succeed is Zero.')
             return 0
         success_chance = SSEnslaveAttemptSuccessChanceOperation.calculate_success_chance(sim_info, target_sim_info)
-        if success_chance >= SSEnslaveAttemptSuccessChanceOperation.ENSLAVE_ATTEMPT_SUCCESS_THRESHOLD:
+        if success_chance <= SSSlaverySettingUtils().main.get_chance_to_succeed():
             log.debug('Success, Enslave attempt is successful.')
             return 1
         log.debug('Failed, Enslave attempt has failed.')

@@ -143,6 +143,7 @@
               </U>
             </V>
             <L n="loot_list">
+              <T>6983989889120951862<!--LootActions: SimSnatcher_Slavery_Loot_Attempt_To_Enslave_Human_Failure--></T>
               <T>23797<!--LootActions: Loot_EmbarrassedSocialCommodity_20--></T>
               <T>10954<!--LootActions: Loot_ForSocialsSocialMotiveMedium--></T>
               <T>36121<!--LootActions: Skill_Loot_Dynamic_Small_ChildrenOnly_Social--></T>
@@ -189,6 +190,7 @@
                   </U>
                 </V>
                 <L n="loot_list">
+              	  <T>17392428372602130401<!--LootActions: SimSnatcher_Slavery_Loot_Attempt_To_Enslave_Human_Success--></T>
                   <T>23797<!--LootActions: Loot_EmbarrassedSocialCommodity_20--></T>
                   <T>11080<!--LootActions: Skill_Loot_Dynamic_Small--></T>
                   <T>10954<!--LootActions: Loot_ForSocialsSocialMotiveMedium--></T>

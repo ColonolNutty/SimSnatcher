@@ -12,6 +12,10 @@ class SSSlaverySetting:
 
     # Main
     SLAVERY_INTERACTIONS_SWITCH = 'ss_slavery_interactions_switch'
+    ATTEMPT_TO_ENSLAVE_SUCCESS_CHANCE = 'ss_slavery_attempt_to_enslave_success_chance'
+
+    # Cheats
+    ATTEMPT_TO_ENSLAVE_ALWAYS_SUCCESSFUL = 'ss_slavery_attempt_to_enslave_always_successful'
 
     # Global
     VERSION = 'version'

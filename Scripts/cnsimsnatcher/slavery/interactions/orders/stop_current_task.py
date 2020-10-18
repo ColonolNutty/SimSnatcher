@@ -56,9 +56,8 @@ class SSStopCurrentTaskInteraction(CommonImmediateSuperInteraction):
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
-    def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
+    def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
-        interaction_target: Sim = interaction_target
         sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         return CommonSimInteractionUtils.cancel_all_running_interactions(target_sim_info, cancel_reason='Master {} said so.'.format(CommonSimNameUtils.get_full_name(sim_info)))

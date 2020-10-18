@@ -31,5 +31,10 @@ class SSSlaverySettingsDataStore(CommonDataStore):
             SSSlaverySetting.VERSION: self._version,
 
             # General
-            SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH: True
+            SSSlaverySetting.SLAVERY_INTERACTIONS_SWITCH: True,
+
+            SSSlaverySetting.ATTEMPT_TO_ENSLAVE_SUCCESS_CHANCE: 50.0,
+
+            # Cheats
+            SSSlaverySetting.ATTEMPT_TO_ENSLAVE_ALWAYS_SUCCESSFUL: False
         }.copy()
