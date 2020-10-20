@@ -17,4 +17,5 @@ class SSCASPartTagType(CommonInt):
     SPECIES: 'SSCASPartTagType' = 4
     CAS_PART_TYPE: 'SSCASPartTagType' = 5
     BINDING_BODY_LOCATION: 'SSCASPartTagType' = 6
-    CUSTOM_TAG: 'SSCASPartTagType' = 7
+    BODY_TYPE: 'SSCASPartTagType' = 7
+    CUSTOM_TAG: 'SSCASPartTagType' = 8

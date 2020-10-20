@@ -18,7 +18,7 @@ from sims4communitylib.utils.localization.common_localization_utils import Commo
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_gender_utils import CommonGenderUtils
 from cnsimsnatcher.cas_parts.cas_part_type import SSCASPartType
-from cnsimsnatcher.dtos.cas_parts.cas_part_available_for import DDCASPartAvailableFor
+from cnsimsnatcher.dtos.cas_parts.cas_part_available_for import SSCASPartAvailableFor
 
 
 class SSCASPart(HasClassLog):
@@ -42,7 +42,7 @@ class SSCASPart(HasClassLog):
         display_name: LocalizedString,
         raw_display_name: str,
         author: str,
-        available_for: DDCASPartAvailableFor,
+        available_for: SSCASPartAvailableFor,
         part_tags: Tuple[str],
         unique_identifier: Union[str, None]=None
     ):
@@ -126,7 +126,7 @@ class SSCASPart(HasClassLog):
         self._cas_part_index = value
 
     @property
-    def available_for(self) -> DDCASPartAvailableFor:
+    def available_for(self) -> SSCASPartAvailableFor:
         """ Information on what this part is available for. """
         return self._available_for
 

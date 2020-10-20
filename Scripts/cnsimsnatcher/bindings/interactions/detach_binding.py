@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from cnsimsnatcher.bindings.dialog.attach_bindings_dialog import SSConfigureBindingsDialog
 from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
@@ -61,7 +62,5 @@ class SSBindingDetachBindingInteraction(CommonImmediateSuperInteraction):
     def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         self.log.format_with_message('Running \'{}\' on_started.'.format(self.__class__.__name__), interaction_sim=interaction_sim, interaction_target=interaction_target)
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        from cnsimsnatcher.bindings.utils.binding_utils import SSBindingUtils
-        from cnsimsnatcher.enums.binding_body_location import SSBindingBodyLocation
-        SSBindingUtils().remove_bindings(target_sim_info, (SSBindingBodyLocation.WRISTS_RIGHT, ))
+        SSConfigureBindingsDialog(target_sim_info, is_attach=False).open()
         return True

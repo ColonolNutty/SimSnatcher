@@ -6,6 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 import services
+from sims.outfits.outfit_enums import BodyType
 from sims.sim_info_types import Gender, Age
 from sims4.localization import TunableLocalizedString
 from sims4.resources import Types
@@ -14,7 +15,7 @@ from sims4.tuning.tunable import Tunable, TunableList, HasTunableFactory, AutoFa
     TunableEnumEntry, TunableEnumSet, TunableSet
 from sims4.tuning.tunable_base import GroupNames
 from sims4communitylib.enums.common_species import CommonSpecies
-from cnsimsnatcher.enums.binding_body_location import SSBindingBodyLocation
+from cnsimsnatcher.bindings.enums.binding_body_location import SSBindingBodyLocation
 
 
 class _SimSnatcherCASPartData(HasTunableFactory, AutoFactoryInit):
@@ -65,18 +66,41 @@ class _SimSnatcherBindingCASPartData(_SimSnatcherCASPartData):
     ]
 
 
+class _SimSnatcherBodyCASPartData(_SimSnatcherCASPartData):
+    FACTORY_TUNABLES = {
+        'part_body_type': TunableEnumEntry(tunable_type=BodyType, default=BodyType.NONE)
+    }
+
+    __slots__ = [
+        'part_type',
+        'part_body_type',
+        'part_id',
+        'additional_part_ids',
+        'part_display_name',
+        'part_raw_display_name',
+        'part_author',
+        'part_tags',
+        'available_for_genders',
+        'available_for_ages',
+        'available_for_species'
+    ]
+
+
 class _SimSnatcherCASPartPackage(metaclass=HashedTunedInstanceMetaclass, manager=services.get_instance_manager(Types.SNIPPET)):
     INSTANCE_TUNABLES = {
         'has_sim_snatcher_cas_parts': Tunable(tunable_type=bool, default=True),
         'binding_cas_parts_list': TunableList(tunable=_SimSnatcherBindingCASPartData.TunableFactory()),
+        'body_cas_parts_list': TunableList(tunable=_SimSnatcherBodyCASPartData.TunableFactory()),
     }
 
     __slots__ = [
         'has_sim_snatcher_cas_parts',
         'binding_cas_parts_list',
+        'body_cas_parts_list',
     ]
 
 
 SimSnatcherCASPartData = _SimSnatcherCASPartData
 SimSnatcherBindingCASPartData = _SimSnatcherBindingCASPartData
+SimSnatcherBodyCASPartData = _SimSnatcherBodyCASPartData
 SimSnatcherCASPartPackage = _SimSnatcherCASPartPackage

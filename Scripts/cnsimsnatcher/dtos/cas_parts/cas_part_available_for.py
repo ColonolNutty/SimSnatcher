@@ -12,7 +12,7 @@ from sims.sim_info_types import Gender, Age
 from sims4communitylib.enums.common_species import CommonSpecies
 
 
-class DDCASPartAvailableFor:
+class SSCASPartAvailableFor:
     """ Holds information for what types of Sims a part is available for. """
     def __init__(
         self,
@@ -46,9 +46,9 @@ class DDCASPartAvailableFor:
         return True, 'Success'
 
     @staticmethod
-    def everything() -> 'DDCASPartAvailableFor':
+    def everything() -> 'SSCASPartAvailableFor':
         """ Create an Available For instance that applies to everything. """
-        return DDCASPartAvailableFor((Gender.MALE, Gender.FEMALE), (Age.BABY, Age.TODDLER, Age.CHILD, Age.TEEN, Age.YOUNGADULT, Age.ADULT, Age.ELDER), (CommonSpecies.HUMAN, CommonSpecies.SMALL_DOG, CommonSpecies.LARGE_DOG, CommonSpecies.CAT))
+        return SSCASPartAvailableFor((Gender.MALE, Gender.FEMALE), (Age.BABY, Age.TODDLER, Age.CHILD, Age.TEEN, Age.YOUNGADULT, Age.ADULT, Age.ELDER), (CommonSpecies.HUMAN, CommonSpecies.SMALL_DOG, CommonSpecies.LARGE_DOG, CommonSpecies.CAT))
 
     def __repr__(self) -> str:
         return '<genders:{}, ages:{}, species:{}>'\
