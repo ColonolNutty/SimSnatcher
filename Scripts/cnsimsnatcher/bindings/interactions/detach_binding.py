@@ -7,7 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
-from cnsimsnatcher.bindings.dialog.attach_bindings_dialog import SSConfigureBindingsDialog
+from cnsimsnatcher.bindings.dialog.configure_bindings_dialog import SSConfigureBindingsDialog
 from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
 from cnsimsnatcher.settings.setting_utils import SSSettingUtils
 from cnsimsnatcher.slavery.settings.setting_utils import SSSlaverySettingUtils
