@@ -12,3 +12,4 @@ class SSBindingInteractionId(CommonInt):
     """ Binding interaction ids. """
     ATTACH_BINDING = 8796309808627172555
     DETACH_BINDING = 6689007077610793997
+    BOUND = 7765552652077127712

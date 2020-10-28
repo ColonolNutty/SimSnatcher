@@ -24,7 +24,6 @@ class SSBodyCASPart(SSCASPart):
     """ Holds information related to a Body CAS part. """
     def __init__(
         self,
-        part_type: SSCASPartType,
         body_type: BodyType,
         part_id: int,
         additional_part_ids: Tuple[int],
@@ -36,7 +35,7 @@ class SSBodyCASPart(SSCASPart):
         unique_identifier: Union[str, None]=None
     ):
         super().__init__(
-            part_type,
+            SSCASPartType.BODY,
             part_id,
             additional_part_ids,
             display_name,
@@ -115,16 +114,11 @@ class SSBodyCASPart(SSCASPart):
         available_for = SSCASPartAvailableFor(available_for_genders, available_for_ages, available_for_species)
         part_tags: Tuple[str] = tuple(getattr(package_body_part, 'part_tags', tuple()))
         part_tags: Tuple[str] = tuple([part_tag for part_tag in part_tags if part_tag])
-        part_type = getattr(package_body_part, 'part_type', SSCASPartType.NONE)
-        if part_type == SSCASPartType.NONE:
-            log.error('Failed to load CAS Part {} by {}. CAS Part Type is NONE, please specify a CAS Part Type!'.format(error_display_name, author), throw=False)
-            return None
         part_body_type = getattr(package_body_part, 'part_body_type', BodyType.NONE)
         if part_body_type == BodyType.NONE:
             log.error('Failed to load CAS Part {} by {}. Body Type is NONE, please specify a Body Type!'.format(error_display_name, author), throw=False)
             return None
         return cls(
-            part_type,
             part_body_type,
             part_id,
             additional_part_ids,

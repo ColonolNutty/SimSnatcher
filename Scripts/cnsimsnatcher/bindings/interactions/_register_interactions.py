@@ -28,3 +28,18 @@ class _SSBindingSimInteractionHandler(CommonScriptObjectInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     def should_add(self, script_object: ScriptObject, *args, **kwargs) -> bool:
         return CommonTypeUtils.is_sim_instance(script_object)
+
+
+@CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
+class _SSBindingObjectInteractionHandler(CommonScriptObjectInteractionHandler):
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def interactions_to_add(self) -> Tuple[int]:
+        result: Tuple[int] = (
+            SSBindingInteractionId.BOUND,
+        )
+        return result
+
+    # noinspection PyMissingOrEmptyDocstring
+    def should_add(self, script_object: ScriptObject, *args, **kwargs) -> bool:
+        return not CommonTypeUtils.is_sim_instance(script_object)

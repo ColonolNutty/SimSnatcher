@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ASM name="SimSnatcher_Animation_play" dcc="sage">
+  <Actor name="a0" type="Sim" master="true" virtual="false" />
+  <Actor name="a1" type="Sim" virtual="false" />
+  <Actor name="a2" type="Sim" virtual="false" />
+  <Actor name="a3" type="Sim" virtual="false" />
+  <Actor name="a4" type="Sim" virtual="false" />
+  <Actor name="a5" type="Sim" virtual="false" />
+  <Actor name="a6" type="Sim" virtual="false" />
+  <Actor name="a7" type="Sim" virtual="false" />
+  <Actor name="a8" type="Sim" virtual="false" />
+  <Actor name="a9" type="Sim" virtual="false" />
+
+  <Actor name="o" type="Object" virtual="false" />
+
+  <Actor name="p0" type="Object" virtual="false" />
+  <Actor name="p1" type="Object" virtual="false" />
+  <Actor name="p2" type="Object" virtual="false" />
+  <Actor name="p3" type="Object" virtual="false" />
+  <Actor name="p4" type="Object" virtual="false" />
+  <Actor name="p5" type="Object" virtual="false" />
+  <Actor name="p6" type="Object" virtual="false" />
+  <Actor name="p7" type="Object" virtual="false" />
+  <Actor name="p8" type="Object" virtual="false" />
+  <Actor name="p9" type="Object" virtual="false" />
+
+  <Parameter Custom="" name="animation_name_a0" type="string"/>
+  <Parameter Custom="" name="animation_name_a1" type="string"/>
+  <Parameter Custom="" name="animation_name_a2" type="string"/>
+  <Parameter Custom="" name="animation_name_a3" type="string"/>
+  <Parameter Custom="" name="animation_name_a4" type="string"/>
+  <Parameter Custom="" name="animation_name_a5" type="string"/>
+  <Parameter Custom="" name="animation_name_a6" type="string"/>
+  <Parameter Custom="" name="animation_name_a7" type="string"/>
+  <Parameter Custom="" name="animation_name_a8" type="string"/>
+  <Parameter Custom="" name="animation_name_a9" type="string"/>
+
+  <Parameter Custom="" name="object_animation_name" type="string"/>
+
+  <Parameter Custom="" name="prop_animation_name_p0" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p1" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p2" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p3" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p4" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p5" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p6" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p7" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p8" type="string"/>
+  <Parameter Custom="" name="prop_animation_name_p9" type="string"/>
+
+  <PostureManifest actors="a0,a1,a2,a3,a4,a5,a6,a7,a8,a9">
+    <Support family="stand" compatibility="UpperBody" carry_left="*" carry_right="*" surface="*" />
+    <Support family="sit" compatibility="UpperBody" carry_left="*" carry_right="*" surface="*" />
+    <Support name="swim" family="none" compatibility="FullBody" carry_left="*" carry_right="*" surface="*" />
+  </PostureManifest>
+
+  <State type="public" skippable="false" interrupt_this="true" name="Play" focus="none" facialoverlays="false" tailoverlays="true" />
+
+  <Connection from="entry" to="Play" />
+  <Connection from="Play" to="exit" />
+
+  <State name="Play" type="public" skippable="false" interrupt_this="true" focus="none" facialoverlays="false" tailoverlays="true">
+    <description />
+
+    <MakeController>
+      <Controller target="a0" controller="@ClipController(clip={animation_name_a0}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="1">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a1" controller="@ClipController(clip={animation_name_a1}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="1">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a2" controller="@ClipController(clip={animation_name_a2}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="2">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a3" controller="@ClipController(clip={animation_name_a3}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a4" controller="@ClipController(clip={animation_name_a4}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a5" controller="@ClipController(clip={animation_name_a5}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a6" controller="@ClipController(clip={animation_name_a6}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a7" controller="@ClipController(clip={animation_name_a7}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a8" controller="@ClipController(clip={animation_name_a8}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="a9" controller="@ClipController(clip={animation_name_a9}, loop_count=#1)" overridePosture="false" mask="" track="normal" mirror_conditional="False" suppress_footsteps="False" transition_class_in="Custom" transition_class_out="Custom" ik_configuration="" focus="undefined" start_frame_offset="0" end_frame_offset="0" timescale="1" unique_id="3">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="o" controller="@ClipController(clip={object_animation_name}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p0" controller="@ClipController(clip={prop_animation_name_p0}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p1" controller="@ClipController(clip={prop_animation_name_p1}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p2" controller="@ClipController(clip={prop_animation_name_p2}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p3" controller="@ClipController(clip={prop_animation_name_p3}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p4" controller="@ClipController(clip={prop_animation_name_p4}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p5" controller="@ClipController(clip={prop_animation_name_p5}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p6" controller="@ClipController(clip={prop_animation_name_p6}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p7" controller="@ClipController(clip={prop_animation_name_p7}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p8" controller="@ClipController(clip={prop_animation_name_p8}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+
+      <Controller target="p9" controller="@ClipController(clip={prop_animation_name_p9}, loop_count=#1)" focus="undefined" unique_id="11" ik_configuration="" mask="" overridePosture="false" track="normal" transition_class_in="Custom" transition_class_out="Custom">
+        <TransitionClassList>
+          <Transition transition_class_name="Custom" transition_duration_in="0.2666667" use_custom_transition_in="true" transition_type_in="linear" transition_mask_in="" transition_duration_out="0.2666667" use_custom_transition_out="true" transition_type_out="linear" transition_mask_out="" />
+        </TransitionClassList>
+      </Controller>
+    </MakeController>
+
+  </State>
+</ASM>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<I c="SSAnimationPlayInteraction" i="interaction" m="cnsimsnatcher.bindings.interactions.animation_play" n="SimSnatcher_Play_Animation" s="7765552652077127712">
+  <V t="resource_key" n="_icon">
+    <U n="resource_key">
+      <T n="key" p="InteractionIcon">2f7d0004:00000000:F838AC7741A8AFC6</T>
+    </U>
+  </V>
+  <V t="disabled" n="_saveable" />
+  <T n="attention_cost">0.5</T>
+  <V n="basic_content" t="flexible_length">
+    <U n="flexible_length">
+      <V n="content" t="looping_content">
+        <U n="looping_content">
+          <U n="animation_ref">
+            <T n="factory">14128200524032011865<!--AnimationElement: SimSnatcher_Animation--></T>
+          </U>
+        </U>
+      </V>
+      <T n="start_autonomous_inertial">False</T>
+    </U>
+  </V>
+  <T n="disable_transitions">True</T>
+  <V t="disable_focus" n="basic_focus" />
+  <T n="display_name">0xA356843F<!--Bound--></T>
+  <T n="allow_autonomous">False</T>
+  <V t="disabled" n="basic_reserve_object" />
+  <T n="force_exit_on_inertia">False</T>
+  <E n="scoring_priority">HIGH</E>
+  <E n="target_type">OBJECT</E>
+  <V t="enabled" n="sim_affinity_posture_scoring_data">
+    <U n="enabled">
+      <L n="my_scoring">
+        <U>
+          <V t="relationship_based" n="affinity_strategy" />
+          <T n="negate_tag">True</T>
+        </U>
+        <U>
+          <V t="avoid" n="affinity_strategy" />
+          <E n="running_interaction_tag">Very_Loud</E>
+        </U>
+      </L>
+      <L n="my_tags">
+        <E>Loud</E>
+      </L>
+    </U>
+  </V>
+  <T n="time_overhead">30</T>
+</I>

@@ -33,7 +33,6 @@ from sims4communitylib.utils.objects.common_object_interaction_utils import Comm
 from sims4communitylib.utils.resources.common_interaction_utils import CommonInteractionUtils
 from sims4communitylib.utils.sims.common_sim_interaction_utils import CommonSimInteractionUtils
 from sims4communitylib.utils.sims.common_sim_state_utils import CommonSimStateUtils
-from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from ssutilities.commonlib.utils.commonterrainutils import SSCommonTerrainUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
@@ -72,7 +71,6 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
         'bed_getnear_fromsocial',
         'eat_to_clean_from_sit',
         'fridge_grabsnack_autotest',
-        'simsnatcher',
         ModInfo.get_identity().base_namespace.lower()
     }
 
@@ -99,7 +97,6 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
         'terrain_setup_garden',
         'piemenu',
         'object_hirenpc',
-        'simsnatcher',
         ModInfo.get_identity().base_namespace.lower()
     }
 
@@ -146,15 +143,6 @@ class SSOrderToPerformInteractionInteraction(CommonImmediateSuperInteraction):
 
             interaction_target = _get_top_level_object(interaction_target) or interaction_target
             cls.get_log().format(top_level_object=interaction_target)
-            cls.get_log().debug('Checking if object is in use.')
-            if hasattr(interaction_target, 'get_users'):
-                current_obj_users = interaction_target.get_users(sims_only=True)
-                if len(current_obj_users) > 1:
-                    cls.get_log().debug('Failed, Location is reserved by more than one sim.')
-                    return cls.create_test_result(False, reason='Object is reserved.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSOrderToStringId.OBJECT_IS_IN_USE))
-                if len(current_obj_users) == 1:
-                    cls.get_log().debug('Failed, Location is reserved already.')
-                    return cls.create_test_result(False, reason='The object is currently in use.', tooltip=CommonLocalizationUtils.create_localized_tooltip(SSOrderToStringId.OBJECT_IS_IN_USE))
         else:
             cls.get_log().debug('Failed, Target was not valid.')
             return TestResult.NONE

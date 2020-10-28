@@ -51,7 +51,6 @@ class _SimSnatcherBindingCASPartData(_SimSnatcherCASPartData):
     }
 
     __slots__ = [
-        'part_type',
         'part_display_icon',
         'body_location',
         'part_id',
@@ -72,7 +71,6 @@ class _SimSnatcherBodyCASPartData(_SimSnatcherCASPartData):
     }
 
     __slots__ = [
-        'part_type',
         'part_body_type',
         'part_id',
         'additional_part_ids',
