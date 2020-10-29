@@ -21,6 +21,7 @@
   </V>
   <T n="disable_transitions">True</T>
   <V t="disable_focus" n="basic_focus" />
+  <T n="category">2953704054832033008<!--SS Parent--></T>
   <T n="display_name">0xA356843F<!--Bound--></T>
   <T n="allow_autonomous">False</T>
   <V t="disabled" n="basic_reserve_object" />

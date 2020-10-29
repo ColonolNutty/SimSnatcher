@@ -20,8 +20,7 @@ class _SSBindingSimInteractionHandler(CommonScriptObjectInteractionHandler):
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int] = (
-            SSBindingInteractionId.ATTACH_BINDING,
-            SSBindingInteractionId.DETACH_BINDING
+            SSBindingInteractionId.CONFIGURE_BINDINGS,
         )
         return result
 

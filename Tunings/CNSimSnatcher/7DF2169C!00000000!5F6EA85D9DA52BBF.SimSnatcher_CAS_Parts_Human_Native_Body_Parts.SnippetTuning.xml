@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<I c="SimSnatcherCASPartPackage" i="snippet" m="cnsimsnatcher.cas_parts.cas_part_tuning" n="SimSnatcher_CAS_Parts_Human_Native_Body_Parts" s="6876618801071598527">
+  <T n="has_sim_snatcher_cas_parts">True</T>
+  <L n="body_cas_parts_list">
+    <!--Upper Body-->
+    <U>
+      <T n="part_id">6562</T>
+      <T n="part_raw_display_name">Native Adult Male Upper Body (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>MALE</E>
+      </L>
+      <T n="part_body_type">UPPER_BODY</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+    <U>
+      <T n="part_id">6540</T>
+      <T n="part_raw_display_name">Native Adult Female Upper Body (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>FEMALE</E>
+      </L>
+      <T n="part_body_type">UPPER_BODY</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+    <!--Lower Body-->
+    <U>
+      <T n="part_id">6574</T>
+      <T n="part_raw_display_name">Native Adult Male Lower Body (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>MALE</E>
+      </L>
+      <T n="part_body_type">LOWER_BODY</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+    <U>
+      <T n="part_id">6544</T>
+      <T n="part_raw_display_name">Native Adult Female Lower Body (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>FEMALE</E>
+      </L>
+      <T n="part_body_type">LOWER_BODY</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+  	<!--Feet-->
+    <U>
+      <T n="part_id">6563</T>
+      <T n="part_raw_display_name">Native Adult Male Shoes (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>MALE</E>
+      </L>
+      <T n="part_body_type">SHOES</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+    <U>
+      <T n="part_id">6543</T>
+      <T n="part_raw_display_name">Native Adult Female Shoes (H)</T>
+      <T n="part_author">Vanilla</T>
+      <L n="available_for_species">
+      	<E>HUMAN</E>
+      </L>
+      <L n="available_for_genders">
+      	<E>FEMALE</E>
+      </L>
+      <T n="part_body_type">SHOES</T>
+      <L n="part_tags">
+      	<E>NATIVE</E>
+      </L>
+    </U>
+  </L>
+</I>

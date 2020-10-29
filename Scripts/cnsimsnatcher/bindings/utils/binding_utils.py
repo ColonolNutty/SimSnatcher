@@ -12,6 +12,8 @@ from cnsimsnatcher.cas_parts.cas_part_type import SSCASPartType
 from cnsimsnatcher.cas_parts.query.cas_part_query_utils import SSCASPartQueryUtils
 from cnsimsnatcher.cas_parts.tag_filters.binding_body_location_filter import SSBindingBodyLocationCASPartFilter
 from cnsimsnatcher.cas_parts.tag_filters.body_type_filter import SSBodyTypeCASPartFilter
+from cnsimsnatcher.cas_parts.tag_filters.cas_part_tag_filter import SSCASPartTagFilter
+from cnsimsnatcher.dtos.cas_parts.binding_cas_part import SSBindingCASPart
 from cnsimsnatcher.dtos.cas_parts.body_cas_part import SSBodyCASPart
 from cnsimsnatcher.dtos.cas_parts.cas_part import SSCASPart
 from cnsimsnatcher.bindings.enums.binding_body_location import SSBindingBodyLocation
@@ -42,10 +44,37 @@ class SSBindingUtils(HasLog):
     def log_identifier(self) -> str:
         return 'ss_binding'
 
+    def get_bindings(self, sim_info: SimInfo, body_location: SSBindingBodyLocation=None, additional_filters: Iterator[SSCASPartTagFilter]=()) -> Tuple[SSBindingCASPart]:
+        """get_bindings(sim_info, body_location=None, additional_filters=())
+
+        Retrieve bindings for a Sim.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :param body_location: A body location. If set, only bindings matching the body location will be returned. If None, all bindings will be returned. Default is None.
+        :type body_location: SSBindingBodyLocation, optional
+        :param additional_filters: Additional filters for filtering bindings. Default is an empty collection.
+        :type additional_filters: Iterator[SSCASPartTagFilter], optional
+        :return: A collection of Binding CAS Parts matching the criteria.
+        :rtype: Tuple[SSBindingCASPart]
+        """
+        additional_filters = tuple(additional_filters)
+        if body_location is not None:
+            additional_filters = (
+                *additional_filters,
+                SSBindingBodyLocationCASPartFilter(body_location),
+            )
+        result: Tuple[SSBindingCASPart] = SSCASPartQueryUtils().get_cas_parts_for_sim(
+            sim_info,
+            SSCASPartType.BINDING,
+            additional_filters=additional_filters
+        )
+        return result
+
     def add_bindings(self, sim_info: SimInfo, body_locations: Tuple[SSBindingBodyLocation]) -> bool:
         """add_bindings(sim_info, body_location)
 
-        Add Bindings to the Sim.
+        Add Bindings to a Sim.
 
         :param sim_info: An instance of a Sim.
         :type sim_info: SimInfo
@@ -63,10 +92,7 @@ class SSBindingUtils(HasLog):
             if body_location == SSBindingBodyLocation.NONE:
                 self.log.debug('binding is disabled or None, skipping.')
                 continue
-            binding_cas_parts = SSCASPartQueryUtils().get_cas_parts_for_sim(sim_info, SSCASPartType.BINDING, additional_filters=(
-                    SSBindingBodyLocationCASPartFilter(body_location),
-                )
-            )
+            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location)
             if not binding_cas_parts:
                 self.log.debug('No binding parts found for {} Location: {}'.format(sim_name, body_location))
                 continue
@@ -82,7 +108,7 @@ class SSBindingUtils(HasLog):
             if not has_cas_part:
                 self.log.debug('\'{}\' has no binding cas parts attached for binding {}. Attaching one now.'.format(sim_name, body_location))
                 random_binding_cas_part: SSCASPart = random.choice(binding_cas_parts)
-                if self._attach_binding_to_every_outfit(sim_info, random_binding_cas_part.part_id):
+                if self._attach_binding_to_every_outfit(sim_info, (random_binding_cas_part.part_id, *random_binding_cas_part.additional_part_ids), resend_outfits=False):
                     has_added = True
         if has_added:
             self.log.debug('At least one binding was applied, applying the changes.')
@@ -92,6 +118,24 @@ class SSBindingUtils(HasLog):
             self.log.debug('No Bindings were applied.')
         self.log.debug('Done attempting to apply Bindings.')
         return has_added
+
+    def add_binding(self, sim_info: SimInfo, binding_cas_part: SSBindingCASPart) -> bool:
+        """add_binding(sim_info, binding_cas_part)
+
+        Add a Binding to a Sim.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :param binding_cas_part: The binding cas parts to add.
+        :type binding_cas_part: SSBindingCASPart
+        :return: True, if the Binding was added successfully. False, if not.
+        :rtype: bool
+        """
+        sim_name = CommonSimNameUtils.get_full_name(sim_info)
+        self.log.debug('Attempting to add Binding to Sim {}: {}'.format(sim_name, binding_cas_part))
+        current_outfit = CommonOutfitUtils.get_current_outfit(sim_info)
+        self.log.debug('\'{}\' does not have binding attached {}. Attaching one now.'.format(sim_name, binding_cas_part.unique_identifier))
+        return self._attach_binding_to_every_outfit(sim_info, (binding_cas_part.part_id, *binding_cas_part.additional_part_ids))
 
     def remove_bindings(self, sim_info: SimInfo, body_locations: Iterator[SSBindingBodyLocation]=()) -> bool:
         """remove_bindings(sim_info, body_locations=())
@@ -112,26 +156,24 @@ class SSBindingUtils(HasLog):
         if not body_locations:
             body_locations = SSBindingBodyLocation.get_all()
         # noinspection PyTypeChecker
-        for binding_body_location in body_locations:
-            self.log.debug('Checking binding body location {}'.format(binding_body_location))
-            if binding_body_location == SSBindingBodyLocation.NONE:
+        for body_location in body_locations:
+            self.log.debug('Checking binding body location {}'.format(body_location))
+            if body_location == SSBindingBodyLocation.NONE:
                 self.log.debug('Binding body location was None')
                 continue
-            binding_cas_parts = SSCASPartQueryUtils().get_cas_parts_for_sim(sim_info, SSCASPartType.BINDING, additional_filters=(
-                    SSBindingBodyLocationCASPartFilter(binding_body_location),
-                )
-            )
+            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location)
             for binding_cas_part in binding_cas_parts:
-                self.log.debug('Removing binding {} for cas part {}'.format(binding_body_location, binding_cas_part.unique_identifier))
+                self.log.debug('Removing binding {} for cas part {}'.format(body_location, binding_cas_part.unique_identifier))
                 if not CommonOutfitUtils.has_cas_part_attached(sim_info, binding_cas_part.part_id):
                     self.log.debug('Binding CAS Part was not attached {}.'.format(binding_cas_part.unique_identifier))
                     continue
-                if not self._detach_binding_from_every_outfit(sim_info, binding_cas_part.part_id):
+                if not self._detach_binding_from_every_outfit(sim_info, (binding_cas_part.part_id, *binding_cas_part.additional_part_ids), resend_outfits=False):
                     self.log.debug('Binding CAS Part failed to be removed {}.'.format(binding_cas_part.unique_identifier))
                     continue
                 has_removed = True
         if has_removed:
             self.log.debug('At least one binding was removed, refreshing the outfit of \'{}\''.format(sim_name))
+            CommonOutfitUtils.set_outfit_dirty(sim_info, CommonOutfitUtils.get_current_outfit_category(sim_info))
             CommonOutfitUtils.set_current_outfit(sim_info, current_outfit)
             return True
         else:
@@ -139,53 +181,74 @@ class SSBindingUtils(HasLog):
         self.log.debug('Done Removing Bindings.')
         return False
 
-    def _detach_binding_from_every_outfit(self, sim_info: SimInfo, binding_cas_part_id: int, resend_outfits: bool=True) -> bool:
-        if binding_cas_part_id == -1:
-            self.log.debug('No binding cas part id.')
-            return False
+    def remove_binding(self, sim_info: SimInfo, binding_cas_part: SSBindingCASPart) -> bool:
+        """remove_binding(sim_info, binding_cas_part)
 
-        body_type = self._get_body_type(binding_cas_part_id)
+        Remove a Binding from a Sim.
 
-        native_body_part = self._locate_native_body_part_if_exists(sim_info, body_type)
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :param binding_cas_part: The binding cas parts to add.
+        :type binding_cas_part: SSBindingCASPart
+        :return: True, if the Binding was added successfully. False, if not.
+        :rtype: bool
+        """
+        sim_name = CommonSimNameUtils.get_full_name(sim_info)
+        self.log.debug('Attempting to add Binding to Sim {}: {}'.format(sim_name, binding_cas_part))
+        self.log.debug('\'{}\' does not have binding attached {}. Attaching one now.'.format(sim_name, binding_cas_part.unique_identifier))
+        return self._detach_binding_from_every_outfit(sim_info, (binding_cas_part.part_id, *binding_cas_part.additional_part_ids))
 
+    def _attach_binding_to_every_outfit(self, sim_info: SimInfo, binding_cas_part_ids: Iterator[int], resend_outfits: bool=True) -> bool:
+        from sims.outfits.outfit_utils import get_maximum_outfits_for_category
+        binding_cas_part_ids = tuple(binding_cas_part_ids)
+        current_outfit = CommonOutfitUtils.get_current_outfit(sim_info)
         result = False
+
         for occult_base_sim_info in CommonOccultUtils.get_sim_info_for_all_occults_gen(sim_info, (OccultType.MERMAID,)):
             for outfit_category in CommonOutfitUtils.get_all_outfit_categories():
                 for outfit_index in range(get_maximum_outfits_for_category(outfit_category)):
                     if not CommonOutfitUtils.has_outfit(occult_base_sim_info, (outfit_category, outfit_index)):
                         continue
+                    for binding_cas_part_id in binding_cas_part_ids:
+                        if binding_cas_part_id == -1:
+                            self.log.debug('No binding cas part id.')
+                            continue
 
-                    if CommonCASUtils.detach_cas_part_from_sim(occult_base_sim_info, binding_cas_part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index)):
-                        result = True
-                        if native_body_part is not None:
-                            CommonCASUtils.attach_cas_part_to_sim(occult_base_sim_info, native_body_part.part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index))
+                        body_type = self._get_body_type(binding_cas_part_id)
 
+                        if CommonCASUtils.attach_cas_part_to_sim(occult_base_sim_info, binding_cas_part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index)):
+                            result = True
         if result and resend_outfits:
-            self.log.debug('Binding {} was successfully detached.'.format(binding_cas_part_id))
-            CommonOutfitUtils.resend_outfits(sim_info)
+            self.log.debug('Bindings {} were successfully attached.'.format(binding_cas_part_ids))
+            CommonOutfitUtils.set_outfit_dirty(sim_info, CommonOutfitUtils.get_current_outfit_category(sim_info))
+            CommonOutfitUtils.set_current_outfit(sim_info, current_outfit)
         return result
 
-    def _attach_binding_to_every_outfit(self, sim_info: SimInfo, binding_cas_part_id: int) -> bool:
-        from sims.outfits.outfit_utils import get_maximum_outfits_for_category
-        current_outfit = CommonOutfitUtils.get_current_outfit(sim_info)
-        if binding_cas_part_id == -1:
-            self.log.debug('No binding cas part id.')
-            return False
-
-        body_type = self._get_body_type(binding_cas_part_id)
-
+    def _detach_binding_from_every_outfit(self, sim_info: SimInfo, binding_cas_part_ids: Iterator[int], resend_outfits: bool=True) -> bool:
+        binding_cas_part_ids = tuple(binding_cas_part_ids)
         result = False
         for occult_base_sim_info in CommonOccultUtils.get_sim_info_for_all_occults_gen(sim_info, (OccultType.MERMAID,)):
             for outfit_category in CommonOutfitUtils.get_all_outfit_categories():
                 for outfit_index in range(get_maximum_outfits_for_category(outfit_category)):
                     if not CommonOutfitUtils.has_outfit(occult_base_sim_info, (outfit_category, outfit_index)):
                         continue
+                    for binding_cas_part_id in binding_cas_part_ids:
+                        if binding_cas_part_id == -1:
+                            self.log.debug('No binding cas part id.')
+                            return False
 
-                    if CommonCASUtils.attach_cas_part_to_sim(occult_base_sim_info, binding_cas_part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index)):
-                        result = True
-        if result:
-            self.log.debug('Binding {} was successfully attached.'.format(binding_cas_part_id))
-            CommonOutfitUtils.set_current_outfit(sim_info, current_outfit)
+                        body_type = self._get_body_type(binding_cas_part_id)
+
+                        native_body_part = self._locate_native_body_part_if_exists(sim_info, body_type)
+
+                        if CommonCASUtils.detach_cas_part_from_sim(occult_base_sim_info, binding_cas_part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index)):
+                            result = True
+                            if native_body_part is not None:
+                                CommonCASUtils.attach_cas_part_to_sim(occult_base_sim_info, native_body_part.part_id, body_type=body_type, outfit_category_and_index=(outfit_category, outfit_index))
+
+        if result and resend_outfits:
+            self.log.debug('Bindings {} were successfully detached.'.format(binding_cas_part_ids))
+            CommonOutfitUtils.resend_outfits(sim_info)
         return result
 
     def _get_body_type(self, cas_part_id: int) -> BodyType:
@@ -205,9 +268,9 @@ class SSBindingUtils(HasLog):
         return outfit_io, False
 
     def _locate_native_body_part_if_exists(self, sim_info: SimInfo, body_type: Union[int, BodyType]) -> Union[SSBodyCASPart, None]:
-        binding_cas_parts = SSCASPartQueryUtils().get_cas_parts_for_sim(sim_info, SSCASPartType.BODY, additional_filters=(
+        body_cas_parts = SSCASPartQueryUtils().get_cas_parts_for_sim(sim_info, SSCASPartType.BODY, additional_filters=(
             SSBodyTypeCASPartFilter(body_type),
         ))
-        if not binding_cas_parts:
+        if not body_cas_parts:
             return None
-        return random.choice(binding_cas_parts)
+        return random.choice(body_cas_parts)

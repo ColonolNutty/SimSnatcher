@@ -1,4 +1,4 @@
-<I c="SSBindingAttachBindingInteraction" i="interaction" m="cnsimsnatcher.bindings.interactions.attach_binding" n="SimSnatcher_Bindings_Attach_Binding" s="8796309808627172555">
+<I c="SSBindingConfigureBindingsInteraction" i="interaction" m="cnsimsnatcher.bindings.interactions.configure_bindings" n="SimSnatcher_Bindings_Configure_Bindings" s="6146063040292547031">
   <V n="_saveable" t="disabled" />
   <V n="pie_menu_icon" t="enabled">
     <V n="enabled" t="resource_key">
@@ -8,7 +8,7 @@
     </V>
   </V>
   <T n="category">13395888899209448946<!--SimSnatcher_Pie_Bindings--></T>
-  <T n="display_name">0x9B828831<!--Attach Binding--></T>
+  <T n="display_name">0x9A13B7DF<!--Configure Binding--></T>
   <U n="progress_bar_enabled">
     <T n="bar_enabled">False</T>
   </U>

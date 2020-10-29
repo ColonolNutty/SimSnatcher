@@ -42,11 +42,11 @@ class SSAllowanceConfigDialog(HasLog):
     def log_identifier(self) -> str:
         return 'ss_allowance_config_dialog'
 
-    def open(self, target_sim_info: SimInfo) -> None:
+    def open(self, target_sim_info: SimInfo, page: int=1) -> None:
         """ Open Dialog. """
         try:
             self.log.debug('Opening Dialog.')
-            self._settings(target_sim_info).show(sim_info=target_sim_info)
+            self._settings(target_sim_info).show(sim_info=target_sim_info, page=page)
         except Exception as ex:
             CommonExceptionHandler.log_exception(self.mod_identity, 'Problem occurred when opening dialog for \'{}\'.'.format(CommonSimNameUtils.get_full_name(target_sim_info)), exception=ex)
 
@@ -60,7 +60,7 @@ class SSAllowanceConfigDialog(HasLog):
 
         def _reopen(*_, **__) -> None:
             self.log.debug('Reopening Dialog.')
-            self.open(target_sim_info)
+            self.open(target_sim_info, page=option_dialog.current_page)
 
         option_dialog = CommonChooseObjectOptionDialog(
             SSAllowanceStringId.CHANGE_ALLOWANCE_NAME,
