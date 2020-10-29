@@ -8,9 +8,11 @@ Copyright (c) COLONOLNUTTY
 import random
 from typing import Tuple, Iterator, Union, Dict
 
+from cnsimsnatcher.bindings.enums.body_side import SSBodySide
 from cnsimsnatcher.cas_parts.cas_part_type import SSCASPartType
 from cnsimsnatcher.cas_parts.query.cas_part_query_utils import SSCASPartQueryUtils
 from cnsimsnatcher.cas_parts.tag_filters.binding_body_location_filter import SSBindingBodyLocationCASPartFilter
+from cnsimsnatcher.cas_parts.tag_filters.binding_body_side_filter import SSBindingBodySideCASPartFilter
 from cnsimsnatcher.cas_parts.tag_filters.body_type_filter import SSBodyTypeCASPartFilter
 from cnsimsnatcher.cas_parts.tag_filters.cas_part_tag_filter import SSCASPartTagFilter
 from cnsimsnatcher.dtos.cas_parts.binding_cas_part import SSBindingCASPart
@@ -44,7 +46,22 @@ class SSBindingUtils(HasLog):
     def log_identifier(self) -> str:
         return 'ss_binding'
 
-    def get_bindings(self, sim_info: SimInfo, body_location: SSBindingBodyLocation=None, additional_filters: Iterator[SSCASPartTagFilter]=()) -> Tuple[SSBindingCASPart]:
+    def has_binding(self, sim_info: SimInfo, binding_cas_part: SSBindingCASPart) -> bool:
+        """has_binding(sim_info, binding_cas_part)
+
+        Determine if a Sim has a Binding.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :param binding_cas_part: The binding cas part.
+        :type binding_cas_part: SSBindingCASPart
+        :return: True, if the Sim has the binding on their current outfit. False, if not.
+        :rtype: bool
+        """
+        body_type = self._get_body_type(binding_cas_part.part_id)
+        return CommonCASUtils.has_cas_part_attached(sim_info, binding_cas_part.part_id, body_type=body_type)
+
+    def get_bindings(self, sim_info: SimInfo, body_location: SSBindingBodyLocation=None, body_side: SSBodySide=None, additional_filters: Iterator[SSCASPartTagFilter]=()) -> Tuple[SSBindingCASPart]:
         """get_bindings(sim_info, body_location=None, additional_filters=())
 
         Retrieve bindings for a Sim.
@@ -53,6 +70,8 @@ class SSBindingUtils(HasLog):
         :type sim_info: SimInfo
         :param body_location: A body location. If set, only bindings matching the body location will be returned. If None, all bindings will be returned. Default is None.
         :type body_location: SSBindingBodyLocation, optional
+        :param body_side: A body location. If set, only bindings matching the body side will be returned. If None, all bindings will be returned. Default is None.
+        :type body_side: SSBodySide, optional
         :param additional_filters: Additional filters for filtering bindings. Default is an empty collection.
         :type additional_filters: Iterator[SSCASPartTagFilter], optional
         :return: A collection of Binding CAS Parts matching the criteria.
@@ -64,6 +83,11 @@ class SSBindingUtils(HasLog):
                 *additional_filters,
                 SSBindingBodyLocationCASPartFilter(body_location),
             )
+        if body_side is not None:
+            additional_filters = (
+                *additional_filters,
+                SSBindingBodySideCASPartFilter(body_side)
+            )
         result: Tuple[SSBindingCASPart] = SSCASPartQueryUtils().get_cas_parts_for_sim(
             sim_info,
             SSCASPartType.BINDING,
@@ -71,8 +95,8 @@ class SSBindingUtils(HasLog):
         )
         return result
 
-    def add_bindings(self, sim_info: SimInfo, body_locations: Tuple[SSBindingBodyLocation]) -> bool:
-        """add_bindings(sim_info, body_location)
+    def add_bindings(self, sim_info: SimInfo, body_locations: Tuple[SSBindingBodyLocation], body_side: SSBodySide=None) -> bool:
+        """add_bindings(sim_info, body_location, body_side=None)
 
         Add Bindings to a Sim.
 
@@ -80,6 +104,8 @@ class SSBindingUtils(HasLog):
         :type sim_info: SimInfo
         :param body_locations: A collection of binding body locations to add.
         :type body_locations: Tuple[SSBindingBodyLocation]
+        :param body_side: The side to add bindings to. If set to None, all sides will be considered. Default is None.
+        :type body_side: SSBodySide, optional
         :return: True, if the Bindings were added successfully. False, if not.
         :rtype: bool
         """
@@ -92,7 +118,7 @@ class SSBindingUtils(HasLog):
             if body_location == SSBindingBodyLocation.NONE:
                 self.log.debug('binding is disabled or None, skipping.')
                 continue
-            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location)
+            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location, body_side=body_side)
             if not binding_cas_parts:
                 self.log.debug('No binding parts found for {} Location: {}'.format(sim_name, body_location))
                 continue
@@ -133,12 +159,10 @@ class SSBindingUtils(HasLog):
         """
         sim_name = CommonSimNameUtils.get_full_name(sim_info)
         self.log.debug('Attempting to add Binding to Sim {}: {}'.format(sim_name, binding_cas_part))
-        current_outfit = CommonOutfitUtils.get_current_outfit(sim_info)
-        self.log.debug('\'{}\' does not have binding attached {}. Attaching one now.'.format(sim_name, binding_cas_part.unique_identifier))
         return self._attach_binding_to_every_outfit(sim_info, (binding_cas_part.part_id, *binding_cas_part.additional_part_ids))
 
-    def remove_bindings(self, sim_info: SimInfo, body_locations: Iterator[SSBindingBodyLocation]=()) -> bool:
-        """remove_bindings(sim_info, body_locations=())
+    def remove_bindings(self, sim_info: SimInfo, body_locations: Iterator[SSBindingBodyLocation]=(), body_side: SSBodySide=None) -> bool:
+        """remove_bindings(sim_info, body_locations=(), body_side=None)
 
         Remove Bindings from a Sim.
 
@@ -146,6 +170,8 @@ class SSBindingUtils(HasLog):
         :type sim_info: SimInfo
         :param body_locations: A collection of Body Locations to Remove. If empty, all Body Locations will be removed. Default is an empty collection.
         :type body_locations: Iterator[SSBindingBodyLocation], optional
+        :param body_side: The side to remove bindings from. If set to None, all sides will be removed. Default is None.
+        :type body_side: SSBodySide, optional
         :return: True, if the Body Locations were removed. False, if not.
         :rtype: bool
         """
@@ -161,7 +187,7 @@ class SSBindingUtils(HasLog):
             if body_location == SSBindingBodyLocation.NONE:
                 self.log.debug('Binding body location was None')
                 continue
-            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location)
+            binding_cas_parts = self.get_bindings(sim_info, body_location=body_location, body_side=body_side)
             for binding_cas_part in binding_cas_parts:
                 self.log.debug('Removing binding {} for cas part {}'.format(body_location, binding_cas_part.unique_identifier))
                 if not CommonOutfitUtils.has_cas_part_attached(sim_info, binding_cas_part.part_id):
@@ -195,7 +221,6 @@ class SSBindingUtils(HasLog):
         """
         sim_name = CommonSimNameUtils.get_full_name(sim_info)
         self.log.debug('Attempting to add Binding to Sim {}: {}'.format(sim_name, binding_cas_part))
-        self.log.debug('\'{}\' does not have binding attached {}. Attaching one now.'.format(sim_name, binding_cas_part.unique_identifier))
         return self._detach_binding_from_every_outfit(sim_info, (binding_cas_part.part_id, *binding_cas_part.additional_part_ids))
 
     def _attach_binding_to_every_outfit(self, sim_info: SimInfo, binding_cas_part_ids: Iterator[int], resend_outfits: bool=True) -> bool:

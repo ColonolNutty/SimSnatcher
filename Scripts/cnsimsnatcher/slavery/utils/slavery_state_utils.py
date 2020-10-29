@@ -11,7 +11,7 @@ from typing import Tuple, Callable, List, Union
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from cnsimsnatcher.persistence.ss_sim_data import SSSimData
 from cnsimsnatcher.slavery.enums.interaction_ids import SSSlaveryInteractionId
 from cnsimsnatcher.slavery.enums.relationship_bit_ids import SSSlaveryRelationshipBitId
 from cnsimsnatcher.slavery.enums.situation_ids import SSSlaverySituationId

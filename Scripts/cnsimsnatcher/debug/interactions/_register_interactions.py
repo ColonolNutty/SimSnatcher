@@ -5,6 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+import sims4.commands
 from typing import Tuple
 
 from cnsimsnatcher.enums.interaction_ids import SSInteractionId
@@ -35,8 +36,6 @@ class _SSDebugSimInteractionHandler(CommonScriptObjectInteractionHandler):
 log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'thingy')
 log.enable()
 
-import sims4.commands
-
 
 @sims4.commands.Command('ss.do_it', command_type=sims4.commands.CommandType.Live)
 def _ss_do_it(_connection: int=None):
@@ -66,6 +65,7 @@ def _ss_do_it(_connection: int=None):
             log.error('Failed target_posture', exception=ex)
 
         try:
+            # noinspection PyPropertyAccess
             posture_state = sim.posture_state
             _log_thingy(posture_state, 'posture_state')
         except Exception as ex:

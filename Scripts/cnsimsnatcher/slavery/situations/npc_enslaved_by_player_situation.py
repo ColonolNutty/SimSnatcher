@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from cnsimsnatcher.enums.captured_situation_state import SSSituationState
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from cnsimsnatcher.persistence.ss_sim_data import SSSimData
 from event_testing.resolver import SingleSimResolver
 from event_testing.test_events import TestEvent
 from interactions.utils.localization_tokens import LocalizationTokens

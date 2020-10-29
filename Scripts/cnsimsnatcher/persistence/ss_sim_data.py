@@ -6,8 +6,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from pprint import pformat
-from typing import Tuple
+from typing import Tuple, Dict
 
+from cnsimsnatcher.bindings.enums.binding_body_location import SSBindingBodyLocation
+from cnsimsnatcher.bindings.enums.body_side import SSBodySide
 from cnsimsnatcher.modinfo import ModInfo
 from sims4.commands import Command, CommandType, CheatOutput
 from sims4communitylib.enums.tags_enum import CommonGameTag
@@ -110,12 +112,60 @@ class SSSimData(CommonPersistedSimDataStorage):
 
     @property
     def allowances(self) -> Tuple[CommonGameTag]:
-        """ Retrieve the allowances for the Sim. """
+        """ Current things the Sim is allowed to do. """
         return self.get_data(default=tuple())
 
     @allowances.setter
     def allowances(self, value: Tuple[CommonGameTag]):
         self.set_data(value)
+
+    @property
+    def restrained_body_parts(self) -> Dict[str, SSBodySide]:
+        """ Body parts currently being restrained on a Sim organized by SSBindingBodyLocation. """
+        return self.get_data(default=dict())
+
+    @restrained_body_parts.setter
+    def restrained_body_parts(self, value: Dict[str, SSBodySide]):
+        self.set_data(value)
+
+    def has_body_restraint(self, location: SSBindingBodyLocation, body_side: SSBodySide):
+        """ Determine if a body restraint has been applied. """
+        if location.name not in self.restrained_body_parts:
+            return False
+        current_restraint = self.restrained_body_parts[location.name]
+        if current_restraint == body_side:
+            return True
+        if current_restraint == SSBodySide.BOTH:
+            return True
+        return False
+
+    def apply_body_restraint(self, location: SSBindingBodyLocation, body_side: SSBodySide):
+        """ Apply a body restraint. """
+        if location.name in self.restrained_body_parts:
+            current_restraint = self.restrained_body_parts[location.name]
+            if current_restraint == SSBodySide.BOTH:
+                return
+            if current_restraint == SSBodySide.RIGHT and body_side == SSBodySide.LEFT:
+                body_side = SSBodySide.BOTH
+            elif current_restraint == SSBodySide.LEFT and body_side == SSBodySide.RIGHT:
+                body_side = SSBodySide.BOTH
+        # noinspection PyAttributeOutsideInit
+        self.restrained_body_parts[location.name] = body_side
+
+    def remove_body_restraint(self, location: SSBindingBodyLocation, body_side: SSBodySide):
+        """ Remove a body restraint. """
+        if location.name not in self.restrained_body_parts:
+            return
+        current_restraint = self.restrained_body_parts[location.name]
+        if current_restraint == body_side or body_side == SSBodySide.BOTH:
+            del self.restrained_body_parts[location.name]
+            return
+        if current_restraint == SSBodySide.BOTH:
+            if body_side == SSBodySide.RIGHT:
+                body_side = SSBodySide.LEFT
+            elif body_side == SSBodySide.LEFT:
+                body_side = SSBodySide.RIGHT
+        self.restrained_body_parts[location.name] = body_side
 
 
 @Command('ss.print_sim_data', command_type=CommandType.Live)

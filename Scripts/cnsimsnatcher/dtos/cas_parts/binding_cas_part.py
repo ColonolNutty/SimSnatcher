@@ -10,6 +10,7 @@ from _resourceman import Key
 from typing import Tuple, Union, TYPE_CHECKING
 
 from cnsimsnatcher.bindings.enums.binding_body_location import SSBindingBodyLocation
+from cnsimsnatcher.bindings.enums.body_side import SSBodySide
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.sim_info_types import Gender, Age
 from sims4communitylib.enums.common_species import CommonSpecies
@@ -29,6 +30,7 @@ class SSBindingCASPart(SSCASPart):
         self,
         icon_id: Union[int, Key],
         binding_body_location: SSBindingBodyLocation,
+        binding_body_side: SSBodySide,
         part_id: int,
         additional_part_ids: Tuple[int],
         display_name: LocalizedString,
@@ -50,6 +52,7 @@ class SSBindingCASPart(SSCASPart):
             unique_identifier=unique_identifier
         )
         self._binding_body_location = binding_body_location
+        self._binding_body_side = binding_body_side
         self._icon_id = icon_id
 
     # noinspection PyMissingOrEmptyDocstring
@@ -76,6 +79,11 @@ class SSBindingCASPart(SSCASPart):
         """ The location of the CAS Part. """
         return self._binding_body_location
 
+    @property
+    def body_side(self) -> SSBodySide:
+        """ Which side of the body the binding is located. """
+        return self._binding_body_side
+
     def __eq__(self, other: 'SSBindingCASPart') -> bool:
         if not isinstance(other, SSBindingCASPart):
             return False
@@ -85,14 +93,16 @@ class SSBindingCASPart(SSCASPart):
             return False
         if self.body_location != other.body_location:
             return False
+        if self.body_side != other.body_side:
+            return False
         return True
 
     def __hash__(self) -> int:
-        return hash((str(self.part_id), str(self.part_type), str(self.body_location)))
+        return hash((str(self.part_id), str(self.part_type), str(self.body_location), str(self.body_side)))
 
     def __repr__(self) -> str:
-        return '<name:{}\nunique_identifier: {}\nauthor:{}\npart_id:{}\npart_tags:{}\navailable_for:{}\npart_type:{}\npart_sub_type:{}>'\
-            .format(self.name, self.unique_identifier, self.author, self.part_id, self.tags, str(self.available_for), self.part_type, self.body_location)
+        return '<name:{}\nunique_identifier: {}\nauthor:{}\npart_id:{}\npart_tags:{}\navailable_for:{}\npart_type:{}\nbody_location:{}\nbody_side:{}>'\
+            .format(self.name, self.unique_identifier, self.author, self.part_id, self.tags, str(self.available_for), self.part_type, self.body_location, self.body_side)
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -128,9 +138,14 @@ class SSBindingCASPart(SSCASPart):
         if binding_body_location == SSBindingBodyLocation.NONE:
             log.error('Failed to load CAS Part {} by {}. It is missing the body location!'.format(error_display_name, author), throw=False)
             return None
+        body_side = getattr(package_body_part, 'body_side', SSBodySide.NONE)
+        if body_side == SSBodySide.NONE:
+            log.error('Failed to load CAS Part {} by {}. It is missing the body side!'.format(error_display_name, author), throw=False)
+            return None
         return cls(
             display_icon,
             binding_body_location,
+            body_side,
             part_id,
             additional_part_ids,
             display_name,

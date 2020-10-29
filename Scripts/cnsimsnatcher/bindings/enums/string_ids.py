@@ -19,6 +19,7 @@ class SSBindingStringId(Int):
     """ LocalizedString identifiers used by SS. """
     BINDING = 3696479536
     BODY_LOCATION = 908573458
+    BODY_SIDE = 1159597562
     NO_BINDINGS_FOUND = 581513238
 
     # Tokens: {0.String}

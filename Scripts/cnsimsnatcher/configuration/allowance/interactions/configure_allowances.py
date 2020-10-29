@@ -8,7 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Any
 
 from cnsimsnatcher.configuration.allowance.dialogs.allowance_config_dialog import SSAllowanceConfigDialog
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from cnsimsnatcher.persistence.ss_sim_data import SSSimData
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from interactions.context import InteractionContext
 from cnsimsnatcher.modinfo import ModInfo

@@ -9,7 +9,8 @@
       <T n="part_display_name">0x519405D6<!--Zip Ties (Wrists) (Gray)--></T>
       <T n="part_raw_display_name">Zip Ties (Wrists) (Gray) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_BOTH</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -23,7 +24,8 @@
       <T n="part_display_name">0x07A2047A<!--Zip Ties (Wrists) (Black)--></T>
       <T n="part_raw_display_name">Zip Ties (Wrists) (Black) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_BOTH</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -37,7 +39,8 @@
       <T n="part_display_name">0xAC667344<!--Zip Ties (Wrists) (White)--></T>
       <T n="part_raw_display_name">Zip Ties (Wrists) (White) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_BOTH</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -51,7 +54,8 @@
       <T n="part_display_name">0x17D89B56<!--Zip Ties (Ankles) (Black)--></T>
       <T n="part_raw_display_name">Zip Ties (Ankles) (Black) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -65,7 +69,8 @@
       <T n="part_display_name">0x17D89B56<!--Zip Ties (Ankles) (Gray)--></T>
       <T n="part_raw_display_name">Zip Ties (Ankles) (Gray) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -79,7 +84,8 @@
       <T n="part_display_name">0xB4B7E850<!--Zip Ties (Ankles) (White)--></T>
       <T n="part_raw_display_name">Zip Ties (Ankles) (White) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -94,6 +100,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Gray) (HM)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -106,6 +113,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Black) (HM)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -118,6 +126,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Red) (HM)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -130,6 +139,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Gray) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -142,6 +152,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Black) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -154,6 +165,7 @@
       <T n="part_raw_display_name">Duct Tape Gag (Mouth) (Red) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -166,6 +178,7 @@
       <T n="part_raw_display_name">Duct Tape Gag 2 (Mouth) (Gray) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -178,6 +191,7 @@
       <T n="part_raw_display_name">Duct Tape Gag 2 (Mouth) (Black) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -190,6 +204,7 @@
       <T n="part_raw_display_name">Duct Tape Gag 2 (Mouth) (Red) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -201,7 +216,8 @@
       <T n="part_id">10044084759311099564</T>
       <T n="part_raw_display_name">Duct Tape Blindfold (Eyes) (Gray) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">EYES_BOTH</T>
+      <T n="body_location">EYES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -214,7 +230,8 @@
       <T n="part_id">13227224781730309286</T>
       <T n="part_raw_display_name">Duct Tape Blindfold (Eyes) (Black) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">EYES_BOTH</T>
+      <T n="body_location">EYES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -227,7 +244,8 @@
       <T n="part_id">11696766341947038442</T>
       <T n="part_raw_display_name">Duct Tape Blindfold (Eyes) (Red) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">EYES_BOTH</T>
+      <T n="body_location">EYES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -242,6 +260,7 @@
       <T n="part_raw_display_name">Cleave Gag (Mouth) (H)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -255,6 +274,7 @@
       <T n="part_raw_display_name">Cleave Gag 2 (Mouth) (H)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -269,6 +289,7 @@
       <T n="part_raw_display_name">Ballgag (Mouth) (BlackWhite) (HM)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -281,6 +302,7 @@
       <T n="part_raw_display_name">Ballgag (Mouth) (BlackRed) (HM)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -293,6 +315,7 @@
       <T n="part_raw_display_name">Ballgag (Mouth) (BlackWhite) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -305,6 +328,7 @@
       <T n="part_raw_display_name">Ballgag (Mouth) (BlackRed) (HF)</T>
       <T n="part_author">bstylez</T>
       <T n="body_location">MOUTH</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -317,7 +341,8 @@
       <T n="part_id">17760059841565058097</T>
       <T n="part_raw_display_name">Ropes R (Wrist) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_RIGHT</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">RIGHT</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -330,7 +355,8 @@
       <T n="part_id">15106063884724288338</T>
       <T n="part_raw_display_name">Ropes L (Wrist) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_LEFT</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">LEFT</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -343,7 +369,8 @@
       <T n="part_id">15027663545558516229</T>
       <T n="part_raw_display_name">Ropes (Ankles) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -357,7 +384,8 @@
       <T n="part_id">12031863152622927189</T>
       <T n="part_raw_display_name">Handcuffs R (Wrist) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_RIGHT</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">RIGHT</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -370,7 +398,8 @@
       <T n="part_id">14583663886106843924</T>
       <T n="part_raw_display_name">Handcuffs L (Wrist) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">WRISTS_LEFT</T>
+      <T n="body_location">WRISTS</T>
+      <T n="body_side">LEFT</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -383,7 +412,8 @@
       <T n="part_id">13025411376553115854</T>
       <T n="part_raw_display_name">Handcuffs Chained (Ankles) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>
@@ -396,7 +426,8 @@
       <T n="part_id">14154989148766903307</T>
       <T n="part_raw_display_name">Handcuffs Broken (Ankles) (H)</T>
       <T n="part_author">bstylez</T>
-      <T n="body_location">ANKLES_BOTH</T>
+      <T n="body_location">ANKLES</T>
+      <T n="body_side">BOTH</T>
       <L n="available_for_species">
       	<E>HUMAN</E>
       </L>

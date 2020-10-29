@@ -14,7 +14,7 @@ from cnsimsnatcher.abduction.enums.trait_ids import SSAbductionTraitId
 from cnsimsnatcher.configuration.allowance.utils.allowance_utils import SSAllowanceUtils
 from cnsimsnatcher.enums.trait_ids import SSTraitId
 from cnsimsnatcher.modinfo import ModInfo
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from cnsimsnatcher.persistence.ss_sim_data import SSSimData
 from cnsimsnatcher.utils.buff_utils import SSBuffUtils
 from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_log import HasLog

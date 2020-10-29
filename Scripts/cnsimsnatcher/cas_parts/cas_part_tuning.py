@@ -6,6 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 import services
+from cnsimsnatcher.bindings.enums.body_side import SSBodySide
 from sims.outfits.outfit_enums import BodyType
 from sims.sim_info_types import Gender, Age
 from sims4.localization import TunableLocalizedString
@@ -47,12 +48,14 @@ class _SimSnatcherCASPartData(HasTunableFactory, AutoFactoryInit):
 class _SimSnatcherBindingCASPartData(_SimSnatcherCASPartData):
     FACTORY_TUNABLES = {
         'part_display_icon': Tunable(tunable_type=int, default=0),
-        'body_location': TunableEnumEntry(tunable_type=SSBindingBodyLocation, default=SSBindingBodyLocation.NONE)
+        'body_location': TunableEnumEntry(tunable_type=SSBindingBodyLocation, default=SSBindingBodyLocation.NONE),
+        'body_side': TunableEnumEntry(tunable_type=SSBodySide, default=SSBodySide.NONE)
     }
 
     __slots__ = [
         'part_display_icon',
         'body_location',
+        'body_side',
         'part_id',
         'additional_part_ids',
         'part_display_name',

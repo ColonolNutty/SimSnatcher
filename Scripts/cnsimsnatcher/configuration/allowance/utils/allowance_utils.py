@@ -42,7 +42,7 @@ from cnsimsnatcher.configuration.allowance.allowances.allowed_visitor import SSA
 from cnsimsnatcher.configuration.allowance.allowances.allowed_work import SSAllowedWork
 from cnsimsnatcher.configuration.allowance.allowances.allowed_workout import SSAllowedWorkout
 from cnsimsnatcher.configuration.allowance.allowances.allowance import SSAllowanceData
-from cnsimsnatcher.persistence.ss_sim_data_storage import SSSimData
+from cnsimsnatcher.persistence.ss_sim_data import SSSimData
 from sims.sim_info import SimInfo
 
 
