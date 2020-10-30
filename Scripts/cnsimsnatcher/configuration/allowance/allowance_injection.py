@@ -122,12 +122,17 @@ class _SSInteractionAllowance:
     def _is_interaction_allowed(sim_info: SimInfo, interaction: Interaction):
         try:
             tags = interaction.appropriateness_tags
-            if not tags:
+            interaction_category_tags = interaction.interaction_category_tags
+            all_tags = (
+                *tags,
+                *interaction_category_tags
+            )
+            if not all_tags:
+                return True
+            if CommonSimStateUtils.is_dying(sim_info):
                 return True
             sim_data = SSSimData(sim_info)
             if not sim_data.is_slave_or_captive:
-                return True
-            if CommonSimStateUtils.is_dying(sim_info):
                 return True
             log.format_with_message('Checking if Sim is allowed to perform interaction.', sim=CommonSimNameUtils.get_full_name(sim_info), interaction=CommonInteractionUtils.get_interaction_short_name(interaction))
             allowed = True
@@ -152,11 +157,12 @@ class _SSInteractionAllowance:
                     allowance_tags = body_sides[body_side]
                     if not allowance_tags:
                         continue
-                    for tag in tags:
+                    for tag in all_tags:
                         if tag in allowance_tags:
                             allowed = False
                             break
                     if not allowed:
+                        log.format_with_message('Not allowed due to bindings.', restraints=sim_data.restrained_body_parts, tags_of_interaction=all_tags)
                         if sim_info is CommonSimUtils.get_active_sim_info() and interaction.is_user_directed and not interaction.is_autonomous and not interaction.is_autonomous_picker_interaction:
                             CommonBasicNotification(
                                 SSStringId.RESTRAINED,
@@ -175,7 +181,7 @@ class _SSInteractionAllowance:
                         description,
                     ).show(icon=IconInfoData(obj_instance=sim_info))
                 return False
-            log.format_with_message('Allowed.', allowance_tags=sim_data.allowances, tags_of_interaction=tags)
+            log.format_with_message('Allowed.', allowance_tags=sim_data.allowances, tags_of_interaction=tags, )
         except Exception as ex:
             log.error('Error occurred while checking interaction allowance.', exception=ex)
         return True

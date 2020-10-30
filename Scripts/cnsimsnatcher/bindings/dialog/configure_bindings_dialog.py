@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any, Tuple
+from typing import Callable, Any
 
 from cnsimsnatcher.bindings.enums.binding_body_location import SSBindingBodyLocation
 from cnsimsnatcher.bindings.enums.body_side import SSBodySide
