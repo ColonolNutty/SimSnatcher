@@ -71,6 +71,8 @@ class SSSlaveSituationStateMixin(CommonSituationState):
         self.owner.try_set_next_state(self.next_state())
 
     def _update_headline(self, sim: Sim):
+        if sim is None:
+            return
         resolver = SingleSimResolver(sim.sim_info)
         tokens = self.tooltip_name_text_tokens.get_tokens(resolver)
         sim.sim_info.sim_headline = self.tooltip_name(*tokens)
