@@ -1,3 +1,15 @@
+v2.6:
+- Bindings
+  - Add the ability to add custom Bindings to Sim Snatcher
+  - Added a Bound interaction to play a specific "bound in chair" animation (Will be expanded upon in the future)
+  - Sim Snatcher interactions may now be performed within the Perform Interaction dialog
+  - Replaced the Attach/Remove bindings interactions with a Configure Bindings interaction.
+  - Bindings can prevent Sims from doing certain things.
+- Objects in use will now allow Sim Snatcher interactions to be performed on them.
+- Added the ability to equip specific bindings
+- The allowances dialog now reopens to the same page after selecting an option.
+- SS now requires at least version 1.40 of S4CL
+
 v2.5:
 - Added debug interactions to Summon Captives and Slaves
 - Changed how SS saves it's settings, old captives and slaves will no longer work with this new system!
