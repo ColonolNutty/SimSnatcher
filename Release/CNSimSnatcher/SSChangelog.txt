@@ -1,3 +1,6 @@
+v2.7:
+- The Bound interaction now only appears when clicking on Sims instead of appearing everywhere
+
 v2.6:
 - Bindings
   - Add the ability to add custom Bindings to Sim Snatcher
