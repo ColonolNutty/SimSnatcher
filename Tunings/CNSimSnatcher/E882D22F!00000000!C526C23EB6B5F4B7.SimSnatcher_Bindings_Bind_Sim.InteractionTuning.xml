@@ -1,0 +1,16 @@
+<I c="SSBindingsBindSimInteraction" i="interaction" m="cnsimsnatcher.bindings.interactions.bind_sim" n="SimSnatcher_Bindings_Bind_Sim" s="14206255649195947191">
+  <V n="_saveable" t="disabled" />
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_immediateInteraction.png">2f7d0004:00000000:25eea5cdba6a6fd6</T>
+      </U>
+    </V>
+  </V>
+  <T n="category">2953704054832033008<!--SS Parent--></T>
+  <T n="display_name">0x1F3BB935<!--Bind Sim--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>
