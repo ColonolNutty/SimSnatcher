@@ -1,3 +1,8 @@
+v2.8:
+- Added Bind Sim and Unbind Sim interactions
+- Disabled the Bound interaction from being available for Sims not enabled for Sim Snatcher
+- Bind Sim binds the Target Sim instead of the Source Sim now
+
 v2.7:
 - The Bound interaction now only appears when clicking on Sims instead of appearing everywhere
 
